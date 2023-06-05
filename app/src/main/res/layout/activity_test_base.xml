@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <!--        <variable-->
+        <!--            name="testViewModel"-->
+        <!--            type="com.example.coroutinedemo.test.TestBaseViewModel" />-->
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnWanArticle"
+        app:layout_constraintStart_toEndOf="@+id/btnWanArticle"
+        tools:context=".test.TestBaseActivity">
+
+        <Button
+            android:id="@+id/btnWanArticle"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="30dp"
+            android:text="ButtonWanArticle"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toStartOf="@+id/btnDouyinRecommend"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnDouyinRecommend"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="30dp"
+            android:text="ButtonDouyin"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btnWanArticle"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvWanArticle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WanAndroid"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tvDouyinRecommend"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnWanArticle" />
+
+        <TextView
+            android:id="@+id/tvDouyinRecommend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="128dp"
+            android:text="douyin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tvWanArticle"
+            app:layout_constraintTop_toBottomOf="@+id/btnWanArticle" />
+
+        <com.liang.module_base.widget.TypewriterTextView
+            android:id="@+id/typewriterTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center_horizontal"
+            android:text="TypeTextView"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@id/tvDouyinRecommend"
+            app:layout_constraintStart_toStartOf="@id/tvDouyinRecommend"
+            app:layout_constraintTop_toBottomOf="@id/tvDouyinRecommend" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/android_tag"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnDouyinRecommend"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivGlide"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnWanArticle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

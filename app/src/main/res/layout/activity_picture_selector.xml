@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        tools:context=".pictureSelector.PictureSelectorActivity">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvGallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivGallery"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/btnSelectorPictureSystem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:drawableTop="@drawable/ic_add_image"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            android:text="系统相册"
+            app:layout_constraintEnd_toStartOf="@+id/btnSelectorPicture"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivGallery" />
+
+        <TextView
+            android:id="@+id/btnSelectorPicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_add_image"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            android:text="自定义相册-蓝色"
+            app:layout_constraintEnd_toStartOf="@+id/btnSelectorPictureWeChat"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btnSelectorPictureSystem"
+            app:layout_constraintTop_toTopOf="@id/btnSelectorPictureSystem" />
+
+        <TextView
+            android:id="@+id/btnSelectorPictureWeChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_add_image"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            android:text="自定义相册-WeChat"
+            app:layout_constraintEnd_toStartOf="@+id/btnOnlyGallery"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btnSelectorPicture"
+            app:layout_constraintTop_toTopOf="@id/btnSelectorPicture" />
+
+        <TextView
+            android:id="@+id/btnOnlyGallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_add_image"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            android:text="Gallery模式"
+            app:layout_constraintEnd_toStartOf="@+id/btnOnlyCamera"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btnSelectorPictureWeChat"
+            app:layout_constraintTop_toTopOf="@id/btnSelectorPictureSystem"/>
+
+        <TextView
+            android:id="@+id/btnOnlyCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_add_image"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            android:text="单独拍照"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btnOnlyGallery"
+            app:layout_constraintTop_toTopOf="@id/btnSelectorPictureSystem" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

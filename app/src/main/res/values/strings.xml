@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">NewBaseProject</string>
+
+    <string name="android_tag">安卓协程</string>
+
+    <string name="changeLanguageMode">中->英</string>
+    <string name="Chinese_mode">中文模式</string>
+    <string name="English_mode">英文模式</string>
+
+    <string name="func_menu_title">功能菜单</string>
+    <string name="func_retrofit_common_view_model">普通ViewModel写法</string>
+    <string name="func_retrofit_koin">Koin注解-Retrofit</string>
+
+    <string name="func_coroutine">协程封装</string>
+    <string name="func_day_night">主题更换</string>
+    <string name="func_change_language">语言国际化</string>
+    <string name="func_typewriter">打字机效果</string>
+    <string name="func_choose_image">图片选择器</string>
+    <string name="func_default_text">默认文字</string>
+    <string name="exit_application">再按一次退出应用</string>
+
 </resources>

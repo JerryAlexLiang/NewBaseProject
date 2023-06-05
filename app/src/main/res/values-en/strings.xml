@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CoroutineDemo</string>
+
+    <string name="android_tag">Android Coroutine</string>
+
+    <string name="changeLanguageMode">En->CH</string>
+    <string name="Chinese_mode">中文模式</string>
+    <string name="English_mode">英文模式</string>
+
+    <string name="func_menu_title">Function Menu</string>
+    <string name="func_retrofit_common_view_model">ViewModel without annotations</string>
+    <string name="func_retrofit_koin">Koin-Di-Retrofit</string>
+
+    <string name="func_coroutine">Coroutine package</string>
+    <string name="func_day_night">DayNightMode</string>
+    <string name="func_change_language">Language internationalization</string>
+    <string name="func_typewriter">Typewriter</string>
+    <string name="func_choose_image">Picture selector</string>
+    <string name="func_default_text">Default text</string>
+    <string name="exit_application">Press again to exit the application</string>
+
+
+    <!--    <string name="func_retrofit_get">Test the Retrofit-GET request</string>-->
+</resources>
