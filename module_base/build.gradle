@@ -1,0 +1,156 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.liang.module_base'
+//    compileSdk 33
+    compileSdk BuildVersions.compileSdk
+
+    defaultConfig {
+//        minSdk 21
+//        targetSdk 33
+
+        minSdk BuildVersions.minSdk
+        targetSdk BuildVersions.targetSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    // 开启dataBinding
+    buildFeatures {
+        dataBinding true
+    }
+    // 开启viewBinding
+    viewBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+
+//    implementation 'androidx.core:core-ktx:1.7.0'
+//    implementation 'androidx.appcompat:appcompat:1.4.1'
+//    implementation 'com.google.android.material:material:1.5.0'
+//    testImplementation 'junit:junit:4.13.2'
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    /////////////////////////////使用buildSrc统一版本依赖////////////////////////////////////////
+
+    // ----------- Android-------------
+    api(AndroidX.coreKtx)
+    api(AndroidX.appcompat)
+    api(AndroidX.material)
+    api(AndroidX.constraintLayout)
+    api(AndroidX.junit)
+    api(AndroidX.junitExt)
+    api(AndroidX.espresso)
+
+    //    //----------- Jetpack----------------
+    // ViewModelScope
+    api(Jetpack.viewModelKtx)
+    // LifecycleScope提供协程作用域的，同样必不可少
+    api(Jetpack.lifecycleScope)
+    // lifeCycle.repeatOnLifecycle()
+    api(Jetpack.lifecycleRuntimeCompose)
+    // liveData
+    api(Jetpack.liveDataKtx)
+    // ktx的扩展库，这些倒不是必须的，但是能帮忙我们简化不少代码的书写
+    api(Jetpack.activityKtx)
+    api(Jetpack.fragmentKtx)
+    // 协程库，因为Flow是构建在Kotlin协程基础之上的，因此协程依赖库必不可少
+    api(Jetpack.coroutinesCore)
+    api(Jetpack.coroutinesAndroid)
+    // UnPeek-LiveData解决数据倒灌
+    api(Jetpack.unPeekLiveData)
+
+    //---------------Koin依赖注入------------------
+//    // Koin for Kotlin
+//    api(Jetpack.koinCore)
+//    api(Jetpack.koinCoreExt)
+//    // Koin for AndroidX
+//    api(Jetpack.koinAndroidxScope)
+//    api(Jetpack.koinAndroidxViewModel)
+//    api(Jetpack.koinAndroidxFragment)
+//    api(Jetpack.koinAndroidxExt)
+
+    api(Jetpack.koinCore)
+    api(Jetpack.koinAndroid)
+
+    //---------------网络相关------------------
+    api(CommonDependencies.retrofit)
+    api(CommonDependencies.gson)
+    api(CommonDependencies.converterGson)
+    // Moshi
+    api(CommonDependencies.moshi)
+    api(CommonDependencies.moshi_kt)
+    api(CommonDependencies.converterMoshi)
+
+    api(CommonDependencies.loggingInterceptor)
+    api(CommonDependencies.persistentCookieJar)
+
+    // 加载反馈页管理框架 https://github.com/KingJA/LoadSir
+    api(CommonDependencies.loadSir)
+
+    // 腾讯MMKV 基于 mmap 的高性能通用 key-value 组件
+    api(CommonDependencies.mmkv)
+
+    //---------------图片相关------------------
+    // Glide
+    api(CommonDependencies.glide)
+    // Coil
+    api(CommonDependencies.coil)
+    api(CommonDependencies.coil_base)
+    api(CommonDependencies.coil_gif)
+    api(CommonDependencies.coil_svg)
+    api(CommonDependencies.coil_video)
+
+    //---------------UI相关-------------
+    api(CommonDependencies.recyclerview)
+    api(CommonDependencies.cardView)
+    api(CommonDependencies.baseQuickAdapter)
+    api(CommonDependencies.swipeRefreshLayout)
+    api(CommonDependencies.flexbox)
+
+    // material风格功能强大的Dialog
+    api(CommonDependencies.materialDialogsCore)
+    api(CommonDependencies.materialDialogsLifecycle)
+    api(CommonDependencies.materialDialogsbottomsheets)
+
+    // 工具类
+    api(CommonDependencies.utilCodex)
+
+    // LiveEventBus
+    api(CommonDependencies.liveEventBus)
+    api(CommonDependencies.lebxProcessorGson)
+
+    //权限请求 com.permissionx.guolindev
+    api(CommonDependencies.permissionX)
+
+    // PictureSelector https://github.com/LuckSiege/PictureSelector
+    api(CommonDependencies.pictureSelectorBasic)
+    api(CommonDependencies.pictureSelectorCompress)
+    api(CommonDependencies.pictureSelectorUCrop)
+    api(CommonDependencies.pictureSelectorCameraX)
+
+    // BannerViewPager
+    api(CommonDependencies.bannerViewPager)
+
+}
