@@ -14,6 +14,7 @@ import com.liang.module_base.utils.LogUtils
 import com.liang.module_base.utils.decoration.SpaceItemDecorationKt
 import com.liang.newbaseproject.R
 import com.liang.newbaseproject.databinding.ActivityMainBinding
+import com.liang.newbaseproject.splash.SplashActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -58,7 +59,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.initListener()
         mBinding.ivBtnSetting.setOnClickListener {
             "Setting".showShortToast()
-            startActivity(intent.putExtra("isShowButton", true))
         }
 
         mainFunRvAdapter.setOnItemClickListener { adapter, view, position ->
@@ -78,6 +78,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                             } else {
                                 changeLanguage(true)
                             }
+                        } else if (funNameResId == R.string.func_typewriter) {
+                            val intent = Intent()
+                            intent.putExtra("isShowButton", true)
+                            intent.setClass(this@MainActivity, SplashActivity::class.java)
+                            startActivity(intent)
                         } else {
                             LanguageUtilKt.getStrByLanguage(
                                 this@MainActivity,

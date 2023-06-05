@@ -2,6 +2,8 @@ package com.liang.newbaseproject.splash
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.View
+import android.view.View.OnLongClickListener
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.liang.module_base.base.BaseActivity
@@ -53,6 +55,18 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(),
                 splashViewModel.setTypeData()
             }
         }
+//        mBinding.root.setOnLongClickListener {
+//            if (!isShowButton) {
+//                startToMain(0)
+//            }
+//            false
+//        }
+
+        mBinding.root.setOnClickListener {
+            if (!isShowButton) {
+                startToMain(0)
+            }
+        }
     }
 
     override fun startObserver() {
@@ -68,10 +82,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(),
                         start(it.name, 120)
                     } else {
                         text = it.name
-                        startToMain(2000)
-//                        if (isShowButton) {
-//                            startToMain(2000)
-//                        }
+//                        startToMain(2000)
+                        if (!isShowButton) {
+                            startToMain(2000)
+                        }
                     }
                 }
             }
@@ -95,10 +109,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(),
                 com.liang.module_base.R.color.item_title
             )
         )
-//        if (isShowButton) {
-//            startToMain(1000)
-//        }
-        startToMain(1000)
+//        startToMain(1000)
+        if (!isShowButton) {
+            startToMain(1000)
+        }
     }
 
     private fun startToMain(time: Long) {
