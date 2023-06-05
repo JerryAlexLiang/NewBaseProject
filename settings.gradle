@@ -1,0 +1,38 @@
+pluginManagement {
+    repositories {
+//        google()
+//        mavenCentral()
+//        gradlePluginPortal()
+
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+//        jcenter() { url 'https://jcenter.bintray.com/' }
+        mavenCentral() { url 'https://jcenter.bintray.com/' }
+
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        gradlePluginPortal()
+        google()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+//        google()
+//        mavenCentral()
+
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+//        jcenter() { url 'https://jcenter.bintray.com/' }
+        mavenCentral() { url 'https://jcenter.bintray.com/' }
+
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        gradlePluginPortal()
+        google()
+    }
+}
+rootProject.name = "NewBaseProject"
+include ':app'
