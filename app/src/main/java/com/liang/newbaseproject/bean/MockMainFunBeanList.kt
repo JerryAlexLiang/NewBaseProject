@@ -5,6 +5,7 @@ import com.liang.module_base.base.BaseApp
 import com.liang.module_base.utils.LanguageUtilKt
 import com.liang.newbaseproject.R
 import com.liang.newbaseproject.normal.NormalViewModelActivity
+import com.liang.newbaseproject.pictureSelector.PictureSelectorActivity
 
 object MockMainFunBeanList {
 
@@ -29,7 +30,7 @@ object MockMainFunBeanList {
     private val bean7 =
         FunItemBean(
             R.string.func_choose_image,
-//            activity = PictureSelectorActivity::class.java
+            activity = PictureSelectorActivity::class.java
         )
 
     private var funBeanList: MutableList<FunItemBean> = mutableListOf()

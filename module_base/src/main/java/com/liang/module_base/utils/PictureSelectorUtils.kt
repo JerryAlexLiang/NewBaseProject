@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
@@ -78,6 +79,7 @@ object PictureSelectorUtils {
     private val chooseModeImage = SelectMimeType.ofImage()
     private val chooseModeVideo = SelectMimeType.ofVideo()
     private val chooseModeAudio = SelectMimeType.ofAudio()
+
 
     /**
      * @param multipleSelectionMode  单选or多选   false:单选，true:多选
@@ -154,6 +156,8 @@ object PictureSelectorUtils {
         isDirectReturnSingle: Boolean = false,
         recordVideoMaxSecond: Int = 10,
         recordVideoMinSecond: Int = 0,
+        isUseSystemPlayer: Boolean = false,
+        selectedDataList: ArrayList<LocalMedia>? = null
     ): PictureSelectionModel {
         // 进入相册
         return PictureSelector.create(context)
@@ -166,6 +170,7 @@ object PictureSelectorUtils {
             .isWithSelectVideoImage(isWithSelectVideoImage) // 是否可以同时选择图片和视频
             .setSelectorUIStyle(setSelectorUIStyle(uiStyle))
             .setImageEngine(GlideEngineKt.createGlideEngine())
+//            .setImageEngine(CoilEngine())
             .setSelectionMode(if (multipleSelectionMode) SelectModeConfig.MULTIPLE else SelectModeConfig.SINGLE)
             .setCompressEngine(getCompressFileEngine(enableCompress))
             .setCropEngine(getCropFileEngine(enableCrop))
@@ -189,7 +194,7 @@ object PictureSelectorUtils {
             .isAutoVideoPlay(false)
             .isLoopAutoVideoPlay(true)
             // 使用系统播放器
-            .isUseSystemVideoPlayer(false)
+            .isUseSystemVideoPlayer(isUseSystemPlayer)
             .isPageSyncAlbumCount(useSystemVideoPlayer) // 是否以带过滤条件的分页方式同步最新专辑下的资源数
             .setGridItemSelectAnimListener(if (setGridItemSelectAnimListener) OnGridItemSelectAnimListener { view, isSelected ->
                 val set = AnimatorSet()
@@ -222,7 +227,47 @@ object PictureSelectorUtils {
             .isGif(true)  // 是否打开gif
             .setRecordVideoMaxSecond(recordVideoMaxSecond)  // 视频录制最大时长
             .setRecordVideoMinSecond(recordVideoMinSecond)  // 视频录制最小时长
-//            .setSelectedData(mAdapter.getData())  // 选择选定的图片集
+            .setSelectedData(selectedDataList)  // 选择选定的图片集
+    }
+
+    /**
+     * 预览图片、视频、音频
+     */
+    fun openPreview(
+        context: Context,
+        uiStyle: Int? = null,
+        language: Int = languageConfig,
+        isUseSystemPlayer: Boolean = false,
+        isPreviewZoomEffect: Boolean = false,
+        recyclerview: RecyclerView,
+        isPreviewFromFragment: Boolean = false,
+        position: Int,
+        dataList: ArrayList<LocalMedia>?
+    ) {
+        PictureSelector.create(context)
+            .openPreview()
+            .setImageEngine(GlideEngineKt.createGlideEngine())
+//            .setImageEngine(CoilEngine())
+            .setVideoPlayerEngine(null)
+            .setSelectorUIStyle(setSelectorUIStyle(uiStyle))
+            .setLanguage(language)
+            .isAutoVideoPlay(false)
+            .isLoopAutoVideoPlay(true)
+            // 预览点击全屏效果
+            .isPreviewFullScreenMode(true)
+            // 视频支持暂停与播放
+            .isVideoPauseResumePlay(true)
+            // 使用系统播放器
+            .isUseSystemVideoPlayer(isUseSystemPlayer)
+            .setCustomLoadingListener(getCustomLoadingListener())
+            .isPreviewZoomEffect(isPreviewZoomEffect, recyclerview) //预览缩放效果模式
+            .apply {
+                if (isPreviewFromFragment) {
+                    startFragmentPreview(position, true, dataList)
+                } else {
+                    startActivityPreview(position, true, dataList)
+                }
+            }
     }
 
     /**
@@ -242,6 +287,7 @@ object PictureSelectorUtils {
         openOriginal: Boolean = false,
         recordVideoMaxSecond: Int = 10,
         recordVideoMinSecond: Int = 0,
+        selectedDataList: ArrayList<LocalMedia>? = null
     ): PictureSelectionCameraModel {
         // 进入相册
         return PictureSelector.create(context)
@@ -256,6 +302,7 @@ object PictureSelectorUtils {
             .isOriginalControl(openOriginal)  // 是否开启原图功能
             .setRecordVideoMaxSecond(recordVideoMaxSecond)  // 视频录制最大时长
             .setRecordVideoMinSecond(recordVideoMinSecond)  // 视频录制最小时长
+            .setSelectedData(selectedDataList)  // 选择选定的图片集
     }
 
     private fun getCustomCameraEvent(isCustomCameraEvent: Boolean): OnCameraInterceptListener? {
@@ -802,41 +849,47 @@ object PictureSelectorUtils {
     }
 
 
-    private fun analyticalSelectResults(result: ArrayList<LocalMedia>) {
+    fun analyticalSelectResults(result: ArrayList<LocalMedia>) {
         for (media in result) {
-            if (media.width == 0 || media.height == 0) {
-                if (PictureMimeType.isHasImage(media.mimeType)) {
-                    val imageExtraInfo = MediaUtils.getImageSize(BaseApp.appContext, media.path)
-                    media.width = imageExtraInfo.width
-                    media.height = imageExtraInfo.height
-                } else if (PictureMimeType.isHasVideo(media.mimeType)) {
-                    val videoExtraInfo = MediaUtils.getVideoSize(BaseApp.appContext, media.path)
-                    media.width = videoExtraInfo.width
-                    media.height = videoExtraInfo.height
-                }
-            }
-            LogUtils.d(tag = TAG, msg = "文件名: " + media.fileName)
-            LogUtils.d(tag = TAG, msg = "是否压缩:" + media.isCompressed)
-            LogUtils.d(tag = TAG, msg = "压缩:" + media.compressPath)
-            LogUtils.d(tag = TAG, msg = "初始路径:" + media.path)
-            LogUtils.d(tag = TAG, msg = "绝对路径:" + media.realPath)
-            LogUtils.d(tag = TAG, msg = "是否裁剪:" + media.isCut)
-            LogUtils.d(tag = TAG, msg = "裁剪路径:" + media.cutPath)
-            LogUtils.d(tag = TAG, msg = "是否开启原图:" + media.isOriginal)
-            LogUtils.d(tag = TAG, msg = "原图路径:" + media.originalPath)
-            LogUtils.d(tag = TAG, msg = "沙盒路径:" + media.sandboxPath)
-            LogUtils.d(tag = TAG, msg = "水印路径:" + media.watermarkPath)
-            LogUtils.d(tag = TAG, msg = "视频缩略图:" + media.videoThumbnailPath)
-            LogUtils.d(tag = TAG, msg = "原始宽高: " + media.width + "x" + media.height)
-            LogUtils.d(
-                tag = "",
-                msg = "裁剪宽高: " + media.cropImageWidth + "x" + media.cropImageHeight
-            )
-            LogUtils.d(
-                tag = "",
-                msg = "文件大小: " + PictureFileUtils.formatAccurateUnitFileSize(media.size)
-            )
-            LogUtils.d(tag = "", msg = "文件时长: " + media.duration)
+            extracted(media)
         }
     }
+
+    fun extracted(media: LocalMedia) {
+        if (media.width == 0 || media.height == 0) {
+            if (PictureMimeType.isHasImage(media.mimeType)) {
+                val imageExtraInfo = MediaUtils.getImageSize(BaseApp.appContext, media.path)
+                media.width = imageExtraInfo.width
+                media.height = imageExtraInfo.height
+            } else if (PictureMimeType.isHasVideo(media.mimeType)) {
+                val videoExtraInfo = MediaUtils.getVideoSize(BaseApp.appContext, media.path)
+                media.width = videoExtraInfo.width
+                media.height = videoExtraInfo.height
+            }
+        }
+        LogUtils.d(tag = TAG, msg = "文件名: " + media.fileName)
+        LogUtils.d(tag = TAG, msg = "是否压缩:" + media.isCompressed)
+        LogUtils.d(tag = TAG, msg = "压缩:" + media.compressPath)
+        LogUtils.d(tag = TAG, msg = "初始路径:" + media.path)
+        LogUtils.d(tag = TAG, msg = "绝对路径:" + media.realPath)
+        LogUtils.d(tag = TAG, msg = "是否裁剪:" + media.isCut)
+        LogUtils.d(tag = TAG, msg = "裁剪路径:" + media.cutPath)
+        LogUtils.d(tag = TAG, msg = "是否开启原图:" + media.isOriginal)
+        LogUtils.d(tag = TAG, msg = "原图路径:" + media.originalPath)
+        LogUtils.d(tag = TAG, msg = "沙盒路径:" + media.sandboxPath)
+        LogUtils.d(tag = TAG, msg = "水印路径:" + media.watermarkPath)
+        LogUtils.d(tag = TAG, msg = "视频缩略图:" + media.videoThumbnailPath)
+        LogUtils.d(tag = TAG, msg = "原始宽高: " + media.width + "x" + media.height)
+        LogUtils.d(
+            tag = "",
+            msg = "裁剪宽高: " + media.cropImageWidth + "x" + media.cropImageHeight
+        )
+        LogUtils.d(
+            tag = "",
+            msg = "文件大小: " + PictureFileUtils.formatAccurateUnitFileSize(media.size)
+        )
+        LogUtils.d(tag = "", msg = "文件时长: " + media.duration)
+    }
+
+
 }

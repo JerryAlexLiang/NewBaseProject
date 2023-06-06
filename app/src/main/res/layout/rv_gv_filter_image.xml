@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.luck.picture.lib.widget.SquareRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivFiv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/iv_del"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/ivFiv"
+            android:layout_alignRight="@id/ivFiv"
+            android:paddingLeft="10dp"
+            android:paddingBottom="10dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_item_delete"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_duration"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_alignStart="@id/ivFiv"
+            android:layout_alignEnd="@id/ivFiv"
+            android:layout_alignBottom="@id/ivFiv"
+            android:background="@drawable/ps_ic_shadow_bg"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:paddingTop="8dp"
+            android:text="00:00"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+            android:visibility="gone"
+            app:drawableStartCompat="@drawable/ic_video"
+            tools:visibility="visible" />
+
+    </com.luck.picture.lib.widget.SquareRelativeLayout>
+
+</layout>

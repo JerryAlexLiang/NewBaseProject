@@ -2,12 +2,19 @@ package com.liang.module_base.base
 
 import android.app.Application
 import android.content.Context
+import android.os.Build.VERSION.SDK_INT
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
-import com.liang.module_base.extension.getNightMode
+import coil.ComponentRegistry
+import coil.ImageLoader
+import coil.ImageLoaderFactory
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
+import coil.decode.VideoFrameDecoder
 import com.jeremyliao.liveeventbus.LiveEventBus
+import com.liang.module_base.extension.getNightMode
 import com.tencent.mmkv.MMKV
 import kotlin.properties.Delegates
 
@@ -16,7 +23,7 @@ import kotlin.properties.Delegates
  * @User: Jerry
  * @Description: Application基类
  */
-open class BaseApp : Application(), ViewModelStoreOwner {
+open class BaseApp : Application(), ViewModelStoreOwner, ImageLoaderFactory {
 
     private lateinit var mAppViewModelStore: ViewModelStore
 
@@ -98,4 +105,20 @@ open class BaseApp : Application(), ViewModelStoreOwner {
 
     override val viewModelStore: ViewModelStore
         get() = mAppViewModelStore
+
+    override fun newImageLoader(): ImageLoader {
+        val imageLoader = ImageLoader.Builder(baseContext)
+        val newBuilder = ComponentRegistry().newBuilder()
+        newBuilder.add(VideoFrameDecoder.Factory())
+        if (SDK_INT >= 28) {
+            newBuilder.add(ImageDecoderDecoder.Factory())
+        } else {
+            newBuilder.add(GifDecoder.Factory())
+        }
+        val componentRegistry = newBuilder.build()
+
+        imageLoader.components(componentRegistry)
+
+        return imageLoader.build()
+    }
 }

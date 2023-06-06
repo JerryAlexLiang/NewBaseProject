@@ -5,6 +5,8 @@ import com.liang.newbaseproject.livedata.WanApiRepositoryKoin
 import com.liang.newbaseproject.livedata.WanApiService
 import com.liang.newbaseproject.main.MainFunRvAdapter
 import com.liang.newbaseproject.main.MainViewModel
+import com.liang.newbaseproject.pictureSelector.GalleryRvAdapter
+import com.liang.newbaseproject.pictureSelector.PictureSelectorViewModel
 import com.liang.newbaseproject.splash.SplashViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -52,14 +54,17 @@ val viewModelModule: Module = module {
 //        TestBaseViewModel(androidApplication(), get(), get())
 //    }
 //
-//    viewModel {
-//        PictureSelectorViewModel(androidApplication())
-//    }
+    viewModel {
+        PictureSelectorViewModel(androidApplication())
+    }
 }
 
 /** 适配器 Module */
 val adapterModule: Module = module {
     factory {
         MainFunRvAdapter()
+    }
+    factory {
+        GalleryRvAdapter()
     }
 }

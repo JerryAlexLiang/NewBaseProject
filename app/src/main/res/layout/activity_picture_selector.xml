@@ -14,20 +14,37 @@
         android:paddingEnd="6dp"
         tools:context=".pictureSelector.PictureSelectorActivity">
 
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center_vertical"
+            android:paddingStart="50dp"
+            android:paddingEnd="50dp"
+            android:text="@string/func_menu_title"
+            android:textColor="@color/item_title"
+            android:textSize="22sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintBottom_toTopOf="@id/rvGallery"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvGallery"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
         <ImageView
             android:id="@+id/ivGallery"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_marginTop="50dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,14 +54,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp"
             android:drawableTop="@drawable/ic_add_image"
             android:drawablePadding="10dp"
             android:padding="10dp"
             android:text="系统相册"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnSelectorPicture"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivGallery" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/btnSelectorPicture"
@@ -54,6 +72,7 @@
             android:drawablePadding="10dp"
             android:padding="10dp"
             android:text="自定义相册-蓝色"
+
             app:layout_constraintEnd_toStartOf="@+id/btnSelectorPictureWeChat"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btnSelectorPictureSystem"
@@ -83,7 +102,7 @@
             app:layout_constraintEnd_toStartOf="@+id/btnOnlyCamera"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btnSelectorPictureWeChat"
-            app:layout_constraintTop_toTopOf="@id/btnSelectorPictureSystem"/>
+            app:layout_constraintTop_toTopOf="@id/btnSelectorPictureSystem" />
 
         <TextView
             android:id="@+id/btnOnlyCamera"
@@ -97,6 +116,12 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btnOnlyGallery"
             app:layout_constraintTop_toTopOf="@id/btnSelectorPictureSystem" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="btnSelectorPictureSystem,btnSelectorPicture,btnSelectorPictureWeChat,btnOnlyGallery,btnOnlyCamera" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -152,4 +152,7 @@ dependencies {
     // BannerViewPager
     api(CommonDependencies.bannerViewPager)
 
+//    // 视频播放器Exoplayer
+//    api(CommonDependencies.exoplayer)
+
 }

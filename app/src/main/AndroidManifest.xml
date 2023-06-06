@@ -70,6 +70,9 @@
         <activity
             android:name=".normal.NormalViewModelActivity"
             android:exported="true" />
+        <activity
+            android:name=".pictureSelector.PictureSelectorActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

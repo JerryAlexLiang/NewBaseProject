@@ -138,6 +138,11 @@ object DepsVersions {
     //com.github.zhpanvip:bannerviewpager:latestVersion
     const val bannerViewPager = "3.5.11"
 
+    /**
+     * - Exoplayer视频播放器
+     * - implementation "com.google.android.exoplayer:exoplayer:${2.17.1}"
+     */
+    const val exoplayer = "2.17.1"
 }
 
 object CommonDependencies {
@@ -348,4 +353,10 @@ object CommonDependencies {
      */
     const val bannerViewPager =
         "com.github.zhpanvip:bannerviewpager:${DepsVersions.bannerViewPager}"
+
+    /**
+     * Exoplayer视频播放器
+     * implementation "com.google.android.exoplayer:exoplayer:${2.17.1}"
+     */
+//    const val exoplayer = "com.google.android.exoplayer:exoplayer:${DepsVersions.exoplayer}"
 }
