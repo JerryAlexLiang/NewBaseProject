@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.LocaleList;
 
+import com.liang.module_base.base.BaseApp;
 import com.liang.module_base.extension.MmkvExtKt;
 
 import java.util.Locale;
@@ -29,8 +30,7 @@ public class LanguageUtil {
     private static final String CHINESE_COUNTRY = "CN";
     private static final String CHINESE_LANGUAGE = "zh";
 
-    private static final String APPNAME = "com.hyundai.car.healthy";
-
+    private static final String APP_PACKAGE_NAME = PackageUtils.getAppPackageName(BaseApp.Companion.getAppContext());
 
     private static Locale getLocale(Context context) {
         if (isChineseVersion(context)) {
@@ -54,7 +54,7 @@ public class LanguageUtil {
     private static String getStringByLocale(Context context, int stringId, String language, String country) {
 
         Resources resources = getApplicationResource(context, context.getApplicationContext().getPackageManager(),
-                APPNAME, new Locale(language, country));
+                APP_PACKAGE_NAME, new Locale(language, country));
         if (resources == null) {
             return "ERROR_LABEL";
         } else {
@@ -69,7 +69,7 @@ public class LanguageUtil {
     private static String[] getStringsByLocale(Context context, int stringId, String language, String country) {
 
         Resources resources = getApplicationResource(context, context.getApplicationContext().getPackageManager(),
-                APPNAME, new Locale(language, country));
+                APP_PACKAGE_NAME, new Locale(language, country));
         if (resources == null) {
             return new String[0];
         } else {

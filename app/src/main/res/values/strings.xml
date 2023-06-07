@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">NewBaseProject</string>
+    <string name="app_package_name">com.liang.newbaseproject</string>
 
     <string name="android_tag">安卓协程</string>
 

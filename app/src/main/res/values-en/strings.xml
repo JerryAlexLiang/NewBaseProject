@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">CoroutineDemo</string>
+    <string name="app_package_name">com.liang.newbaseproject</string>
 
     <string name="android_tag">Android Coroutine</string>
 

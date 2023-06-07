@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.os.Build
 import android.os.LocaleList
+import com.liang.module_base.base.BaseApp
 import com.liang.module_base.extension.getChineseMode
 import com.liang.module_base.extension.setChineseMode
 import com.liang.module_base.utils.LogUtils.d
@@ -19,13 +20,17 @@ import java.util.Locale
 object LanguageUtilKt {
 
     private const val TAG = "LanguageUtil"
-    const val ERROR_LABEL = ""
+    private const val ERROR_LABEL = ""
     private const val SPECIFIC_COUNTRY = "US"
     private const val SPECIFIC_LANGUAGE = "en"
     private const val CHINESE_COUNTRY = "CN"
     private const val CHINESE_LANGUAGE = "zh"
 
-    private const val APPNAME = "com.example.coroutinedemo"
+    private var APP_PACKAGE_NAME = PackageUtilsKt.getAppPackageName(BaseApp.appContext)!!
+
+//    fun initAppPackageName(appPackageName: String) {
+//        APP_PACKAGE_NAME = appPackageName
+//    }
 
     private fun getLocale(): Locale {
         return if (isChineseVersion) {
@@ -52,7 +57,7 @@ object LanguageUtilKt {
     ): String {
         val resources = getApplicationResource(
             context, context.applicationContext.packageManager,
-            APPNAME, Locale(language, country)
+            APP_PACKAGE_NAME, Locale(language, country)
         )
         return if (resources == null) {
             "ERROR_LABEL"
@@ -73,7 +78,7 @@ object LanguageUtilKt {
     ): Array<String?> {
         val resources = getApplicationResource(
             context, context.applicationContext.packageManager,
-            APPNAME, Locale(language, country)
+            APP_PACKAGE_NAME, Locale(language, country)
         )
         return if (resources == null) {
             arrayOfNulls(0)
