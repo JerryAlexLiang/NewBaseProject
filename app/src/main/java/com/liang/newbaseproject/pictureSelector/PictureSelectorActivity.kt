@@ -37,6 +37,9 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
     private val chooseMode = SelectMimeType.ofAll()
     private val language = LanguageConfig.ENGLISH
 
+    // 默认多选
+    var multipleSelectionMode: Boolean = true
+
     override fun getLayoutId(): Int {
         return R.layout.activity_picture_selector
     }
@@ -65,9 +68,16 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
         }
     }
 
+
+
     override fun initListener() {
         super.initListener()
         mBinding.apply {
+            switchMultipleSelectionMode.setOnCheckedChangeListener { buttonView, isChecked ->
+//                pictureSelectorViewModel.multipleSelectionMode = isChecked
+                multipleSelectionMode = isChecked
+            }
+
             btnSelectorPictureSystem.setOnClickListener {
 //            choosePicture()
                 PictureSelectorUtils
@@ -79,6 +89,7 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
                 PictureSelectorUtils
                     .openGallery(
                         this@PictureSelectorActivity,
+                        multipleSelectionMode = multipleSelectionMode,
                         uiStyle = PictureSelectorUtils.NUM_STYLE,
                         selectedDataList = pictureSelectorViewModel.galleryList
                     )
@@ -90,6 +101,7 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
                     this@PictureSelectorActivity,
                     language = LanguageConfig.ENGLISH,
                     uiStyle = PictureSelectorUtils.CHAT_STYLE,
+                    multipleSelectionMode = multipleSelectionMode,
                     isMaxSelectEnabledMask = true,
                     isCustomCameraEvent = true,
                     selectedDataList = pictureSelectorViewModel.galleryList
@@ -101,7 +113,7 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
                 PictureSelectorUtils
                     .openGallery(
                         this@PictureSelectorActivity,
-                        multipleSelectionMode = false,
+                        multipleSelectionMode = multipleSelectionMode,
                         isDisplayCamera = false,
                         isDirectReturnSingle = true,
                         selectedDataList = pictureSelectorViewModel.galleryList
@@ -114,6 +126,18 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
                     this@PictureSelectorActivity,
                     selectedDataList = pictureSelectorViewModel.galleryList
                 )
+                    .forResult(pictureSelectorViewModel.onResultCallbackListener())
+            }
+
+            btnCaptureAudio.setOnClickListener {
+                PictureSelectorUtils
+                    .openGallery(
+                        this@PictureSelectorActivity,
+                        chooseMode = PictureSelectorUtils.chooseModeAudio,
+                        multipleSelectionMode = multipleSelectionMode,
+                        isDisplayCamera = true,
+                        selectedDataList = pictureSelectorViewModel.galleryList
+                    )
                     .forResult(pictureSelectorViewModel.onResultCallbackListener())
             }
         }

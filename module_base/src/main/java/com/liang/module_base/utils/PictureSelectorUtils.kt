@@ -1,14 +1,26 @@
 package com.liang.module_base.utils
 
+import android.Manifest
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.provider.MediaStore
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.TextUtils
+import android.text.style.AbsoluteSizeSpan
+import android.text.style.ForegroundColorSpan
+import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -37,11 +49,15 @@ import com.luck.picture.lib.interfaces.OnCameraInterceptListener
 import com.luck.picture.lib.interfaces.OnCustomLoadingListener
 import com.luck.picture.lib.interfaces.OnGridItemSelectAnimListener
 import com.luck.picture.lib.interfaces.OnKeyValueResultCallbackListener
+import com.luck.picture.lib.interfaces.OnRecordAudioInterceptListener
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
 import com.luck.picture.lib.interfaces.OnSelectAnimListener
 import com.luck.picture.lib.interfaces.OnSelectLimitTipsListener
 import com.luck.picture.lib.interfaces.OnVideoThumbnailEventListener
 import com.luck.picture.lib.language.LanguageConfig
+import com.luck.picture.lib.permissions.PermissionChecker
+import com.luck.picture.lib.permissions.PermissionConfig
+import com.luck.picture.lib.permissions.PermissionResultCallback
 import com.luck.picture.lib.style.BottomNavBarStyle
 import com.luck.picture.lib.style.PictureSelectorStyle
 import com.luck.picture.lib.style.SelectMainStyle
@@ -52,6 +68,7 @@ import com.luck.picture.lib.utils.MediaUtils
 import com.luck.picture.lib.utils.PictureFileUtils
 import com.luck.picture.lib.utils.StyleUtils
 import com.luck.picture.lib.utils.ToastUtils
+import com.luck.picture.lib.widget.MediumBoldTextView
 import com.yalantis.ucrop.UCrop
 import com.yalantis.ucrop.UCropImageEngine
 import top.zibin.luban.Luban
@@ -75,11 +92,10 @@ object PictureSelectorUtils {
     const val NUM_STYLE = 2;
     const val CHAT_STYLE = 3;
 
-    private val chooseModeAll = SelectMimeType.ofAll()
-    private val chooseModeImage = SelectMimeType.ofImage()
-    private val chooseModeVideo = SelectMimeType.ofVideo()
-    private val chooseModeAudio = SelectMimeType.ofAudio()
-
+    val chooseModeAll = SelectMimeType.ofAll()
+    val chooseModeImage = SelectMimeType.ofImage()
+    val chooseModeVideo = SelectMimeType.ofVideo()
+    val chooseModeAudio = SelectMimeType.ofAudio()
 
     /**
      * @param multipleSelectionMode  单选or多选   false:单选，true:多选
@@ -227,7 +243,26 @@ object PictureSelectorUtils {
             .isGif(true)  // 是否打开gif
             .setRecordVideoMaxSecond(recordVideoMaxSecond)  // 视频录制最大时长
             .setRecordVideoMinSecond(recordVideoMinSecond)  // 视频录制最小时长
-            .setSelectedData(selectedDataList)  // 选择选定的图片集
+            .setRecordAudioInterceptListener(MeOnRecordAudioInterceptListener()) // 拦截记录音频点击事件，用户可以实现自己的记录音频框架
+//            .setSelectedData(selectedDataList)  // 选择选定的图片集
+            .setSelectedData(setSelectedData(multipleSelectionMode, selectedDataList))  // 选择选定的图片集
+    }
+
+    /**
+     * 选择选定的图片集
+     */
+    private fun setSelectedData(
+        multipleSelectionMode: Boolean,
+        selectedDataList: ArrayList<LocalMedia>?
+    ): ArrayList<LocalMedia> {
+        val dataList: ArrayList<LocalMedia> = arrayListOf()
+        if (multipleSelectionMode) {
+            selectedDataList?.let { dataList.addAll(it) }
+        } else {
+//            dataList.add(selectedDataList[selectedDataList.size - 1])
+            selectedDataList?.last()?.let { dataList.add(it) }
+        }
+        return dataList
     }
 
     /**
@@ -302,6 +337,7 @@ object PictureSelectorUtils {
             .isOriginalControl(openOriginal)  // 是否开启原图功能
             .setRecordVideoMaxSecond(recordVideoMaxSecond)  // 视频录制最大时长
             .setRecordVideoMinSecond(recordVideoMinSecond)  // 视频录制最小时长
+            .setRecordAudioInterceptListener(MeOnRecordAudioInterceptListener()) // 拦截记录音频点击事件，用户可以实现自己的记录音频框架
             .setSelectedData(selectedDataList)  // 选择选定的图片集
     }
 
@@ -891,5 +927,110 @@ object PictureSelectorUtils {
         LogUtils.d(tag = "", msg = "文件时长: " + media.duration)
     }
 
+    /**
+     * 录音回调事件
+     */
+    private class MeOnRecordAudioInterceptListener : OnRecordAudioInterceptListener {
+        override fun onRecordAudio(fragment: Fragment, requestCode: Int) {
+            val recordAudio = arrayOf(Manifest.permission.RECORD_AUDIO)
+            if (PermissionChecker.isCheckSelfPermission(fragment.context, recordAudio)) {
+                startRecordSoundAction(fragment, requestCode)
+            } else {
+                addPermissionDescription(
+                    fragment.requireView() as ViewGroup,
+                    recordAudio
+                )
+                PermissionChecker.getInstance().requestPermissions(
+                    fragment,
+                    arrayOf<String>(Manifest.permission.RECORD_AUDIO),
+                    object : PermissionResultCallback {
+                        override fun onGranted() {
+                            removePermissionDescription(fragment.requireView() as ViewGroup)
+                            startRecordSoundAction(fragment, requestCode)
+                        }
 
+                        override fun onDenied() {
+                            removePermissionDescription(fragment.requireView() as ViewGroup)
+                        }
+                    })
+            }
+        }
+    }
+
+    /**
+     * 启动录音意图
+     */
+    @SuppressLint("QueryPermissionsNeeded")
+    private fun startRecordSoundAction(fragment: Fragment, requestCode: Int) {
+        val recordAudioIntent = Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION)
+        if (recordAudioIntent.resolveActivity(fragment.requireActivity().packageManager) != null) {
+            fragment.startActivityForResult(recordAudioIntent, requestCode)
+        } else {
+            ToastUtils.showToast(fragment.context, "The system is missing a recording component")
+        }
+    }
+
+    private const val TAG_EXPLAIN_VIEW = "TAG_EXPLAIN_VIEW"
+
+    /**
+     * 添加权限说明
+     */
+    private fun addPermissionDescription(
+        viewGroup: ViewGroup,
+        permissionArray: Array<String>
+    ) {
+        val dp10 = DensityUtil.dip2px(viewGroup.context, 10f)
+        val dp15 = DensityUtil.dip2px(viewGroup.context, 15f)
+        val view = MediumBoldTextView(viewGroup.context)
+        view.tag = TAG_EXPLAIN_VIEW
+        view.textSize = 14f
+        view.setTextColor(Color.parseColor("#333333"))
+        view.setPadding(dp10, dp15, dp10, dp15)
+        val title: String
+        val explain: String
+        if (TextUtils.equals(permissionArray[0], PermissionConfig.CAMERA[0])) {
+            title = "相机权限使用说明"
+            explain = "相机权限使用说明\n用户app用于拍照/录视频"
+        } else if (TextUtils.equals(permissionArray[0], Manifest.permission.RECORD_AUDIO)) {
+            title = "录音权限使用说明"
+            explain = "录音权限使用说明\n用户app用于采集声音"
+        } else {
+            title = "存储权限使用说明"
+            explain = "存储权限使用说明\n用户app写入/下载/保存/读取/修改/删除图片、视频、文件等信息"
+        }
+        val startIndex = 0
+        val endOf = startIndex + title.length
+        val builder = SpannableStringBuilder(explain)
+        builder.setSpan(
+            AbsoluteSizeSpan(DensityUtil.dip2px(viewGroup.context, 16f)),
+            startIndex,
+            endOf,
+            Spannable.SPAN_INCLUSIVE_EXCLUSIVE
+        )
+        builder.setSpan(
+            ForegroundColorSpan(-0xcccccd),
+            startIndex,
+            endOf,
+            Spannable.SPAN_INCLUSIVE_EXCLUSIVE
+        )
+        view.text = builder
+        view.background =
+            ContextCompat.getDrawable(viewGroup.context, R.drawable.ps_demo_permission_desc_bg)
+        val layoutParams = RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.MATCH_PARENT,
+            RelativeLayout.LayoutParams.WRAP_CONTENT
+        )
+        layoutParams.topMargin = DensityUtil.getStatusBarHeight(viewGroup.context)
+        layoutParams.leftMargin = dp10
+        layoutParams.rightMargin = dp10
+        viewGroup.addView(view, layoutParams)
+    }
+
+    /**
+     * 移除权限说明
+     */
+    private fun removePermissionDescription(viewGroup: ViewGroup) {
+        val tagExplainView = viewGroup.findViewWithTag<View>(TAG_EXPLAIN_VIEW)
+        viewGroup.removeView(tagExplainView)
+    }
 }

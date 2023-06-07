@@ -30,6 +30,37 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <Switch
+            android:id="@+id/switchMultipleSelectionMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:thumb="@drawable/switch_ios_thumb"
+            android:track="@drawable/switch_ios_track_selector"
+            app:layout_constraintBottom_toBottomOf="@id/tvTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvTitle"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <!--        <com.google.android.material.switchmaterial.SwitchMaterial-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:thumb="@drawable/switch_ios_thumb"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@id/tvTitle"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="@id/tvTitle"-->
+        <!--            app:track="@drawable/switch_ios_track_selector" />-->
+
+
+        <!--        <androidx.appcompat.widget.SwitchCompat-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:thumb="@drawable/switch_ios_thumb"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@id/tvTitle"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="@id/tvTitle"-->
+        <!--            app:track="@drawable/switch_ios_track_selector" />-->
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvGallery"
             android:layout_width="match_parent"
@@ -55,10 +86,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="20dp"
-            android:drawableTop="@drawable/ic_add_image"
             android:drawablePadding="10dp"
             android:padding="10dp"
             android:text="系统相册"
+            app:drawableTopCompat="@drawable/ic_add_image"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnSelectorPicture"
             app:layout_constraintHorizontal_bias="0.5"
@@ -68,11 +99,10 @@
             android:id="@+id/btnSelectorPicture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/ic_add_image"
             android:drawablePadding="10dp"
             android:padding="10dp"
             android:text="自定义相册-蓝色"
-
+            app:drawableTopCompat="@drawable/ic_add_image"
             app:layout_constraintEnd_toStartOf="@+id/btnSelectorPictureWeChat"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btnSelectorPictureSystem"
@@ -82,10 +112,10 @@
             android:id="@+id/btnSelectorPictureWeChat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/ic_add_image"
             android:drawablePadding="10dp"
             android:padding="10dp"
             android:text="自定义相册-WeChat"
+            app:drawableTopCompat="@drawable/ic_add_image"
             app:layout_constraintEnd_toStartOf="@+id/btnOnlyGallery"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btnSelectorPicture"
@@ -95,10 +125,10 @@
             android:id="@+id/btnOnlyGallery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/ic_add_image"
             android:drawablePadding="10dp"
             android:padding="10dp"
             android:text="Gallery模式"
+            app:drawableTopCompat="@drawable/ic_add_image"
             app:layout_constraintEnd_toStartOf="@+id/btnOnlyCamera"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btnSelectorPictureWeChat"
@@ -108,13 +138,26 @@
             android:id="@+id/btnOnlyCamera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/ic_add_image"
             android:drawablePadding="10dp"
             android:padding="10dp"
             android:text="单独拍照"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:drawableTopCompat="@drawable/ic_add_image"
+            app:layout_constraintEnd_toStartOf="@+id/btnCaptureAudio"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btnOnlyGallery"
+            app:layout_constraintTop_toTopOf="@id/btnSelectorPictureSystem" />
+
+        <TextView
+            android:id="@+id/btnCaptureAudio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            android:text="选择音频"
+            app:drawableTopCompat="@drawable/ic_add_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btnOnlyCamera"
             app:layout_constraintTop_toTopOf="@id/btnSelectorPictureSystem" />
 
         <androidx.constraintlayout.widget.Group
