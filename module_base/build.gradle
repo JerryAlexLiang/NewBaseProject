@@ -152,7 +152,25 @@ dependencies {
     // BannerViewPager
     api(CommonDependencies.bannerViewPager)
 
+
 //    // 视频播放器Exoplayer
 //    api(CommonDependencies.exoplayer)
+
+    // Room数据库
+    // apply plugin: 'kotlin-kapt'
+    // implementation "androidx.room:room-runtime:$room_version"
+    // annotationProcessor "androidx.room:room-compiler:$room_version"
+    // kapt "androidx.room:room-compiler:$room_version"  // Kotlin 使用 kapt
+    // ksp "androidx.room:room-compiler:$room_version"   // To use Kotlin Symbol Processing (KSP)
+    // implementation "androidx.room:room-ktx:2.2.5" //Coroutines support for Room 协程操作库
+
+//    implementation 'androidx.room:room-runtime:2.5.0'
+//    implementation 'androidx.room:room-ktx:2.5.0'
+//    kapt 'androidx.room:room-compiler:2.5.0'
+
+    api(Jetpack.roomRuntime)
+    api(Jetpack.roomKtx)
+    kapt(Jetpack.roomCompiler)
+
 
 }

@@ -4,6 +4,7 @@ import com.liang.newbaseproject.koin.appModules
 import com.liang.module_base.base.BaseApp
 import com.liang.module_base.utils.LanguageUtilKt
 import com.liang.newbaseproject.R
+import com.liang.newbaseproject.room.AppRoomDatabase
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext.startKoin
@@ -16,11 +17,22 @@ class MyApp : BaseApp() {
         lateinit var appViewModel: AppViewModel
     }
 
+
+
     override fun onCreate() {
         super.onCreate()
 //        initLanguageAppName()
+        // 将数据库实例化
+        initRoomDataBase()
         initAppViewModel()
         initKoin()
+    }
+
+    /**
+     * 将数据库实例化
+     */
+    private fun initRoomDataBase() {
+
     }
 
     private fun initLanguageAppName() {

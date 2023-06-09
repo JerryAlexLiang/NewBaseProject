@@ -2,6 +2,7 @@ package com.liang.newbaseproject.pictureSelector
 
 import android.content.Context
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.liang.module_base.base.BaseActivity
@@ -21,6 +22,7 @@ import com.luck.picture.lib.interfaces.OnResultCallbackListener
 import com.luck.picture.lib.language.LanguageConfig
 import com.luck.picture.lib.utils.DensityUtil
 import com.yalantis.ucrop.decoration.GridSpacingItemDecoration
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -146,17 +148,25 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
         }
 
         // 预览图片、视频、音频
-//        galleryRvAdapter.setOnItemClickListener { adapter, view, position ->
-        galleryRvAdapter.setOnItemClickListener { _, _, position ->
-            PictureSelectorUtils.openPreview(
-                this@PictureSelectorActivity,
-                uiStyle = PictureSelectorUtils.DEFAULT_STYLE,
-                recyclerview = mBinding.rvGallery,
-                position = position,
-                dataList = pictureSelectorViewModel.gallerySelectedList,
-                isDisplayDelete = true,
-                externalPreviewEventListener = customExternalPreviewEventListener(),
-            )
+        galleryRvAdapter.apply {
+//            setOnItemClickListener { adapter, view, position ->
+            setOnItemClickListener { _, _, position ->
+                PictureSelectorUtils.openPreview(
+                    this@PictureSelectorActivity,
+                    uiStyle = PictureSelectorUtils.DEFAULT_STYLE,
+                    recyclerview = mBinding.rvGallery,
+                    position = position,
+                    dataList = pictureSelectorViewModel.gallerySelectedList,
+                    isDisplayDelete = true,
+                    externalPreviewEventListener = customExternalPreviewEventListener(),
+                )
+            }
+
+            // 添加子 view 的点击事件
+            galleryRvAdapter.addOnItemChildClickListener(R.id.iv_del) { adapter, view, position ->
+                // 删除选中MediaBean，并清除存储数据
+                deleteMediaBean(position)
+            }
         }
     }
 
@@ -169,9 +179,8 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
          * @param position 删除的下标
          */
         override fun onPreviewDelete(position: Int) {
-            pictureSelectorViewModel.gallerySelectedList.removeAt(position)
-            galleryRvAdapter.removeAt(position)
-            galleryRvAdapter.notifyItemRemoved(position)
+            // deleteMediaBean
+            deleteMediaBean(position)
         }
 
         /**
@@ -183,6 +192,20 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
             return false
         }
 
+    }
+
+    /**
+     * 删除选中MediaBean，并清除存储数据
+     */
+    private fun deleteMediaBean(position: Int) {
+        pictureSelectorViewModel.gallerySelectedList.removeAt(position)
+        galleryRvAdapter.removeAt(position)
+        galleryRvAdapter.notifyItemRemoved(position)
+
+        lifecycleScope.launch {
+            LogUtils.d(msg = "=====> ${MoshiUtil.toJson(pictureSelectorViewModel.galleryList[position])}")
+//            pictureSelectorViewModel.deleteMediaBean(mediaBean)
+        }
     }
 
     override fun startObserver() {
@@ -223,8 +246,7 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
 
     }
 
-    //    private fun analyticalSelectResults(result: ArrayList<LocalMedia>) {
-    private fun analyticalSelectResults(result: List<MediaBean>) {
+    private fun analyticalSelectResults(result: MutableList<MediaBean>) {
 
         LogUtils.d(msg = "MediaBeans: ${MoshiUtil.toJson(result)}")
 
@@ -247,22 +269,7 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
 //        }
 
         runOnUiThread {
-            // Coil图片加载
-            val media = result[0]
-//            val path: String = media.availablePath
-            val path: String = media.localMedia.availablePath
-//            mBinding.ivGallery.load(
-//                if (PictureMimeType.isContent(path) && !media.isCut && !media.isCompressed) Uri.parse(
-//                    path
-//                ) else path
-//            ) {
-//                crossfade(true)
-//                placeholder(com.liang.module_base.R.drawable.app_vector_image)
-//                error(com.liang.module_base.R.drawable.app_vector_broken_image)
-//                transformations(CircleCropTransformation())
-//            }
             pictureSelectorViewModel.galleryList = result
-
             galleryRvAdapter.submitList(pictureSelectorViewModel.galleryList)
         }
     }

@@ -14,28 +14,25 @@ import com.liang.newbaseproject.databinding.RvGvFilterImageBinding
 import com.liang.newbaseproject.room.MediaBean
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.config.SelectMimeType
-import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.utils.DateUtils
 
-//class GalleryRvAdapter : BaseQuickAdapter<LocalMedia, DataBindingHolder<RvGvFilterImageBinding>>() {
 class GalleryRvAdapter : BaseQuickAdapter<MediaBean, DataBindingHolder<RvGvFilterImageBinding>>() {
 
     override fun onBindViewHolder(
         holder: DataBindingHolder<RvGvFilterImageBinding>,
         position: Int,
-//        item: LocalMedia?
-        mediaBean: MediaBean?
+        item: MediaBean?
     ) {
-        if (mediaBean == null) return
+        if (item == null) return
 
-        val item = mediaBean.localMedia
+        val localMedia = item.localMedia
 
         // 获取Binding
         val binding = holder.binding
-        val chooseModel = item.chooseModel
-        val path = item.availablePath
-        val duration = item.duration
-        val mimeType = item.mimeType
+        val chooseModel = localMedia.chooseModel
+        val path = localMedia.availablePath
+        val duration = localMedia.duration
+        val mimeType = localMedia.mimeType
 
 //        PictureSelectorUtils.extracted(item)
 
@@ -58,7 +55,7 @@ class GalleryRvAdapter : BaseQuickAdapter<MediaBean, DataBindingHolder<RvGvFilte
                     ivFiv.apply {
                         scaleType = ImageView.ScaleType.CENTER_CROP
                         load(
-                            if (PictureMimeType.isContent(path) && !item.isCut && !item.isCompressed) {
+                            if (PictureMimeType.isContent(path) && !localMedia.isCut && !localMedia.isCompressed) {
                                 Uri.parse(path)
                             } else {
                                 path
@@ -79,7 +76,7 @@ class GalleryRvAdapter : BaseQuickAdapter<MediaBean, DataBindingHolder<RvGvFilte
                 ivFiv.apply {
                     scaleType = ImageView.ScaleType.CENTER_CROP
                     load(
-                        if (PictureMimeType.isContent(path) && !item.isCut && !item.isCompressed) {
+                        if (PictureMimeType.isContent(path) && !localMedia.isCut && !localMedia.isCompressed) {
                             Uri.parse(path)
                         } else {
                             path

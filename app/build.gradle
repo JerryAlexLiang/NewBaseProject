@@ -198,4 +198,6 @@ dependencies {
 //    implementation(CommonDependencies.gson)
 
     implementation project(path: ':module_base')
+
+    kapt(Jetpack.roomCompiler)
 }

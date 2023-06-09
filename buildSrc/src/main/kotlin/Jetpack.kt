@@ -25,6 +25,11 @@ object JetpackVersions {
 
     const val koinVersion = "3.4.0"
 
+    /**
+     * Room
+     */
+    const val roomVersion = "2.5.0"
+
 }
 
 object Jetpack {
@@ -78,4 +83,17 @@ object Jetpack {
 //    const val koinAndroidxFragment =
 //        "org.koin:koin-androidx-fragment:${JetpackVersions.koinVersion}"
 //    const val koinAndroidxExt = "org.koin:koin-androidx-ext:${JetpackVersions.koinVersion}"
+
+    /**
+     * Room数据库
+     * - apply plugin: 'kotlin-kapt'
+     * - implementation "androidx.room:room-runtime:$room_version"
+     * - annotationProcessor "androidx.room:room-compiler:$room_version"
+     * - kapt "androidx.room:room-compiler:$room_version"  // Kotlin 使用 kapt
+     * - ksp "androidx.room:room-compiler:$room_version"   // To use Kotlin Symbol Processing (KSP)
+     * - implementation "androidx.room:room-ktx:2.2.5" //Coroutines support for Room 协程操作库
+     */
+    const val roomRuntime = "androidx.room:room-runtime:${JetpackVersions.roomVersion}"
+    const val roomCompiler = "androidx.room:room-compiler:${JetpackVersions.roomVersion}"
+    const val roomKtx = "androidx.room:room-ktx:${JetpackVersions.roomVersion}"
 }

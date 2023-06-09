@@ -1,5 +1,6 @@
 package com.liang.newbaseproject.koin
 
+import androidx.room.Room
 import com.liang.module_base.http.net.RetrofitManager
 import com.liang.newbaseproject.livedata.WanApiRepositoryKoin
 import com.liang.newbaseproject.livedata.WanApiService
@@ -7,6 +8,8 @@ import com.liang.newbaseproject.main.MainFunRvAdapter
 import com.liang.newbaseproject.main.MainViewModel
 import com.liang.newbaseproject.pictureSelector.GalleryRvAdapter
 import com.liang.newbaseproject.pictureSelector.PictureSelectorViewModel
+import com.liang.newbaseproject.room.AppRoomDatabase
+import com.liang.newbaseproject.room.RoomRepository
 import com.liang.newbaseproject.splash.SplashViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -24,14 +27,35 @@ val netModule = module {
     }
 }
 
+val daoModule = module {
+    // single与factory功能一致，只不过创建的是单例
+    single {
+        Room.databaseBuilder(
+            androidApplication(),
+            AppRoomDatabase::class.java,
+            "app_database"
+        ).build()
+    }
+
+    single {
+        val database = get<AppRoomDatabase>()
+        database.getMediaBeanDao()
+    }
+}
+
 /** 数据仓库 Module */
 val repositoryModule: Module = module {
+    // single与factory功能一致，只不过创建的是单例
     single {
         WanApiRepositoryKoin(get())
     }
 
     single {
         MxnzpApiRepository(get())
+    }
+
+    single {
+        RoomRepository(get())
     }
 }
 
@@ -55,12 +79,13 @@ val viewModelModule: Module = module {
 //    }
 //
     viewModel {
-        PictureSelectorViewModel(androidApplication())
+        PictureSelectorViewModel(androidApplication(), get())
     }
 }
 
 /** 适配器 Module */
 val adapterModule: Module = module {
+    // factory创建注入类的实例
     factory {
         MainFunRvAdapter()
     }
