@@ -47,6 +47,7 @@ import com.luck.picture.lib.engine.CropFileEngine
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnCameraInterceptListener
 import com.luck.picture.lib.interfaces.OnCustomLoadingListener
+import com.luck.picture.lib.interfaces.OnExternalPreviewEventListener
 import com.luck.picture.lib.interfaces.OnGridItemSelectAnimListener
 import com.luck.picture.lib.interfaces.OnKeyValueResultCallbackListener
 import com.luck.picture.lib.interfaces.OnRecordAudioInterceptListener
@@ -256,17 +257,22 @@ object PictureSelectorUtils {
         selectedDataList: ArrayList<LocalMedia>?
     ): ArrayList<LocalMedia> {
         val dataList: ArrayList<LocalMedia> = arrayListOf()
+        dataList.clear()
         if (multipleSelectionMode) {
-            selectedDataList?.let { dataList.addAll(it) }
+            if (selectedDataList != null) {
+                dataList.addAll(selectedDataList)
+            }
         } else {
-//            dataList.add(selectedDataList[selectedDataList.size - 1])
-            selectedDataList?.last()?.let { dataList.add(it) }
+            if (!selectedDataList.isNullOrEmpty()) {
+                dataList.add(selectedDataList.last())
+            }
         }
         return dataList
     }
 
     /**
      * 预览图片、视频、音频
+     * - onExternalPreviewEventListener:外部预览监听事件
      */
     fun openPreview(
         context: Context,
@@ -277,6 +283,8 @@ object PictureSelectorUtils {
         recyclerview: RecyclerView,
         isPreviewFromFragment: Boolean = false,
         position: Int,
+        isDisplayDelete: Boolean = true,
+        externalPreviewEventListener: OnExternalPreviewEventListener? = null,
         dataList: ArrayList<LocalMedia>?
     ) {
         PictureSelector.create(context)
@@ -296,11 +304,12 @@ object PictureSelectorUtils {
             .isUseSystemVideoPlayer(isUseSystemPlayer)
             .setCustomLoadingListener(getCustomLoadingListener())
             .isPreviewZoomEffect(isPreviewZoomEffect, recyclerview) //预览缩放效果模式
+            .setExternalPreviewEventListener(externalPreviewEventListener)
             .apply {
                 if (isPreviewFromFragment) {
-                    startFragmentPreview(position, true, dataList)
+                    startFragmentPreview(position, isDisplayDelete, dataList)
                 } else {
-                    startActivityPreview(position, true, dataList)
+                    startActivityPreview(position, isDisplayDelete, dataList)
                 }
             }
     }
@@ -928,6 +937,19 @@ object PictureSelectorUtils {
     }
 
     /**
+     * 外部预览监听事件
+     */
+    private class MyExternalPreviewEventListener : OnExternalPreviewEventListener {
+        override fun onPreviewDelete(position: Int) {
+
+        }
+
+        override fun onLongPressDownload(context: Context, media: LocalMedia): Boolean {
+            return false
+        }
+    }
+
+    /**
      * 录音回调事件
      */
     private class MeOnRecordAudioInterceptListener : OnRecordAudioInterceptListener {
@@ -1033,4 +1055,5 @@ object PictureSelectorUtils {
         val tagExplainView = viewGroup.findViewWithTag<View>(TAG_EXPLAIN_VIEW)
         viewGroup.removeView(tagExplainView)
     }
+
 }

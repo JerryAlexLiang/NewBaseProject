@@ -11,19 +11,24 @@ import com.liang.module_base.extension.gone
 import com.liang.module_base.extension.visible
 import com.liang.newbaseproject.R
 import com.liang.newbaseproject.databinding.RvGvFilterImageBinding
+import com.liang.newbaseproject.room.MediaBean
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.config.SelectMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.utils.DateUtils
 
-class GalleryRvAdapter : BaseQuickAdapter<LocalMedia, DataBindingHolder<RvGvFilterImageBinding>>() {
+//class GalleryRvAdapter : BaseQuickAdapter<LocalMedia, DataBindingHolder<RvGvFilterImageBinding>>() {
+class GalleryRvAdapter : BaseQuickAdapter<MediaBean, DataBindingHolder<RvGvFilterImageBinding>>() {
 
     override fun onBindViewHolder(
         holder: DataBindingHolder<RvGvFilterImageBinding>,
         position: Int,
-        item: LocalMedia?
+//        item: LocalMedia?
+        mediaBean: MediaBean?
     ) {
-        if (item == null) return
+        if (mediaBean == null) return
+
+        val item = mediaBean.localMedia
 
         // 获取Binding
         val binding = holder.binding

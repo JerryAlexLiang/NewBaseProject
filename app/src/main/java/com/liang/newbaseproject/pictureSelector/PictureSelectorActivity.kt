@@ -1,18 +1,22 @@
 package com.liang.newbaseproject.pictureSelector
 
+import android.content.Context
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.liang.module_base.base.BaseActivity
 import com.liang.module_base.utils.GlideEngineKt
 import com.liang.module_base.utils.LogUtils
+import com.liang.module_base.utils.MoshiUtil
 import com.liang.module_base.utils.PictureSelectorUtils
 import com.liang.module_base.utils.decoration.FullyGridLayoutManagerKt
 import com.liang.newbaseproject.R
 import com.liang.newbaseproject.databinding.ActivityPictureSelectorBinding
+import com.liang.newbaseproject.room.MediaBean
 import com.luck.picture.lib.basic.PictureSelector
 import com.luck.picture.lib.config.SelectMimeType
 import com.luck.picture.lib.entity.LocalMedia
+import com.luck.picture.lib.interfaces.OnExternalPreviewEventListener
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
 import com.luck.picture.lib.language.LanguageConfig
 import com.luck.picture.lib.utils.DensityUtil
@@ -69,7 +73,6 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
     }
 
 
-
     override fun initListener() {
         super.initListener()
         mBinding.apply {
@@ -91,7 +94,7 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
                         this@PictureSelectorActivity,
                         multipleSelectionMode = multipleSelectionMode,
                         uiStyle = PictureSelectorUtils.NUM_STYLE,
-                        selectedDataList = pictureSelectorViewModel.galleryList
+                        selectedDataList = pictureSelectorViewModel.gallerySelectedList
                     )
                     .forResult(pictureSelectorViewModel.onResultCallbackListener())
             }
@@ -104,7 +107,7 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
                     multipleSelectionMode = multipleSelectionMode,
                     isMaxSelectEnabledMask = true,
                     isCustomCameraEvent = true,
-                    selectedDataList = pictureSelectorViewModel.galleryList
+                    selectedDataList = pictureSelectorViewModel.gallerySelectedList
                 )
                     .forResult(pictureSelectorViewModel.onResultCallbackListener())
             }
@@ -115,8 +118,8 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
                         this@PictureSelectorActivity,
                         multipleSelectionMode = multipleSelectionMode,
                         isDisplayCamera = false,
-                        isDirectReturnSingle = true,
-                        selectedDataList = pictureSelectorViewModel.galleryList
+                        isDirectReturnSingle = false,
+                        selectedDataList = pictureSelectorViewModel.gallerySelectedList
                     )
                     .forResult(pictureSelectorViewModel.onResultCallbackListener())
             }
@@ -124,7 +127,7 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
             btnOnlyCamera.setOnClickListener {
                 PictureSelectorUtils.openCamera(
                     this@PictureSelectorActivity,
-                    selectedDataList = pictureSelectorViewModel.galleryList
+                    selectedDataList = pictureSelectorViewModel.gallerySelectedList
                 )
                     .forResult(pictureSelectorViewModel.onResultCallbackListener())
             }
@@ -136,7 +139,7 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
                         chooseMode = PictureSelectorUtils.chooseModeAudio,
                         multipleSelectionMode = multipleSelectionMode,
                         isDisplayCamera = true,
-                        selectedDataList = pictureSelectorViewModel.galleryList
+                        selectedDataList = pictureSelectorViewModel.gallerySelectedList
                     )
                     .forResult(pictureSelectorViewModel.onResultCallbackListener())
             }
@@ -147,11 +150,39 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
         galleryRvAdapter.setOnItemClickListener { _, _, position ->
             PictureSelectorUtils.openPreview(
                 this@PictureSelectorActivity,
+                uiStyle = PictureSelectorUtils.DEFAULT_STYLE,
                 recyclerview = mBinding.rvGallery,
                 position = position,
-                dataList = pictureSelectorViewModel.galleryList
+                dataList = pictureSelectorViewModel.gallerySelectedList,
+                isDisplayDelete = true,
+                externalPreviewEventListener = customExternalPreviewEventListener(),
             )
         }
+    }
+
+    /**
+     * 外部预览监听事件
+     */
+    private fun customExternalPreviewEventListener() = object : OnExternalPreviewEventListener {
+        /**
+         * 删除图片
+         * @param position 删除的下标
+         */
+        override fun onPreviewDelete(position: Int) {
+            pictureSelectorViewModel.gallerySelectedList.removeAt(position)
+            galleryRvAdapter.removeAt(position)
+            galleryRvAdapter.notifyItemRemoved(position)
+        }
+
+        /**
+         * 长按下载
+         * @param media 资源
+         * @return false 自己实现下载逻辑；默认true
+         */
+        override fun onLongPressDownload(context: Context?, media: LocalMedia?): Boolean {
+            return false
+        }
+
     }
 
     override fun startObserver() {
@@ -183,7 +214,7 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
 
     private fun onResultCallbackListener() = object : OnResultCallbackListener<LocalMedia> {
         override fun onResult(result: ArrayList<LocalMedia>) {
-            analyticalSelectResults(result)
+            PictureSelectorUtils.analyticalSelectResults(result)
         }
 
         override fun onCancel() {
@@ -192,53 +223,12 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
 
     }
 
-    private fun analyticalSelectResults(result: ArrayList<LocalMedia>) {
-//        for (media in result) {
-//            if (media.width == 0 || media.height == 0) {
-//                if (PictureMimeType.isHasImage(media.mimeType)) {
-//                    val imageExtraInfo =
-//                        MediaUtils.getImageSize(
-//                            this@PictureSelectorActivity,
-//                            media.path
-//                        )
-//                    media.width = imageExtraInfo.width
-//                    media.height = imageExtraInfo.height
-//                } else if (PictureMimeType.isHasVideo(media.mimeType)) {
-//                    val videoExtraInfo =
-//                        MediaUtils.getVideoSize(
-//                            this@PictureSelectorActivity,
-//                            media.path
-//                        )
-//                    media.width = videoExtraInfo.width
-//                    media.height = videoExtraInfo.height
-//                }
-//            }
-//
-//            LogUtils.d(tag = TAG, msg = "文件名: " + media.fileName)
-//            LogUtils.d(tag = TAG, msg = "是否压缩:" + media.isCompressed)
-//            LogUtils.d(tag = TAG, msg = "压缩:" + media.compressPath)
-//            LogUtils.d(tag = TAG, msg = "初始路径:" + media.path)
-//            LogUtils.d(tag = TAG, msg = "绝对路径:" + media.realPath)
-//            LogUtils.d(tag = TAG, msg = "是否裁剪:" + media.isCut)
-//            LogUtils.d(tag = TAG, msg = "裁剪路径:" + media.cutPath)
-//            LogUtils.d(tag = TAG, msg = "是否开启原图:" + media.isOriginal)
-//            LogUtils.d(tag = TAG, msg = "原图路径:" + media.originalPath)
-//            LogUtils.d(tag = TAG, msg = "沙盒路径:" + media.sandboxPath)
-//            LogUtils.d(tag = TAG, msg = "水印路径:" + media.watermarkPath)
-//            LogUtils.d(tag = TAG, msg = "视频缩略图:" + media.videoThumbnailPath)
-//            LogUtils.d(tag = TAG, msg = "原始宽高: " + media.width + "x" + media.height)
-//            LogUtils.d(
-//                tag = "",
-//                msg = "裁剪宽高: " + media.cropImageWidth + "x" + media.cropImageHeight
-//            )
-//            LogUtils.d(
-//                tag = "",
-//                msg = "文件大小: " + PictureFileUtils.formatAccurateUnitFileSize(media.size)
-//            )
-//            LogUtils.d(tag = "", msg = "文件时长: " + media.duration)
-//        }
+    //    private fun analyticalSelectResults(result: ArrayList<LocalMedia>) {
+    private fun analyticalSelectResults(result: List<MediaBean>) {
 
-        PictureSelectorUtils.analyticalSelectResults(result)
+        LogUtils.d(msg = "MediaBeans: ${MoshiUtil.toJson(result)}")
+
+//        PictureSelectorUtils.analyticalSelectResults(result)
 
 //        lifecycleScope.launch(Dispatchers.Main) {
 //            // Coil图片加载
@@ -259,7 +249,8 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
         runOnUiThread {
             // Coil图片加载
             val media = result[0]
-            val path: String = media.availablePath
+//            val path: String = media.availablePath
+            val path: String = media.localMedia.availablePath
 //            mBinding.ivGallery.load(
 //                if (PictureMimeType.isContent(path) && !media.isCut && !media.isCompressed) Uri.parse(
 //                    path
