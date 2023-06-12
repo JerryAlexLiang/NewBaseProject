@@ -1,5 +1,6 @@
 package com.liang.newbaseproject.room
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -35,9 +36,9 @@ import com.liang.module_base.base.BaseApp
  */
 @Database(
     entities = [MediaBean::class],
-    version = 2,
-//    exportSchema = true, 默认为true
-//    autoMigrations = [AutoMigration(from = 1, to = 2)]
+    version = 3,
+    exportSchema = true, // 默认为true
+    autoMigrations = [AutoMigration(from = 2, to = 3)]
 )
 @TypeConverters(LocalMediaConverter::class)
 abstract class AppRoomDatabase : RoomDatabase() {
@@ -73,7 +74,7 @@ abstract class AppRoomDatabase : RoomDatabase() {
                     AppRoomDatabase::class.java,
                     "app_database"
                 )
-                    .addMigrations(MIGRATION_1_2)
+//                    .addMigrations(MIGRATION_1_2)
                     .build()
                 INSTANCE = instance
 //                return instance

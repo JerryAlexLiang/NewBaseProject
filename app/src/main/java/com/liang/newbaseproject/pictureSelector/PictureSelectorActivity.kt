@@ -203,7 +203,9 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
         lifecycleScope.launch {
             val localMedia = pictureSelectorViewModel.gallerySelectedList[position]
 //            val mediaBean = MediaBean(localMedia.id, localMedia)
-            val mediaBean = MediaBean(localMedia.id, localMedia.fileName, localMedia)
+//            val mediaBean = MediaBean(localMedia.id, localMedia.fileName, localMedia)
+            val mediaBean =
+                MediaBean(localMedia.id, localMedia.fileName, localMedia.dateAddedTime, localMedia)
             pictureSelectorViewModel.deleteMediaBean(mediaBean)
 
             pictureSelectorViewModel.gallerySelectedList.removeAt(position)
@@ -252,7 +254,7 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
 
     private fun analyticalSelectResults(result: MutableList<MediaBean>) {
 
-        LogUtils.d(msg = "MediaBeans: ${MoshiUtil.toJson(result)}")
+        LogUtils.d(msg = "MediaBeans: ${result.size}   ${MoshiUtil.toJson(result)}")
 
 //        PictureSelectorUtils.analyticalSelectResults(result)
 

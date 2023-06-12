@@ -26,7 +26,11 @@ import kotlinx.parcelize.Parcelize
 data class MediaBean(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
+    // 自动升级数据库: 如果需要在表里新增一个字段如test字段，只需要增加一个@ColumnInfo注解，并为其赋一个默认值@ColumnInfo(defaultValue = "0")
+    @ColumnInfo(defaultValue = "")
     val fileName: String = "",
+    @ColumnInfo(defaultValue = "0")
+    val dateAddedTime: Long,
     @ColumnInfo(name = "localMedia")
     val localMedia: LocalMedia
 ) : Parcelable

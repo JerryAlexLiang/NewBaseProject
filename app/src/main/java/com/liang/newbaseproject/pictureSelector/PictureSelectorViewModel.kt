@@ -38,14 +38,16 @@ class PictureSelectorViewModel(
 
     init {
 
-        // 获取本地化存储的MediaBean
-//        viewModelScope.launch(Dispatchers.IO) {
-//            getAllMediaBean()
-//        }
+        // 获取所有列表-way1 获取本地化存储的MediaBean
+        viewModelScope.launch(Dispatchers.IO) {
+            getAllMediaBean()
+        }
 
+        // 取所有列表-way2-通过LiveData观察数据库的变化
 //        getAllMediaBeanByLiveData()
 
-        getAllMediaBeanByFlow()
+        // 取所有列表-way3-通过Flow观察数据库的变化
+//        getAllMediaBeanByFlow()
     }
 
     /**
@@ -60,7 +62,15 @@ class PictureSelectorViewModel(
             val dataList: MutableList<MediaBean> = arrayListOf()
             result.forEach {
 //                dataList.add(MediaBean(id = it.id, localMedia = it))
-                dataList.add(MediaBean(id = it.id, fileName = it.fileName, localMedia = it))
+//                dataList.add(MediaBean(id = it.id, fileName = it.fileName, localMedia = it))
+                dataList.add(
+                    MediaBean(
+                        id = it.id,
+                        fileName = it.fileName,
+                        dateAddedTime = it.dateAddedTime,
+                        localMedia = it
+                    )
+                )
                 _mediaListLiveData.value = dataList
                 // 删除全部本地化存储
                 deleteAllData()
@@ -149,7 +159,8 @@ class PictureSelectorViewModel(
     }
 
     /**
-     * 取所有列表-way2-通过LiveData观察数据库的变化
+     * 取所有列表-way3-通过Flow观察数据库的变化
+     * - Flow通过异步操作（例如网络请求、数据库调用或其他异步代码），一次生成一个值（而不是一次生成所有值）。它的 API 支持协程，因此也可以使用协程来完善 Flow
      */
     fun getAllMediaBeanByFlow() {
         val allMediaBeansFlow = roomRepository.allMediaBeansFlow
