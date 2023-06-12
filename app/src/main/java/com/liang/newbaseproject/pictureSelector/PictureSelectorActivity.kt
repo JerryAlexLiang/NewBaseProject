@@ -50,8 +50,10 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
         return R.layout.activity_picture_selector
     }
 
-    /** 功能列表适配器 */
-    private val galleryRvAdapter by inject<GalleryRvAdapter>()
+    /** 功能列表适配器
+     *  - 通过依赖注入方式获取适配器
+     */
+    private val galleryRvPictureAdapter by inject<GalleryRvPictureAdapter>()
 
     override fun initView(savedInstanceState: Bundle?) {
         mBinding.rvGallery.apply {
@@ -70,7 +72,7 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
                     DensityUtil.dip2px(this@PictureSelectorActivity, 2f), false
                 )
             )
-            adapter = galleryRvAdapter
+            adapter = galleryRvPictureAdapter
         }
     }
 
@@ -148,7 +150,7 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
         }
 
         // 预览图片、视频、音频
-        galleryRvAdapter.apply {
+        galleryRvPictureAdapter.apply {
 //            setOnItemClickListener { adapter, view, position ->
             setOnItemClickListener { _, _, position ->
                 PictureSelectorUtils.openPreview(
@@ -163,7 +165,7 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
             }
 
             // 添加子 view 的点击事件
-            galleryRvAdapter.addOnItemChildClickListener(R.id.iv_del) { adapter, view, position ->
+            galleryRvPictureAdapter.addOnItemChildClickListener(R.id.iv_del) { adapter, view, position ->
                 // 删除选中MediaBean，并清除存储数据
                 deleteMediaBean(position)
             }
@@ -198,13 +200,14 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
      * 删除选中MediaBean，并清除存储数据
      */
     private fun deleteMediaBean(position: Int) {
-        pictureSelectorViewModel.gallerySelectedList.removeAt(position)
-        galleryRvAdapter.removeAt(position)
-        galleryRvAdapter.notifyItemRemoved(position)
-
         lifecycleScope.launch {
-            LogUtils.d(msg = "=====> ${MoshiUtil.toJson(pictureSelectorViewModel.galleryList[position])}")
-//            pictureSelectorViewModel.deleteMediaBean(mediaBean)
+            val localMedia = pictureSelectorViewModel.gallerySelectedList[position]
+            val mediaBean = MediaBean(localMedia.id, localMedia)
+            pictureSelectorViewModel.deleteMediaBean(mediaBean)
+
+            pictureSelectorViewModel.gallerySelectedList.removeAt(position)
+            galleryRvPictureAdapter.removeAt(position)
+            galleryRvPictureAdapter.notifyItemRemoved(position)
         }
     }
 
@@ -252,25 +255,16 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
 
 //        PictureSelectorUtils.analyticalSelectResults(result)
 
-//        lifecycleScope.launch(Dispatchers.Main) {
-//            // Coil图片加载
-//            val media = result[0]
-//            val path: String = media.availablePath
-//            mBinding.ivGallery.load(
-//                if (PictureMimeType.isContent(path) && !media.isCut && !media.isCompressed) Uri.parse(
-//                    path
-//                ) else path
-//            ) {
-//                crossfade(true)
-//                placeholder(R.drawable.app_vector_image)
-//                error(R.drawable.app_vector_broken_image)
-//                transformations(CircleCropTransformation())
-//            }
-//        }
+        lifecycleScope.launch {
+            pictureSelectorViewModel.apply {
+                gallerySelectedList.clear()
+                result.forEach {
+                    gallerySelectedList.add(it.localMedia)
+                }
 
-        runOnUiThread {
-            pictureSelectorViewModel.galleryList = result
-            galleryRvAdapter.submitList(pictureSelectorViewModel.galleryList)
+                galleryList = result
+                galleryRvPictureAdapter.submitList(galleryList)
+            }
         }
     }
 

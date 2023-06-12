@@ -39,13 +39,13 @@ class PictureSelectorViewModel(
     init {
 
         // 获取本地化存储的MediaBean
-        viewModelScope.launch {
-            getAllMediaBean()
-        }
+//        viewModelScope.launch(Dispatchers.IO) {
+//            getAllMediaBean()
+//        }
 
 //        getAllMediaBeanByLiveData()
 
-//        getAllMediaBeanByFlow()
+        getAllMediaBeanByFlow()
     }
 
     /**
@@ -59,8 +59,10 @@ class PictureSelectorViewModel(
 
             val dataList: MutableList<MediaBean> = arrayListOf()
             result.forEach {
-                dataList.add(MediaBean(localMedia = it))
+                dataList.add(MediaBean(id = it.id, localMedia = it))
                 _mediaListLiveData.value = dataList
+                // 删除全部本地化存储
+                deleteAllData()
                 // 本地化存储选择的图片列表
                 saveAllPictures(dataList)
             }
@@ -72,10 +74,20 @@ class PictureSelectorViewModel(
     }
 
     /**
+     * 删除所有数据
+     */
+    private fun deleteAllData() {
+        viewModelScope.launch {
+            deleteAllMediaBean()
+        }
+    }
+
+    /**
      * 保存所有选中图片
      */
     fun saveAllPictures(dataList: MutableList<MediaBean>) {
         viewModelScope.launch(Dispatchers.Default) {
+            //子线程IO处理数据库耗时操作
             insertMediaBeans(dataList)
         }
     }
@@ -118,10 +130,12 @@ class PictureSelectorViewModel(
         val allMediaBean = roomRepository.getAllMediaBean()
 //        if (allMediaBean != null && allMediaBean.size > 0) {
         if (allMediaBean.isNotEmpty()) {
-            _mediaListLiveData.value = allMediaBean
-            gallerySelectedList.clear()
-            allMediaBean.forEach {
-                gallerySelectedList.add(it.localMedia)
+            viewModelScope.launch(Dispatchers.Main) {
+                _mediaListLiveData.value = allMediaBean
+                gallerySelectedList.clear()
+                allMediaBean.forEach {
+                    gallerySelectedList.add(it.localMedia)
+                }
             }
         }
     }
@@ -129,17 +143,15 @@ class PictureSelectorViewModel(
     /**
      * 取所有列表-way2-通过LiveData观察数据库的变化
      */
-//    fun getAllMediaBeanByLiveData() {
-//        val allMediaBeansLiveData = roomRepository.allMediaBeansLiveData
-//        mediaListLiveData = allMediaBeansLiveData
-//    }
+    fun getAllMediaBeanByLiveData() {
+        mediaListLiveData = roomRepository.allMediaBeansLiveData
+    }
 
     /**
      * 取所有列表-way2-通过LiveData观察数据库的变化
      */
     fun getAllMediaBeanByFlow() {
         val allMediaBeansFlow = roomRepository.allMediaBeansFlow
-        val asLiveData = allMediaBeansFlow.asLiveData()
-        _mediaListLiveData.value = asLiveData.value
+        mediaListLiveData = allMediaBeansFlow.asLiveData()
     }
 }

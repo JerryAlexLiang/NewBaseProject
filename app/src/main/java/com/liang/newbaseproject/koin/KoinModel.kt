@@ -1,12 +1,11 @@
 package com.liang.newbaseproject.koin
 
-import androidx.room.Room
 import com.liang.module_base.http.net.RetrofitManager
 import com.liang.newbaseproject.livedata.WanApiRepositoryKoin
 import com.liang.newbaseproject.livedata.WanApiService
 import com.liang.newbaseproject.main.MainFunRvAdapter
 import com.liang.newbaseproject.main.MainViewModel
-import com.liang.newbaseproject.pictureSelector.GalleryRvAdapter
+import com.liang.newbaseproject.pictureSelector.GalleryRvPictureAdapter
 import com.liang.newbaseproject.pictureSelector.PictureSelectorViewModel
 import com.liang.newbaseproject.room.AppRoomDatabase
 import com.liang.newbaseproject.room.RoomRepository
@@ -28,17 +27,22 @@ val netModule = module {
 }
 
 val daoModule = module {
+
     // single与factory功能一致，只不过创建的是单例
     single {
-        Room.databaseBuilder(
-            androidApplication(),
-            AppRoomDatabase::class.java,
-            "app_database"
-        ).build()
+//        Room.databaseBuilder(
+//            androidApplication(),
+//            AppRoomDatabase::class.java,
+//            "app_database"
+//        ).build()
+
+        //初始化Database
+        AppRoomDatabase.getDataBase()
     }
 
     single {
         val database = get<AppRoomDatabase>()
+        // 获取MediaBeanDao数据库操作类
         database.getMediaBeanDao()
     }
 }
@@ -90,6 +94,6 @@ val adapterModule: Module = module {
         MainFunRvAdapter()
     }
     factory {
-        GalleryRvAdapter()
+        GalleryRvPictureAdapter()
     }
 }

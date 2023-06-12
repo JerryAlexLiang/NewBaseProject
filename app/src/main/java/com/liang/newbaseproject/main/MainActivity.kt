@@ -98,7 +98,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun startObserver() {
         super.startObserver()
         mainViewModel.funBeanListLiveData.observe(this) {
-            LogUtils.d(msg = "=============> ${it.size}")
             // 设置数据集合
             mainFunRvAdapter.submitList(it)
         }

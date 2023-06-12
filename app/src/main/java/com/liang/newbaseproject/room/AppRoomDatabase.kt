@@ -1,8 +1,10 @@
 package com.liang.newbaseproject.room
 
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.liang.module_base.base.BaseApp
 
 /**
  * 实现Room数据库（添加Room数据库）
@@ -19,28 +21,30 @@ abstract class AppRoomDatabase : RoomDatabase() {
 
     abstract fun getMediaBeanDao(): MediaBeanDao
 
-//    companion object {
-//        // Singleton防止同时打开多个数据库实例。
-//        @Volatile
-//        private var INSTANCE: AppRoomDatabase? = null
-//
-//        /**
-//         * 6、getDatabase会返回该单例。首次使用时，它会创建数据库，
-//         * - 具体方法是：使用Room的数据库构建器在AppRoomDatabase类的应用上下文中创建RoomDatabase对象，并将其命名为 "app_database"。
-//         */
-//        fun getDataBase(context: Context): AppRoomDatabase {
-//            // if the INSTANCE is not null, then return it,if it is, then create the database
-//            // 如果INSTANCE不为空，则返回它，如果为空，则创建数据库
-//            return INSTANCE ?: synchronized(this) {
-//                val instance = Room.databaseBuilder(
-//                    context.applicationContext,
-//                    AppRoomDatabase::class.java,
-//                    "app_database"
-//                ).build()
-//                INSTANCE = instance
-////                return instance
-//                instance
-//            }
-//        }
-//    }
+    companion object {
+        // Singleton防止同时打开多个数据库实例。
+        @Volatile
+        private var INSTANCE: AppRoomDatabase? = null
+
+        /**
+         * 6、getDatabase会返回该单例。首次使用时，它会创建数据库，
+         *   双重检测锁单例初始化StudentDB
+         * - 具体方法是：使用Room的数据库构建器在AppRoomDatabase类的应用上下文中创建RoomDatabase对象，并将其命名为 "app_database"。
+         */
+        fun getDataBase(): AppRoomDatabase {
+            // if the INSTANCE is not null, then return it,if it is, then create the database
+            // 如果INSTANCE不为空，则返回它，如果为空，则创建数据库
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    BaseApp.appContext,
+                    AppRoomDatabase::class.java,
+                    "app_database"
+                )
+                    .build()
+                INSTANCE = instance
+//                return instance
+                instance
+            }
+        }
+    }
 }

@@ -52,7 +52,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewBaseProject"
         tools:targetApi="31">
-
+        <activity
+            android:name=".pictureSelector.GalleryActivity"
+            android:exported="false" />
         <activity
             android:name=".splash.SplashActivity"
             android:exported="true"
@@ -63,7 +65,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".main.MainActivity"
             android:exported="true" />

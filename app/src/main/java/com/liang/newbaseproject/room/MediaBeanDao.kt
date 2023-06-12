@@ -28,7 +28,7 @@ interface MediaBeanDao {
     /**
      * onConflict = OnConflictStrategy.IGNORE：所选onConflict策略将忽略与列表中的现有Bean完全相同的新Bean.
      */
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMediaBeans(vararg mediaBean: MediaBean)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

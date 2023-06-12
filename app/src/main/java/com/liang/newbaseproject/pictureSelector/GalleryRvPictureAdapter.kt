@@ -16,7 +16,7 @@ import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.config.SelectMimeType
 import com.luck.picture.lib.utils.DateUtils
 
-class GalleryRvAdapter : BaseQuickAdapter<MediaBean, DataBindingHolder<RvGvFilterImageBinding>>() {
+class GalleryRvPictureAdapter : BaseQuickAdapter<MediaBean, DataBindingHolder<RvGvFilterImageBinding>>() {
 
     override fun onBindViewHolder(
         holder: DataBindingHolder<RvGvFilterImageBinding>,

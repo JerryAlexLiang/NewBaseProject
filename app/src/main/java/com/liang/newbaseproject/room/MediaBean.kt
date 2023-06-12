@@ -21,7 +21,7 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "picture_media_table")
 data class MediaBean(
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = 0,
+    val id: Long = 0,
     @ColumnInfo(name = "localMedia")
     val localMedia: LocalMedia
 ) : Parcelable

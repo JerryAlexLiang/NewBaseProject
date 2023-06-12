@@ -20,4 +20,6 @@
     <string name="func_default_text">默认文字</string>
     <string name="exit_application">再按一次退出应用</string>
 
+    <string name="fun_gallery">画廊</string>
+
 </resources>

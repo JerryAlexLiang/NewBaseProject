@@ -21,6 +21,7 @@
     <string name="func_default_text">Default text</string>
     <string name="exit_application">Press again to exit the application</string>
 
+    <string name="fun_gallery">Gallery</string>
 
     <!--    <string name="func_retrofit_get">Test the Retrofit-GET request</string>-->
 </resources>
