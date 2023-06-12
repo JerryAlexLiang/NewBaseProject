@@ -202,7 +202,8 @@ class PictureSelectorActivity : BaseActivity<ActivityPictureSelectorBinding>() {
     private fun deleteMediaBean(position: Int) {
         lifecycleScope.launch {
             val localMedia = pictureSelectorViewModel.gallerySelectedList[position]
-            val mediaBean = MediaBean(localMedia.id, localMedia)
+//            val mediaBean = MediaBean(localMedia.id, localMedia)
+            val mediaBean = MediaBean(localMedia.id, localMedia.fileName, localMedia)
             pictureSelectorViewModel.deleteMediaBean(mediaBean)
 
             pictureSelectorViewModel.gallerySelectedList.removeAt(position)

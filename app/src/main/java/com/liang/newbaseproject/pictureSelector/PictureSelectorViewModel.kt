@@ -59,7 +59,8 @@ class PictureSelectorViewModel(
 
             val dataList: MutableList<MediaBean> = arrayListOf()
             result.forEach {
-                dataList.add(MediaBean(id = it.id, localMedia = it))
+//                dataList.add(MediaBean(id = it.id, localMedia = it))
+                dataList.add(MediaBean(id = it.id, fileName = it.fileName, localMedia = it))
                 _mediaListLiveData.value = dataList
                 // 删除全部本地化存储
                 deleteAllData()
