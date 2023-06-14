@@ -37,6 +37,10 @@ class MainTestViewModel(
     val progressBarLiveData: LiveData<Boolean>
         get() = _progressBarLiveData
 
+//    private val _mirrorLiveData = MutableLiveData<Boolean>()
+//
+//    val mirrorLiveData: LiveData<Boolean> = _mirrorLiveData
+
 //    private val _loginTestLiveData = MutableLiveData<LoginTestResBean>()
 //
 //    val loginTestLiveData: LiveData<LoginTestResBean>

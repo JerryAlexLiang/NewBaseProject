@@ -21,5 +21,7 @@
     <string name="exit_application">再按一次退出应用</string>
 
     <string name="fun_gallery">画廊</string>
+    <string name="multi_select">多选</string>
+    <string name="mirror_x">X镜像</string>
 
 </resources>

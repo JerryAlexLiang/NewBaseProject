@@ -42,7 +42,7 @@ class StatusBarUtil {
          * @param alpha    状态栏透明度
          */
         fun setColor(
-            @NonNull activity: Activity?,
+            activity: Activity?,
             @ColorInt color: Int,
             @IntRange(from = 0, to = 255) alpha: Int
         ) {
@@ -165,6 +165,17 @@ class StatusBarUtil {
                 }
                 window.decorView.systemUiVisibility = systemUiVisibility
             }
+        }
+
+        /**
+         * 左右镜像系统栏
+         */
+        fun setSystemBarMirror(activity: Activity, mirrorUI: Boolean) {
+            val activityWeakReference = WeakReference(activity)
+            val window = activityWeakReference.get()!!.window
+//            window.decorView.scaleX = if (mirrorUI) -1F else 1F
+
+
         }
 
 

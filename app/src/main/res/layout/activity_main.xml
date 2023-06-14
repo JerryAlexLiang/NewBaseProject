@@ -30,11 +30,35 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/tvMirror"
+            app:layout_constraintEnd_toStartOf="@+id/switchMirror"
+            app:layout_constraintTop_toTopOf="@id/tvTitle"
+            app:layout_constraintBottom_toBottomOf="@id/tvTitle"
+            android:text="@string/mirror_x"
+            android:layout_marginEnd="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Switch
+            android:id="@+id/switchMirror"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="10dp"
+            android:checked="false"
+            android:thumb="@drawable/switch_ios_thumb"
+            android:track="@drawable/switch_ios_track_selector"
+            app:layout_constraintBottom_toBottomOf="@id/tvTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvTitle"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
         <ImageView
             android:id="@+id/ivBtnSetting"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:padding="10dp"
+            android:visibility="gone"
             android:src="@drawable/permissionx_ic_setting"
             app:layout_constraintBottom_toBottomOf="@id/tvTitle"
             app:layout_constraintBottom_toTopOf="@id/rvFunction"

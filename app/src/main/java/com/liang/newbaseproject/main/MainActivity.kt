@@ -6,11 +6,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import com.liang.module_base.base.BaseActivity
+import com.liang.module_base.extension.mirrorViewByXForPositive
+import com.liang.module_base.extension.mirrorViewByXForReverse
 import com.liang.module_base.extension.setGridLayoutManager
 import com.liang.module_base.extension.showShortToast
+import com.liang.module_base.extension.showShortToastMirrorX
 import com.liang.module_base.utils.ClickAnimationUtils
 import com.liang.module_base.utils.LanguageUtilKt
-import com.liang.module_base.utils.LogUtils
 import com.liang.module_base.utils.decoration.SpaceItemDecorationKt
 import com.liang.newbaseproject.R
 import com.liang.newbaseproject.databinding.ActivityMainBinding
@@ -30,6 +32,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     /** 功能列表适配器 */
     private val mainFunRvAdapter by inject<MainFunRvAdapter>()
+
+    private var mirrorUI: Boolean = false
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main
@@ -57,8 +61,23 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun initListener() {
         super.initListener()
-        mBinding.ivBtnSetting.setOnClickListener {
-            "Setting".showShortToast()
+        mBinding.apply {
+            ivBtnSetting.setOnClickListener {
+                "Setting".showShortToast()
+            }
+
+            switchMirror.setOnCheckedChangeListener { _, isChecked ->
+                mirrorUI = isChecked
+                // 获取需要翻转的父布局
+                mBinding.root.apply {
+//                    scaleX = (if (isChecked) -1F else 1F)
+                    if (isChecked) {
+                        mirrorViewByXForReverse(this)
+                    } else {
+                        mirrorViewByXForPositive(this)
+                    }
+                }
+            }
         }
 
         mainFunRvAdapter.setOnItemClickListener { adapter, view, position ->
@@ -87,7 +106,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                             LanguageUtilKt.getStrByLanguage(
                                 this@MainActivity,
                                 mainFunBean?.funNameResId ?: R.string.func_default_text
-                            ).showShortToast()
+//                            ).showShortToast()
+                            ).showShortToastMirrorX(mirrorUI)
                         }
                     }
                 }
@@ -110,7 +130,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         if (event.action == KeyEvent.ACTION_DOWN && KeyEvent.KEYCODE_BACK == keyCode) {
             val currentTime = System.currentTimeMillis()
             if (currentTime - touchTime >= waitTime) {
-                getString(R.string.exit_application).showShortToast()
+//                getString(R.string.exit_application).showShortToast()
+                getString(R.string.exit_application).showShortToastMirrorX(mirrorUI)
                 touchTime = currentTime
             } else {
                 finish()

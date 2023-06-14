@@ -30,10 +30,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/tvMirror"
+            app:layout_constraintEnd_toStartOf="@+id/switchMultipleSelectionMode"
+            app:layout_constraintTop_toTopOf="@id/tvTitle"
+            app:layout_constraintBottom_toBottomOf="@id/tvTitle"
+            android:text="@string/multi_select"
+            android:layout_marginEnd="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <Switch
             android:id="@+id/switchMultipleSelectionMode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:checked="true"
             android:thumb="@drawable/switch_ios_thumb"
             android:track="@drawable/switch_ios_track_selector"

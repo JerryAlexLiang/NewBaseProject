@@ -348,3 +348,43 @@ fun setOnClickListener(vararg v: View?, block: View.() -> Unit) {
 fun setOnClickListener(vararg v: View?, listener: View.OnClickListener) {
     v.forEach { it?.setOnClickListener(listener) }
 }
+
+/**
+ * 镜像翻转View
+ */
+fun mirrorView(view: View, mirrorX: Float = 1F, mirrorY: Float = 1F) {
+    view.scaleX = mirrorX
+    view.scaleY = mirrorY
+}
+
+/**
+ * X轴镜像翻转View
+ */
+fun mirrorViewByX(view: View, mirrorX: Float = 1F) {
+    mirrorView(view, mirrorX)
+}
+
+/**
+ * 根据条件设置是否镜像X轴显示View
+ */
+fun mirrorViewByX(view: View, mirrorX: Boolean) {
+    if (mirrorX) {
+        mirrorView(view, mirrorX = -1F)
+    } else {
+        mirrorView(view, mirrorX = 1F)
+    }
+}
+
+/**
+ * X轴正向镜像翻转View
+ */
+fun mirrorViewByXForPositive(view: View) {
+    mirrorView(view, 1F)
+}
+
+/**
+ * X轴反向镜像翻转View
+ */
+fun mirrorViewByXForReverse(view: View) {
+    mirrorView(view, -1F)
+}

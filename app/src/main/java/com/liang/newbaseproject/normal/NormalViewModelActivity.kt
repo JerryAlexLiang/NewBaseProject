@@ -6,6 +6,8 @@ import com.liang.module_base.base.BaseActivity
 import com.liang.module_base.base.BaseApp
 import com.liang.module_base.utils.LogUtils
 import com.liang.module_base.utils.MoshiUtil
+import com.liang.module_base.utils.StatusBarUtil
+import com.liang.module_base.utils.ToastUtil
 import com.liang.newbaseproject.R
 import com.liang.newbaseproject.bean.WanDataBean
 import com.liang.newbaseproject.databinding.ActivityNormalViewModelBinding
@@ -54,6 +56,8 @@ class NormalViewModelActivity : BaseActivity<ActivityNormalViewModelBinding>() {
 
 //    private lateinit var binding: ActivityMainBinding
 
+    private var mirrorUI: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_main)
@@ -90,13 +94,43 @@ class NormalViewModelActivity : BaseActivity<ActivityNormalViewModelBinding>() {
         mBannerViewPager.apply {
             adapter = BannerAdapter()
             registerLifecycleObserver(lifecycle)
-        }.create()
+            setOnPageClickListener { _, position ->
+                val wanDataBean = mBannerViewPager.data[position]
+//                wanDataBean.title.showShortToast()
+                ToastUtil.showShort(
+                    this@NormalViewModelActivity,
+                    wanDataBean.title,
+                    mirrorX = if (mirrorUI) -1F else 1F
+                )
+            }
+            create()
+        }
     }
 
     override fun initListener() {
         super.initListener()
         mBinding.btnGet.setOnClickListener {
             mainTestViewModel.getBanner()
+        }
+
+        //switchMultipleSelectionMode.setOnCheckedChangeListener { buttonView, isChecked ->
+        ////                pictureSelectorViewModel.multipleSelectionMode = isChecked
+        //                multipleSelectionMode = isChecked
+        //            }
+
+        mBinding.switchMirror.setOnCheckedChangeListener { buttonView, isChecked ->
+            mirrorUI = isChecked
+//            if (isChecked) {
+//                // 获取需要翻转的父布局
+//                mBinding.mirrorContainer.scaleY = -1F
+//            } else {
+//                mBinding.mirrorContainer.scaleY = 1F
+//            }
+            // 获取需要翻转的父布局
+            mBinding.mirrorContainer.apply {
+                scaleX = (if (isChecked) -1F else 1F)
+            }
+//            StatusBarUtil.setSystemBarMirror(this, isChecked)
         }
     }
 
