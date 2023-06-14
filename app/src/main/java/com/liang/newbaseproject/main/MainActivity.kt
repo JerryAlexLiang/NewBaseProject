@@ -13,6 +13,7 @@ import com.liang.module_base.extension.showShortToast
 import com.liang.module_base.extension.showShortToastMirrorX
 import com.liang.module_base.utils.ClickAnimationUtils
 import com.liang.module_base.utils.LanguageUtilKt
+import com.liang.module_base.utils.StatusBarUtil
 import com.liang.module_base.utils.decoration.SpaceItemDecorationKt
 import com.liang.newbaseproject.R
 import com.liang.newbaseproject.databinding.ActivityMainBinding

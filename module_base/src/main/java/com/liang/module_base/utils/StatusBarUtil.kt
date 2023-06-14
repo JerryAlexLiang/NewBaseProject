@@ -1,6 +1,7 @@
 package com.liang.module_base.utils
 
 import android.R
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Context
@@ -82,7 +83,7 @@ class StatusBarUtil {
          *
          * @param activity 目标界面
          */
-        fun setTransparentForWindow(@NonNull activity: Activity?) {
+        fun setTransparentForWindow(activity: Activity?) {
             val activityWeakReference = WeakReference(activity)
             val window = activityWeakReference.get()!!.window
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -168,24 +169,13 @@ class StatusBarUtil {
         }
 
         /**
-         * 左右镜像系统栏
-         */
-        fun setSystemBarMirror(activity: Activity, mirrorUI: Boolean) {
-            val activityWeakReference = WeakReference(activity)
-            val window = activityWeakReference.get()!!.window
-//            window.decorView.scaleX = if (mirrorUI) -1F else 1F
-
-
-        }
-
-
-        /**
          * 设置MIUI6+的状态栏的darkMode,darkMode时候字体颜色及icon
          * http://dev.xiaomi.com/doc/p=4769/
          *
          * @param window 目标window
          * @param dark   亮色 or 暗色
          */
+        @SuppressLint("PrivateApi")
         private fun setModeForMIUI6(window: Window, dark: Boolean) {
             val clazz: Class<out Window> = window.javaClass
             try {

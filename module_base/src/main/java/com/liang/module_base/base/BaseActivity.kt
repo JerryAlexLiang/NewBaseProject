@@ -61,8 +61,6 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
             StatusBarUtil.setDarkMode(this)
         }
 
-        StatusBarUtil.setSystemBarMirror(this, true)
-
 //        initViewModel()
         initDataBinding()
 
