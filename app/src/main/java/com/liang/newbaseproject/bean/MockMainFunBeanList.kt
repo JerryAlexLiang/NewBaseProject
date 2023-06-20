@@ -32,6 +32,10 @@ object MockMainFunBeanList {
             R.string.func_choose_image,
             activity = PictureSelectorActivity::class.java
         )
+    private val bean8 =
+        FunItemBean(
+            R.string.func_breathing_plate,
+        )
 
     private var funBeanList: MutableList<FunItemBean> = mutableListOf()
 
@@ -45,6 +49,7 @@ object MockMainFunBeanList {
             add(bean5)
             add(bean6)
             add(bean7)
+            add(bean8)
         }
         return funBeanList
     }

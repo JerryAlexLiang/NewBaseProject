@@ -18,6 +18,8 @@
     <string name="func_typewriter">打字机效果</string>
     <string name="func_choose_image">图片选择器</string>
     <string name="func_default_text">默认文字</string>
+    <string name="func_breathing_plate">息屏</string>
+    <string name="func_brighten_the_screen">亮屏</string>
     <string name="exit_application">再按一次退出应用</string>
 
     <string name="fun_gallery">画廊</string>
