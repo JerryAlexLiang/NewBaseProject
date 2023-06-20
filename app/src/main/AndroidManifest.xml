@@ -27,10 +27,10 @@
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" /> <!-- 适配Android R包可见性 开始 -->
 
-    <!-- 清除屏保需要的权限 -->
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-    <!-- 唤醒屏幕需要的权限 -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+<!--    &lt;!&ndash; 清除屏保需要的权限 &ndash;&gt;-->
+<!--    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />-->
+<!--    &lt;!&ndash; 唤醒屏幕需要的权限 &ndash;&gt;-->
+<!--    <uses-permission android:name="android.permission.WAKE_LOCK" />-->
 
     <queries package="${applicationId}">
         <intent>
@@ -73,18 +73,19 @@
             android:name=".pictureSelector.PictureSelectorActivity"
             android:exported="false" />
 
-        <receiver
-            android:name=".screenlight.ScreenOffAdminReceiver"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:permission="android.permission.BIND_DEVICE_ADMIN">
-            <meta-data
-                android:name="android.app.device_admin"
-                android:resource="@xml/device_admin" />
-            <intent-filter>
-                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
-            </intent-filter>
-        </receiver>
+        <!--        &lt;!&ndash;设备管理器广播接收器&ndash;&gt;-->
+        <!--        <receiver-->
+        <!--            android:name="com.liang.module_base.screenlight.ScreenOffAdminReceiver"-->
+        <!--            android:exported="true"-->
+        <!--            android:label="@string/app_name"-->
+        <!--            android:permission="android.permission.BIND_DEVICE_ADMIN">-->
+        <!--            <meta-data-->
+        <!--                android:name="android.app.device_admin"-->
+        <!--                android:resource="@xml/device_admin" />-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />-->
+        <!--            </intent-filter>-->
+        <!--        </receiver>-->
     </application>
 
 </manifest>

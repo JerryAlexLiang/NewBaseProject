@@ -1,25 +1,37 @@
 package com.liang.module_base.base
 
+import android.app.KeyguardManager
+import android.app.admin.DevicePolicyManager
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.os.PowerManager
 import android.view.View
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.liang.module_base.R
 import com.liang.module_base.extension.getNightMode
 import com.liang.module_base.extension.getResString
 import com.liang.module_base.extension.setNightMode
+import com.liang.module_base.extension.showShortToast
+import com.liang.module_base.screenlight.ScreenOffAdminReceiver
 import com.liang.module_base.utils.ActivityUtil
 import com.liang.module_base.utils.LanguageUtilKt
 import com.liang.module_base.utils.LogUtils
 import com.liang.module_base.utils.StatusBarUtil
 import com.liang.module_base.utils.ToastUtil
 import com.liang.module_base.widget.LoadingDialog
-import com.google.gson.Gson
-import com.liang.module_base.R
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -45,6 +57,11 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
 
 //    lateinit var mViewModel: VM
 
+    private lateinit var adminReceiver: ComponentName
+    private lateinit var mPowerManager: PowerManager
+    private lateinit var policyManager: DevicePolicyManager
+    private var mWakeLock: PowerManager.WakeLock? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         overridePendingTransition(R.anim.scale_enter, R.anim.slide_still)
@@ -60,9 +77,11 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
         } else {
             StatusBarUtil.setDarkMode(this)
         }
-
 //        initViewModel()
         initDataBinding()
+
+        // 检测并去激活设备管理器权限
+        initAdminPermission()
 
         initView(savedInstanceState)
         initData()
@@ -247,5 +266,127 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.slide_still, R.anim.scale_exit)
+    }
+
+    private fun initAdminPermission() {
+        adminReceiver = ComponentName(this, ScreenOffAdminReceiver::class.java)
+        mPowerManager = getSystemService(POWER_SERVICE) as PowerManager
+        policyManager = getSystemService(DEVICE_POLICY_SERVICE) as DevicePolicyManager
+        // 检测并去激活设备管理器权限
+        checkAndTurnOnDeviceManager();
+    }
+
+    /**
+     * 检测并去激活设备管理器权限
+     */
+    fun checkAndTurnOnDeviceManager() {
+        val intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN)
+        intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, adminReceiver)
+        intent.putExtra(
+            DevicePolicyManager.EXTRA_ADD_EXPLANATION,
+            "开启后就可以使用锁屏功能了..."
+        )
+//        startActivityForResult(intent, 0)
+        startActivityLauncher.launch(intent)
+    }
+
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        // 判断超级管理员是否激活
+//        isOpen()
+//    }
+
+    private val startActivityLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                // 判断超级管理员是否激活
+                isOpenAdminPermission()
+            }
+        }
+
+    /**
+     * 判断超级管理员是否激活
+     */
+    private fun isOpenAdminPermission() {
+        if (policyManager.isAdminActive(adminReceiver)) {
+            //判断超级管理员是否激活
+            resources.getString(R.string.device_activated).showShortToast()
+        } else {
+            resources.getString(R.string.device_is_not_activated).showShortToast()
+        }
+    }
+
+    /**
+     * 检测屏幕状态
+     */
+    fun checkScreenOffOrOn() {
+        val pm = getSystemService(POWER_SERVICE) as PowerManager
+        val screenOn = pm.isScreenOn
+        if (!screenOn) { //如果灭屏
+            //相关操作
+            "屏幕是息屏".showShortToast()
+            // 亮屏操作
+            checkScreenOn()
+        } else {
+            "屏幕是亮屏".showShortToast()
+            // 息屏操作
+//            checkScreenOff()
+            // 熄屏并延时亮屏
+            checkScreenOffAndDelayOn()
+        }
+    }
+
+    /**
+     * 亮屏
+     */
+    fun checkScreenOn() {
+        mWakeLock = mPowerManager.newWakeLock(
+            PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP,
+            "tag:WakeLock"
+        )
+        mWakeLock?.acquire(10 * 60 * 1000L /*10 minutes*/)
+        mWakeLock?.release()
+    }
+
+    /**
+     * 熄屏
+     */
+    fun checkScreenOff() {
+        val admin = policyManager.isAdminActive(adminReceiver)
+        if (admin) {
+            screenLockNow()
+        } else {
+            resources.getString(R.string.no_device_management_permission).showShortToast()
+        }
+    }
+
+    /**
+     * 熄屏并延时亮屏
+     */
+    fun checkScreenOffAndDelayOn() {
+        val admin = policyManager.isAdminActive(adminReceiver)
+        if (admin) {
+            screenLockNow()
+            lifecycleScope.launch {
+                delay(5000)
+                checkScreenOn()
+            }
+        } else {
+            resources.getString(R.string.no_device_management_permission).showShortToast()
+        }
+    }
+
+    /**
+     * 息屏API,取消掉设备的屏保
+     */
+    private fun screenLockNow() {
+        // 取消掉设备的屏保
+        val km = getSystemService(KEYGUARD_SERVICE) as KeyguardManager
+        val kl = km.newKeyguardLock("name")
+        kl.disableKeyguard()
+        // 息屏
+        policyManager.lockNow()
     }
 }

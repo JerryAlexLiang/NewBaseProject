@@ -121,4 +121,9 @@
     <string name="ps_select_audio_min_second">选择音频小于%1$d秒</string>
     <string name="ps_select_no_support">不支持的选择类型</string>
 
+    <string name="device_admin_enabled">设备管理器功能可用</string>
+    <string name="device_admin_disabled">设备管理器功能不可用</string>
+    <string name="device_activated">设备已被激活</string>
+    <string name="device_is_not_activated">设备没有被激活</string>
+    <string name="no_device_management_permission">没有设备管理权限</string>
 </resources>
