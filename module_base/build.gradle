@@ -172,5 +172,6 @@ dependencies {
     api(Jetpack.roomKtx)
     kapt(Jetpack.roomCompiler)
 
-
+//    // 今日头条的适配方案
+//    api(CommonDependencies.autoSize)
 }

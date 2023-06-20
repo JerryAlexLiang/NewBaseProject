@@ -13,6 +13,7 @@ import com.liang.module_base.extension.showShortToast
 import com.liang.module_base.extension.showShortToastMirrorX
 import com.liang.module_base.utils.ClickAnimationUtils
 import com.liang.module_base.utils.LanguageUtilKt
+import com.liang.module_base.utils.ToastUtil
 import com.liang.module_base.utils.decoration.SpaceItemDecorationKt
 import com.liang.newbaseproject.R
 import com.liang.newbaseproject.databinding.ActivityMainBinding
@@ -106,11 +107,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                         } else if (funNameResId == R.string.func_breathing_plate) {
                             checkScreenOffOrOn()
                         } else {
-                            LanguageUtilKt.getStrByLanguage(
+                            val strByLanguage = LanguageUtilKt.getStrByLanguage(
                                 this@MainActivity,
                                 mainFunBean?.funNameResId ?: R.string.func_default_text
 //                            ).showShortToast()
-                            ).showShortToastMirrorX(mirrorUI)
+                            )
+//                            LanguageUtilKt.getStrByLanguage(
+//                                this@MainActivity,
+//                                mainFunBean?.funNameResId ?: R.string.func_default_text
+////                            ).showShortToast()
+//                            ).showShortToastMirrorX(mirrorUI)
+
+                            ToastUtil.onShowSuccessRectangleToast(
+                                this@MainActivity,
+                                true,
+                                strByLanguage
+                            )
                         }
                     }
                 }

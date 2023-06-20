@@ -143,6 +143,11 @@ object DepsVersions {
      * - implementation "com.google.android.exoplayer:exoplayer:${2.17.1}"
      */
     const val exoplayer = "2.17.1"
+
+    /**
+     * 今日头条的适配方案
+     */
+    const val autoSize = "1.2.1"
 }
 
 object CommonDependencies {
@@ -359,4 +364,9 @@ object CommonDependencies {
      * implementation "com.google.android.exoplayer:exoplayer:${2.17.1}"
      */
 //    const val exoplayer = "com.google.android.exoplayer:exoplayer:${DepsVersions.exoplayer}"
+
+    /**
+     * 今日头条的适配方案
+     */
+    const val autoSize = "me.jessyan:autosize:${DepsVersions.autoSize}"
 }
