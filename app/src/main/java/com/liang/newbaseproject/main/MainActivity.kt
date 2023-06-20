@@ -9,6 +9,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.PowerManager
 import android.view.KeyEvent
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
 import com.liang.module_base.base.BaseActivity
 import com.liang.module_base.extension.mirrorViewByXForPositive
@@ -72,8 +74,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         adminReceiver = ComponentName(this, ScreenOffAdminReceiver::class.java)
         mPowerManager = getSystemService(POWER_SERVICE) as PowerManager
         policyManager = getSystemService(DEVICE_POLICY_SERVICE) as DevicePolicyManager
+        // 检测并去激活设备管理器权限
         checkAndTurnOnDeviceManager();
-
 
     }
 
@@ -87,18 +89,31 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             DevicePolicyManager.EXTRA_ADD_EXPLANATION,
             "开启后就可以使用锁屏功能了..."
         )
-        startActivityForResult(intent, 0)
+//        startActivityForResult(intent, 0)
+        startActivityLauncher.launch(intent)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        isOpen()
-    }
+
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//         // 判断超级管理员是否激活
+//        isOpen()
+//    }
+
+    private val startActivityLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                // 判断超级管理员是否激活
+                isOpenAdminPermission()
+            }
+        }
 
     /**
      * 判断超级管理员是否激活
      */
-    private fun isOpen() {
+    private fun isOpenAdminPermission() {
         if (policyManager.isAdminActive(adminReceiver)) {
             //判断超级管理员是否激活
             "设备已被激活".showShortToast()
@@ -110,7 +125,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     /**
      * @param view 检测屏幕状态
      */
-    fun checkScreen() {
+    fun checkScreenOffOrOn() {
         val pm = getSystemService(POWER_SERVICE) as PowerManager
         val screenOn = pm.isScreenOn
         if (!screenOn) { //如果灭屏
@@ -122,6 +137,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             "屏幕是亮屏".showShortToast()
             // 息屏操作
 //            checkScreenOff()
+            // 熄屏并延时亮屏
             checkScreenOffAndDelayOn()
         }
     }
@@ -144,7 +160,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     fun checkScreenOff() {
         val admin = policyManager.isAdminActive(adminReceiver)
         if (admin) {
-            ScreenLockNow()
+            screenLockNow()
         } else {
             "没有设备管理权限".showShortToast()
         }
@@ -156,9 +172,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     fun checkScreenOffAndDelayOn() {
         val admin = policyManager.isAdminActive(adminReceiver)
         if (admin) {
-            ScreenLockNow()
+            screenLockNow()
             lifecycleScope.launch {
-                delay(3000)
+                delay(5000)
                 checkScreenOn()
             }
         } else {
@@ -169,7 +185,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     /**
      * 息屏API,取消掉设备的屏保
      */
-    private fun ScreenLockNow() {
+    private fun screenLockNow() {
         // 取消掉设备的屏保
         val km = getSystemService(KEYGUARD_SERVICE) as KeyguardManager
         val kl = km.newKeyguardLock("name")
@@ -226,7 +242,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                             intent.setClass(this@MainActivity, SplashActivity::class.java)
                             startActivity(intent)
                         } else if (funNameResId == R.string.func_breathing_plate) {
-                            checkScreen()
+                            checkScreenOffOrOn()
                         } else {
                             LanguageUtilKt.getStrByLanguage(
                                 this@MainActivity,
