@@ -20,8 +20,11 @@
     <string name="func_choose_image">Picture selector</string>
     <string name="func_default_text">Default text</string>
     <string name="func_breathing_plate">息屏</string>
+
     <string name="func_brighten_the_screen">亮屏</string>
     <string name="exit_application">Press again to exit the application</string>
+
+    <string name="func_rating_bar">StarRatingBar</string>
 
     <string name="fun_gallery">Gallery</string>
     <string name="multi_select">Multiple Choice</string>

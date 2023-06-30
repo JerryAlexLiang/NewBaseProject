@@ -44,4 +44,34 @@
         <attr name="fixHeight" format="boolean" />
     </declare-styleable>
 
+    <!--星级评分控件-->
+    <declare-styleable name="RatingBar">
+        <!--总共最大的星级数，默认为5-->
+        <attr name="srb_numStars" format="integer" />
+        <!--最小星级数，默认为0-->
+        <attr name="srb_minimumStars" format="float" />
+        <!--当前的星级，默认为0-->
+        <attr name="srb_rating" format="float" />
+        <!--星星之间的间距，默认20px-->
+        <attr name="srb_starPadding" format="dimension" />
+        <!--星星为空时的图案，默认R.drawable.srb_ic_empty-->
+        <attr name="srb_drawableEmpty" format="reference" />
+        <!--星星填充时的图案，默认R.drawable.srb_ic_filled-->
+        <attr name="srb_drawableFilled" format="reference" />
+        <!--是否只是指示器，不可以评分？默认false-->
+        <attr name="srb_isIndicator" format="boolean" />
+        <!--是否可以滑动设置评分，默认true-->
+        <attr name="srb_scrollable" format="boolean" />
+        <!--是否可以点击设置评分，默认true-->
+        <attr name="srb_clickable" format="boolean" />
+        <!--重复点击是否可以清空评分，默认true-->
+        <attr name="srb_clearRatingEnabled" format="boolean" />
+        <!--星星的宽度，默认WRAP_CONTENT-->
+        <attr name="srb_starWidth" format="dimension" />
+        <!--星星的高度，默认WRAP_CONTENT-->
+        <attr name="srb_starHeight" format="dimension" />
+        <!--星星的进度单位，默认是1-->
+        <attr name="srb_stepSize" format="float" />
+    </declare-styleable>
+
 </resources>

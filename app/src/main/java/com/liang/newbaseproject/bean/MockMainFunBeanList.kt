@@ -36,6 +36,10 @@ object MockMainFunBeanList {
         FunItemBean(
             R.string.func_breathing_plate,
         )
+    private val bean9 =
+        FunItemBean(
+            R.string.func_rating_bar,
+        )
 
     private var funBeanList: MutableList<FunItemBean> = mutableListOf()
 
@@ -50,6 +54,7 @@ object MockMainFunBeanList {
             add(bean6)
             add(bean7)
             add(bean8)
+            add(bean9)
         }
         return funBeanList
     }
