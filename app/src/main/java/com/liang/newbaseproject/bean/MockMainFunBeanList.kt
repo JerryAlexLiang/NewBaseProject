@@ -53,7 +53,7 @@ object MockMainFunBeanList {
             add(bean5)
             add(bean6)
             add(bean7)
-            add(bean8)
+//            add(bean8)
             add(bean9)
         }
         return funBeanList

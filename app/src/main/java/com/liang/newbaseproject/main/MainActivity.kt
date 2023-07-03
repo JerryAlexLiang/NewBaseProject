@@ -106,7 +106,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                             intent.setClass(this@MainActivity, SplashActivity::class.java)
                             startActivity(intent)
                         } else if (funNameResId == R.string.func_breathing_plate) {
-                            checkScreenOffOrOn()
+//                            checkScreenOffOrOn()
                         } else if (funNameResId == R.string.func_rating_bar) {
                             RatingBarActivity.actionStart(this@MainActivity)
                         } else {

@@ -26,9 +26,9 @@
             app:srb_minimumStars="1"
             app:srb_numStars="5"
             app:srb_rating="1"
-            app:srb_starHeight="90dp"
+            app:srb_starHeight="100dp"
             app:srb_starPadding="20dp"
-            app:srb_starWidth="93dp"
+            app:srb_starWidth="103dp"
             app:srb_stepSize="1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

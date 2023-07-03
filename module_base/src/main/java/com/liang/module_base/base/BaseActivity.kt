@@ -81,7 +81,7 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
         initDataBinding()
 
         // 检测并去激活设备管理器权限
-        initAdminPermission()
+//        initAdminPermission()
 
         initView(savedInstanceState)
         initData()
@@ -321,7 +321,7 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     /**
      * 检测屏幕状态
      */
-    fun checkScreenOffOrOn() {
+    private fun checkScreenOffOrOn() {
         val pm = getSystemService(POWER_SERVICE) as PowerManager
         val screenOn = pm.isScreenOn
         if (!screenOn) { //如果灭屏
