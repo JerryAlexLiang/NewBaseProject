@@ -17,6 +17,7 @@ import com.liang.module_base.utils.ToastUtil
 import com.liang.module_base.utils.decoration.SpaceItemDecorationKt
 import com.liang.newbaseproject.R
 import com.liang.newbaseproject.databinding.ActivityMainBinding
+import com.liang.newbaseproject.koin.KoinActivity
 import com.liang.newbaseproject.ratingBar.RatingBarActivity
 import com.liang.newbaseproject.splash.SplashActivity
 import org.koin.android.ext.android.inject
@@ -109,6 +110,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 //                            checkScreenOffOrOn()
                         } else if (funNameResId == R.string.func_rating_bar) {
                             RatingBarActivity.actionStart(this@MainActivity)
+                        } else if (funNameResId == R.string.func_retrofit_koin) {
+                            KoinActivity.actionStart(this@MainActivity)
                         } else {
                             val strByLanguage = LanguageUtilKt.getStrByLanguage(
                                 this@MainActivity,

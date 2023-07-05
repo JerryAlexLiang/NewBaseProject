@@ -52,6 +52,9 @@
         android:theme="@style/Theme.NewBaseProject"
         tools:targetApi="31">
         <activity
+            android:name=".koin.KoinActivity"
+            android:exported="false" />
+        <activity
             android:name=".ratingBar.RatingBarActivity"
             android:exported="false" />
         <activity

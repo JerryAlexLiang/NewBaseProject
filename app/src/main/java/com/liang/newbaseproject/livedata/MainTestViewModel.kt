@@ -15,13 +15,13 @@ class MainTestViewModel(
     private val wanApiRepository: WanApiRepository,
 ) : BaseViewModel(application) {
 
+    /**
+     * Factory for creating [MainTestViewModel]
+     *
+     * @param arg the repository to pass to [MainTestViewModel]
+     */
     companion object {
-        /**
-         * Factory for creating [MainTestViewModel]
-         *
-         * @param arg the repository to pass to [MainTestViewModel]
-         */
-//        val FACTORY = singleArgViewModelFactory(::WanViewModel)
+        // val FACTORY = singleArgViewModelFactory(::WanViewModel)
         val FACTORY = twoArgViewModelFactory(::MainTestViewModel)
     }
 
