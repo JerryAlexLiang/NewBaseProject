@@ -2,6 +2,8 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    // 发布Maven配置
+    id 'maven-publish'
 }
 
 android {
@@ -175,3 +177,91 @@ dependencies {
 //    // 今日头条的适配方案
 //    api(CommonDependencies.autoSize)
 }
+
+// 发布Maven配置
+// apply plugin: "maven"
+
+//uploadArchives {
+//    repositories.mavenDeployer {
+//        // 唯一标识（通常为模块包名，也可以任意）
+//        pom.groupId = "com.liang.module_base"
+//        //项目名称（通常为类库模块名称，也可以任意）
+//        pom.artifactId = "module_base"
+//        // 版本号
+//        pom.version = "1.0.0"
+//        pom.packaging = "aar"
+//        // 配置本地仓库路径，项目根目录下
+//        repository(url: 'file://D:/CodeSpace/Android/MySpace/Maven')
+//        //github上的仓库
+////        repository(url: "https://raw.githubusercontent.com/zhang106209/MavenDemo/master")
+//    }
+//}
+
+// maven插件在gradel7.0 已删除
+//apply plugin: 'groovy'
+//apply plugin: 'maven-publish'
+
+// or
+// 或者以下写法
+//plugins {
+//    id 'groovy'
+//    id 'maven-publish'
+//}
+
+def versionName = "1.0.0"
+
+def repoUrl = ""
+
+// 因为组件仅在 afterEvaluate 阶段创建，所以必须使用 afterEvaluate() 生命周期方法配置发布。
+afterEvaluate {
+    // 输出一下相关信息
+    println "versionName = " + versionName
+    println "repoUrl = " + repoUrl + "\n"
+
+    publishing {
+        // 配置maven-publishing插件的输出物
+        publications {
+            maven(MavenPublication) {
+                // 唯一标识（通常为模块包名，也可以任意）
+                // 使用方引用 implementation 'com.liang:module_base:1.0.0'
+                groupId = 'com.liang'
+                // 项目名称（通常为类库模块名称，也可以任意）
+                artifactId = 'module_base'
+                version = versionName
+            }
+        }
+        repositories {
+            // 定义一个 maven 仓库
+            maven {
+                // 配置本地仓库路径，项目根目录下
+//                url = uri('file://D:/CodeSpace/Android/MySpace/Maven')
+                url = uri('file://D:/CodeSpace/Android/MySpace/NewBaseProject/Maven')
+            }
+        }
+    }
+}
+
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            // 创建一个名为“release”的Maven发布.
+//            release(MavenPublication) {
+//                // 为发布版本构建变体应用组件。
+//                from components.release
+//                // 然后，可以自定义发布的属性，如下所示。
+//                groupId = 'com.example.MyLibrary'
+//                artifactId = 'final'
+//                version = '1.0'
+//            }
+//            // 创建一个名为“debug”的Maven发布
+//            debug(MavenPublication) {
+//                // 为调试构建变体应用组件。
+//                from components.debug
+//
+//                groupId = 'com.example.MyLibrary'
+//                artifactId = 'final-debug'
+//                version = '1.0'
+//            }
+//        }
+//    }
+//}
