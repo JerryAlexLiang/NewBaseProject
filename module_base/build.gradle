@@ -212,6 +212,11 @@ def versionName = "1.0.0"
 
 def repoUrl = ""
 
+def repository_url() {
+    File file = new File(getRootDir().getAbsolutePath() + File.separator + "maven_repository")
+    return file.toURI().toURL()
+}
+
 // 因为组件仅在 afterEvaluate 阶段创建，所以必须使用 afterEvaluate() 生命周期方法配置发布。
 afterEvaluate {
     // 输出一下相关信息
@@ -235,7 +240,9 @@ afterEvaluate {
             maven {
                 // 配置本地仓库路径，项目根目录下
 //                url = uri('file://D:/CodeSpace/Android/MySpace/Maven')
-                url = uri('file://D:/CodeSpace/Android/MySpace/NewBaseProject/Maven')
+                // AndroidStudio 生成本地库到当前项目目录
+//                url = uri('file://D:/CodeSpace/Android/MySpace/NewBaseProject/Maven')
+                url = uri(repository_url())
             }
         }
     }
