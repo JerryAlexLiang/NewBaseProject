@@ -2,6 +2,7 @@ package com.liang.newbaseproject.normal
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.liang.module_base.base.BaseActivity
 import com.liang.module_base.base.BaseApp
 import com.liang.module_base.utils.LogUtils
@@ -12,6 +13,7 @@ import com.liang.newbaseproject.R
 import com.liang.newbaseproject.bean.WanDataBean
 import com.liang.newbaseproject.databinding.ActivityNormalViewModelBinding
 import com.liang.newbaseproject.livedata.MainTestViewModel
+import com.liang.newbaseproject.livedata.MainTestViewModelFactory
 import com.liang.newbaseproject.livedata.WanApiRepository
 import com.liang.newbaseproject.livedata.WanBaseResBean
 import com.zhpan.bannerview.BannerViewPager
@@ -30,9 +32,9 @@ class NormalViewModelActivity : BaseActivity<ActivityNormalViewModelBinding>() {
     }
 
     // 初始化方法1
-//    private lateinit var mainTestViewModel: MainTestViewModel
+    private lateinit var mainTestViewModel: MainTestViewModel
 
-    //    // 初始化方法2
+//    // 初始化方法2
 //    private val mainTestViewModel: MainTestViewModel by lazy {
 ////        ViewModelProvider(
 ////            this,
@@ -40,38 +42,41 @@ class NormalViewModelActivity : BaseActivity<ActivityNormalViewModelBinding>() {
 ////        )[MainTestViewModel::class.java]
 //        ViewModelProvider(
 //            this,
-//            MainTestViewModel.FACTORY(BaseApp.application, WanApiRepository)
+//            MainTestViewModel.FACTORY(application, WanApiRepository)
 //        )[MainTestViewModel::class.java]
 //    }
 
     // 初始化方法3
-    private val mainTestViewModel: MainTestViewModel by viewModels {
-//        val factory = mainTestViewModelFactory(BaseApp.application, wanApiRepository = WanApiRepository)
-//        mainTestViewModelFactory(BaseApp.application, wanApiRepository = WanApiRepository)
-//        mainTestViewModelFactory(BaseApp.application, WanApiRepository)
-
-        // ViewModelHelpers
-        MainTestViewModel.FACTORY(BaseApp.application, WanApiRepository)
-    }
+//    private val mainTestViewModel: MainTestViewModel by viewModels {
+////        val factory = mainTestViewModelFactory(BaseApp.application, wanApiRepository = WanApiRepository)
+////        mainTestViewModelFactory(BaseApp.application, wanApiRepository = WanApiRepository)
+////        mainTestViewModelFactory(BaseApp.application, WanApiRepository)
+//
+//        // ViewModelHelpers
+//        MainTestViewModel.FACTORY(BaseApp.application, WanApiRepository)
+//    }
 
 //    private lateinit var binding: ActivityMainBinding
 
     private var mirrorUI: Boolean = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun getLayoutId(): Int = R.layout.activity_normal_view_model
+
+    override fun initView(savedInstanceState: Bundle?) {
 //        setContentView(R.layout.activity_main)
 //        binding = ActivityMainBinding.inflate(layoutInflater)
 //        setContentView(binding.root)
 
-//        // 初始化方法1
-//        val factory = mainTestViewModelFactory(wanApiRepository = WanApiRepository)
-//        val mainTestViewModel: MainTestViewModel =
-//            ViewModelProvider(this, factory)[mainTestViewModel::class.java]
+        // 初始化方法1
+//        val factory = MainTestViewModelFactory(application, WanApiRepository)
+//        mainTestViewModel = ViewModelProvider(this, factory)[MainTestViewModel::class.java]
 
-//        val repository = WanApiRepository
-//        mainTestViewModel =
-//            ViewModelProvider(this, MainTestViewModel.FACTORY(repository))[MainTestViewModel::class.java]
+        val repository = WanApiRepository
+        mainTestViewModel =
+            ViewModelProvider(
+                this,
+                MainTestViewModel.FACTORY(application, repository)
+            )[MainTestViewModel::class.java]
 
 //        mBinding.btnLoginTest.setOnClickListener {
 //            val username = "15044856689"
@@ -79,11 +84,7 @@ class NormalViewModelActivity : BaseActivity<ActivityNormalViewModelBinding>() {
 //
 //            mainTestViewModel.loginTest(username, password)
 //        }
-    }
 
-    override fun getLayoutId(): Int = R.layout.activity_normal_view_model
-
-    override fun initView(savedInstanceState: Bundle?) {
         initBannerViewPager()
     }
 

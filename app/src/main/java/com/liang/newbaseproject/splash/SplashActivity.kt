@@ -2,19 +2,23 @@ package com.liang.newbaseproject.splash
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.View
-import android.view.View.OnLongClickListener
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.google.gson.Gson
 import com.liang.module_base.base.BaseActivity
 import com.liang.module_base.extension.gone
 import com.liang.module_base.extension.startTargetActivity
 import com.liang.module_base.extension.visible
+import com.liang.module_base.http.model.DataStatus
 import com.liang.module_base.utils.LogUtils
 import com.liang.module_base.utils.MoshiUtil
 import com.liang.module_base.widget.TypewriterTextView
 import com.liang.newbaseproject.R
 import com.liang.newbaseproject.databinding.ActivitySplashBinding
+import com.liang.newbaseproject.koin.DouyinData
+import com.liang.newbaseproject.koin.MxnzpBaseBean
+import com.liang.newbaseproject.koin.MxnzpViewModel
 import com.liang.newbaseproject.main.MainActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -39,12 +43,16 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(),
 
     private val splashViewModel by viewModel<SplashViewModel>()
 
+    private val mxnzpViewModel: MxnzpViewModel by viewModel()
+
     override fun getLayoutId(): Int {
         return R.layout.activity_splash
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         isShowButton = intent.getBooleanExtra("isShowButton", false)
+        // 使用Koin注解不能实现多个Activity共享ViewModel中的LiveData监听
+        mxnzpViewModel.getMxnzpDouyinList()
     }
 
     override fun initListener() {
@@ -91,6 +99,28 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(),
             }
         }
 
+        mxnzpViewModel.douyinListLiveData.observe(this) {
+            handleResult(it)
+        }
+
+    }
+
+    private fun handleResult(it: MxnzpBaseBean<List<DouyinData>>?) {
+        Log.d(TAG, "initObserve: douyinListLiveData2 dataStatus  + ${it?.dataStatus}")
+        when (it?.dataStatus) {
+            DataStatus.STATE_LOADING -> showLoading()
+            DataStatus.STATE_ERROR -> dismissLoading()
+            DataStatus.STATE_SUCCESS -> {
+                dismissLoading()
+                if (it.code == 200) {
+                    Log.d(TAG, "initObserve: douyinListLiveData2  Success + ${Gson().toJson(it)}")
+                } else {
+                    Log.d(TAG, "initObserve: douyinListLiveData2  + 请求失败：${it.msg}")
+                }
+            }
+
+            null -> {}
+        }
     }
 
     override fun onTypeStart() {

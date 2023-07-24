@@ -77,6 +77,7 @@ val viewModelModule: Module = module {
     viewModel {
         MxnzpViewModel(androidApplication(), get())
     }
+
 //
 //    viewModel {
 //        TestBaseViewModel(androidApplication(), get(), get())
