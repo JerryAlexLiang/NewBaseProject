@@ -2,7 +2,7 @@
 
 ## 用git或gitee搭建私人Maven 如何依赖
 
-### 1、在app.budid中依赖你的云端仓库
+### 1、在项目Project下的budid.gradle/setting.gradle中依赖你的云端仓库
 
 ```
 buildscript {  

@@ -229,7 +229,7 @@ afterEvaluate {
             maven(MavenPublication) {
                 // 唯一标识（通常为模块包名，也可以任意）
                 // 使用方引用 implementation 'com.liang:module_base:1.0.0'
-                groupId = 'com.liang'
+                groupId = 'com.liang.maven_repo'
                 // 项目名称（通常为类库模块名称，也可以任意）
                 artifactId = 'module_base'
                 version = versionName
