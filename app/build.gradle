@@ -16,6 +16,13 @@ plugins {
 
 apply plugin: 'kotlin-android'
 
+//ARouter配置
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+
 android {
     namespace 'com.liang.newbaseproject'
 
@@ -215,6 +222,9 @@ dependencies {
 //    implementation(CommonDependencies.gson)
 
     implementation project(path: ':module_base')
+    implementation project(path: ':module_route')
+    implementation project(path: ':module_picture_selector')
+
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
@@ -223,4 +233,8 @@ dependencies {
 
     // ComposingBuild-使用Plugin中声明的三方库-Room
     kapt(ComposingJetpack.roomCompiler)
+
+    // ARoute路由
+    kapt(ComposingDependencies.aRouterCompiler)
+
 }

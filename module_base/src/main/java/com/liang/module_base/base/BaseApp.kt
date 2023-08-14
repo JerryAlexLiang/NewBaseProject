@@ -7,13 +7,16 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.multidex.MultiDex
 import coil.ComponentRegistry
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.decode.VideoFrameDecoder
+import com.alibaba.android.arouter.launcher.ARouter
 import com.jeremyliao.liveeventbus.LiveEventBus
+import com.liang.module_base.BuildConfig
 import com.liang.module_base.extension.getNightMode
 import com.tencent.mmkv.MMKV
 import kotlin.properties.Delegates
@@ -42,12 +45,32 @@ open class BaseApp : Application(), ViewModelStoreOwner, ImageLoaderFactory {
         mAppViewModelStore = ViewModelStore()
         globalViewModel = getAppViewModelProvider()[GlobalViewModel::class.java]
 
+        MultiDex.install(this)
+
+        //初始化路由SDK
+        initARouter()
+
         // MMKV初始化
         initMMKV()
         // 获取当前的主题
         initDefaultNightMode()
         // 初始化LiveEventBus
         initLiveEventBus()
+    }
+
+    /**
+     * 初始化路由SDK
+     */
+    private fun initARouter() {
+        if (BuildConfig.DEBUG) {
+            // 这两行必须写在init之前，否则这些配置在init过程中将无效
+            // 打印日志
+            ARouter.openLog()
+            // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
+            ARouter.openDebug()
+        }
+        // 尽可能早，推荐在Application中初始化
+        ARouter.init(this)
     }
 
     /**

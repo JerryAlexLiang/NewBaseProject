@@ -66,6 +66,8 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         overridePendingTransition(R.anim.scale_enter, R.anim.slide_still)
 
+        LanguageUtilKt.changeLang(this)
+
         LogUtils.d(tag = TAG_MSG, msg = actionStart)
         LogUtils.d(actionStart, "onChangeLanguage:  init ${LanguageUtilKt.isChinese}")
         mLoadingDialog = LoadingDialog(this)
@@ -89,11 +91,11 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
         startObserver()
     }
 
-    override fun attachBaseContext(newBase: Context?) {
-//        super.attachBaseContext(newBase)
-        val changeLang = LanguageUtilKt.changeLang(newBase)
-        super.attachBaseContext(changeLang)
-    }
+//    override fun attachBaseContext(newBase: Context?) {
+////        super.attachBaseContext(newBase)
+//        val changeLang = LanguageUtilKt.changeLang(newBase)
+//        super.attachBaseContext(changeLang)
+//    }
 
     private fun initDataBinding() {
         mBinding = DataBindingUtil.setContentView(this, getLayoutId())

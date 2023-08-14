@@ -1,0 +1,63 @@
+// 引入ComposingBuild包名
+import com.example.version_plugin.ComposingBuildVersions
+import com.example.version_plugin.ComposingDependencies
+
+plugins {
+    id 'com.android.library'
+    id 'kotlin-kapt'
+    id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android'
+    // ComposingBuild依赖插件
+    id 'version-plugin'
+}
+
+//ARouter配置
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+
+android {
+    namespace 'com.liang.module_route'
+//    compileSdk 33
+    // ComposingBuild-使用Plugin中声明的三方库
+    compileSdk ComposingBuildVersions.compileSdk
+
+    defaultConfig {
+//        minSdk 21
+        minSdk ComposingBuildVersions.minSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    // ARoute路由
+    api(ComposingDependencies.aRouterApi)
+    kapt(ComposingDependencies.aRouterCompiler)
+
+}

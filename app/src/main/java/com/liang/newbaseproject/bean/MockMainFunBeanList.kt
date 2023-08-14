@@ -30,7 +30,7 @@ object MockMainFunBeanList {
     private val bean7 =
         FunItemBean(
             R.string.func_choose_image,
-            activity = PictureSelectorActivity::class.java
+//            activity = PictureSelectorActivity::class.java
         )
     private val bean8 =
         FunItemBean(

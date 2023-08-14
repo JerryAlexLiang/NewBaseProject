@@ -44,3 +44,5 @@ include ':app'
 //include ':versionPlugin'
 //includeBuild("versionPlugin")
 include ':module_base'
+include ':module_picture_selector'
+include ':module_route'

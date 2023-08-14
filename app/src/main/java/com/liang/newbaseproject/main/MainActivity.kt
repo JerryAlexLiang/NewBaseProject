@@ -15,6 +15,7 @@ import com.liang.module_base.utils.ClickAnimationUtils
 import com.liang.module_base.utils.LanguageUtilKt
 import com.liang.module_base.utils.ToastUtil
 import com.liang.module_base.utils.decoration.SpaceItemDecorationKt
+import com.liang.module_route.impl.PictureSelectorServiceProvider
 import com.liang.newbaseproject.R
 import com.liang.newbaseproject.databinding.ActivityMainBinding
 import com.liang.newbaseproject.koin.KoinActivity
@@ -95,6 +96,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                         if (funNameResId == R.string.func_day_night) {
                             // 切换暗黑模式
                             changeDayNightMode()
+                        } else if (funNameResId == R.string.func_choose_image) {
+                            PictureSelectorServiceProvider.startPictureSelectorActivity(this@MainActivity)
                         } else if (funNameResId == R.string.func_change_language) {
                             if (LanguageUtilKt.isChinese) {
                                 changeLanguage(false)

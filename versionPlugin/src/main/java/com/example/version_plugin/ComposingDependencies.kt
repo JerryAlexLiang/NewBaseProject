@@ -151,6 +151,11 @@ object DepsVersions {
      */
     const val autoSize = "1.2.1"
 
+    /**
+     * multidex
+     */
+    const val multidex = "2.0.1"
+
 }
 
 object ComposingDependencies {
@@ -372,4 +377,9 @@ object ComposingDependencies {
      * 今日头条的适配方案
      */
     const val autoSize = "me.jessyan:autosize:${DepsVersions.autoSize}"
+
+    /**
+     * multidex
+     */
+    const val multidex = "androidx.multidex:multidex:${DepsVersions.multidex}"
 }

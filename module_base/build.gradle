@@ -15,6 +15,13 @@ plugins {
     id 'version-plugin'
 }
 
+//ARouter配置
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+
 android {
     namespace 'com.liang.module_base'
 //    compileSdk 33
@@ -323,6 +330,11 @@ dependencies {
 
 //    // 今日头条的适配方案
 //    api(ComposingDependencies.autoSize)
+
+    // ARoute路由
+    api(ComposingDependencies.aRouterApi)
+
+    api(ComposingDependencies.multidex)
 
     /////////////////////////////ComposingBuild-使用Plugin中声明的三方库-end////////////////////////////////////////
 
