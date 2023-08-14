@@ -2,7 +2,7 @@ package com.example.version_plugin
 
 object ComposingBuildVersions {
 
-    const val applicationId = "com.example.coroutinedemo"
+    const val applicationId = "com.liang.newbaseproject"
     const val compileSdk = 33
     const val minSdk = 21
     const val targetSdk = 33

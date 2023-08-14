@@ -1,4 +1,8 @@
 pluginManagement {
+    // Composing builds 统一版本依赖
+    // 为了规范，把它注册在pluginManagement里
+    includeBuild("versionPlugin")
+
     repositories {
 //        google()
 //        mavenCentral()
@@ -36,4 +40,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "NewBaseProject"
 include ':app'
+// Composing builds 统一版本依赖
+//include ':versionPlugin'
+//includeBuild("versionPlugin")
 include ':module_base'

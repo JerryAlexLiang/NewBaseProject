@@ -12,7 +12,9 @@
 ```
 buildscript {  
  repositories {  
- 	maven{url 'https://gitee.com/haochen12/HowzitsMaven/raw/master'}  
+ 	// module_base library
+   // git/gitee仓库地址/仓库名称/raw/分支
+   maven { url 'https://gitee.com/JerryAlexLiang/NewBaseProject/raw/master/maven_repository/' }
  }
 
 ```
@@ -22,11 +24,15 @@ buildscript {
 ### 2、在需要依赖maven_repo的module的build.gradle 中依赖
 
 ```
-   implementation 'com.howzits.autopermit:autopermit:0.0.1-SNAPSHOT'
+   // module_base library
+   // 由groupId : artifactId : version组成
+   implementation 'com.liang.maven_repo:module_base:1.0.0'
 ```
 
-> 由groupId+artifactId+version组成。
-> 【com.howzits.autopermit】:【autopermit】:【0.0.1-SNAPSHOT】
+> 由groupId : artifactId : version组成。
+
+
+### 至此Gitee/GitHub 创建私人Android studio库的 Maven 仓库已经完成。但是测试时发现如果Gitee/GitHub 创建是私有库，按如上配置无法成功下载test库，所以目前只能支持公开库才能下载
 
 
 

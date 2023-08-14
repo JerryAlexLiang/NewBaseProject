@@ -1,22 +1,39 @@
+// 引入ComposingBuild包名
+import com.example.version_plugin.ComposingAndroidX
+import com.example.version_plugin.ComposingBuildVersions
+import com.example.version_plugin.ComposingDependencies
+import com.example.version_plugin.ComposingJetpack
+
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    // 发布Maven配置
-    id 'maven-publish'
+//    // 发布Maven配置
+//    id 'maven-publish'
+
+    // ComposingBuild依赖插件
+    id 'version-plugin'
 }
 
 android {
     namespace 'com.liang.module_base'
 //    compileSdk 33
-    compileSdk BuildVersions.compileSdk
+    // 使用buildSrc统一版本依赖
+//    compileSdk BuildVersions.compileSdk
+
+    // ComposingBuild-使用Plugin中声明的三方库
+    compileSdk ComposingBuildVersions.compileSdk
 
     defaultConfig {
 //        minSdk 21
 //        targetSdk 33
 
-        minSdk BuildVersions.minSdk
-        targetSdk BuildVersions.targetSdk
+//        minSdk BuildVersions.minSdk
+//        targetSdk BuildVersions.targetSdk
+
+        // ComposingBuild-使用Plugin中声明的三方库
+        minSdk ComposingBuildVersions.minSdk
+        targetSdk ComposingBuildVersions.targetSdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -53,34 +70,163 @@ dependencies {
 //    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
 //    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
-    /////////////////////////////使用buildSrc统一版本依赖////////////////////////////////////////
+//    /////////////////////////////使用buildSrc统一版本依赖-start////////////////////////////////////////
+//
+//    // ----------- Android-------------
+//    api(AndroidX.coreKtx)
+//    api(AndroidX.appcompat)
+//    api(AndroidX.material)
+//    api(AndroidX.constraintLayout)
+//    api(AndroidX.junit)
+//    api(AndroidX.junitExt)
+//    api(AndroidX.espresso)
+//
+//    //----------- Jetpack----------------
+//    // ViewModelScope
+//    api(Jetpack.viewModelKtx)
+//    // LifecycleScope提供协程作用域的，同样必不可少
+//    api(Jetpack.lifecycleScope)
+//    // lifeCycle.repeatOnLifecycle()
+//    api(Jetpack.lifecycleRuntimeCompose)
+//    // liveData
+//    api(Jetpack.liveDataKtx)
+//    // ktx的扩展库，这些倒不是必须的，但是能帮忙我们简化不少代码的书写
+//    api(Jetpack.activityKtx)
+//    api(Jetpack.fragmentKtx)
+//    // 协程库，因为Flow是构建在Kotlin协程基础之上的，因此协程依赖库必不可少
+//    api(Jetpack.coroutinesCore)
+//    api(Jetpack.coroutinesAndroid)
+//    // UnPeek-LiveData解决数据倒灌
+//    api(Jetpack.unPeekLiveData)
+//
+//    //---------------Koin依赖注入------------------
+////    // Koin for Kotlin
+////    api(Jetpack.koinCore)
+////    api(Jetpack.koinCoreExt)
+////    // Koin for AndroidX
+////    api(Jetpack.koinAndroidxScope)
+////    api(Jetpack.koinAndroidxViewModel)
+////    api(Jetpack.koinAndroidxFragment)
+////    api(Jetpack.koinAndroidxExt)
+//
+//    api(Jetpack.koinCore)
+//    api(Jetpack.koinAndroid)
+//
+//    //---------------网络相关------------------
+//    api(CommonDependencies.retrofit)
+//    api(CommonDependencies.gson)
+//    api(CommonDependencies.converterGson)
+//    // Moshi
+//    api(CommonDependencies.moshi)
+//    api(CommonDependencies.moshi_kt)
+//    api(CommonDependencies.converterMoshi)
+//
+//    api(CommonDependencies.loggingInterceptor)
+//    api(CommonDependencies.persistentCookieJar)
+//
+//    //---------------UI相关------------------
+//
+//    // 加载反馈页管理框架 https://github.com/KingJA/LoadSir
+//    api(CommonDependencies.loadSir)
+//
+//    // 腾讯MMKV 基于 mmap 的高性能通用 key-value 组件
+//    api(CommonDependencies.mmkv)
+//
+//    //---------------图片相关------------------
+//    // Glide
+//    api(CommonDependencies.glide)
+//    // Coil
+//    api(CommonDependencies.coil)
+//    api(CommonDependencies.coil_base)
+//    api(CommonDependencies.coil_gif)
+//    api(CommonDependencies.coil_svg)
+//    api(CommonDependencies.coil_video)
+//
+//    //---------------UI相关-------------
+//    api(CommonDependencies.recyclerview)
+//    api(CommonDependencies.cardView)
+//    api(CommonDependencies.baseQuickAdapter)
+//    api(CommonDependencies.swipeRefreshLayout)
+//    api(CommonDependencies.flexbox)
+//
+//    // material风格功能强大的Dialog
+//    api(CommonDependencies.materialDialogsCore)
+//    api(CommonDependencies.materialDialogsLifecycle)
+//    api(CommonDependencies.materialDialogsbottomsheets)
+//
+//    // 工具类
+//    api(CommonDependencies.utilCodex)
+//
+//    // LiveEventBus
+//    api(CommonDependencies.liveEventBus)
+//    api(CommonDependencies.lebxProcessorGson)
+//
+//    //权限请求 com.permissionx.guolindev
+//    api(CommonDependencies.permissionX)
+//
+//    // PictureSelector https://github.com/LuckSiege/PictureSelector
+//    api(CommonDependencies.pictureSelectorBasic)
+//    api(CommonDependencies.pictureSelectorCompress)
+//    api(CommonDependencies.pictureSelectorUCrop)
+//    api(CommonDependencies.pictureSelectorCameraX)
+//
+//    // BannerViewPager
+//    api(CommonDependencies.bannerViewPager)
+//
+//
+////    // 视频播放器Exoplayer
+////    api(CommonDependencies.exoplayer)
+//
+//    // Room数据库
+//    // apply plugin: 'kotlin-kapt'
+//    // implementation "androidx.room:room-runtime:$room_version"
+//    // annotationProcessor "androidx.room:room-compiler:$room_version"
+//    // kapt "androidx.room:room-compiler:$room_version"  // Kotlin 使用 kapt
+//    // ksp "androidx.room:room-compiler:$room_version"   // To use Kotlin Symbol Processing (KSP)
+//    // implementation "androidx.room:room-ktx:2.2.5" //Coroutines support for Room 协程操作库
+//
+////    implementation 'androidx.room:room-runtime:2.5.0'
+////    implementation 'androidx.room:room-ktx:2.5.0'
+////    kapt 'androidx.room:room-compiler:2.5.0'
+//
+//    api(Jetpack.roomRuntime)
+//    api(Jetpack.roomKtx)
+//    kapt(Jetpack.roomCompiler)
+//
+////    // 今日头条的适配方案
+////    api(CommonDependencies.autoSize)
+//
+//    /////////////////////////////使用buildSrc统一版本依赖-end////////////////////////////////////////
+
+
+    /////////////////////////////ComposingBuild-使用Plugin中声明的三方库-start////////////////////////////////////////
 
     // ----------- Android-------------
-    api(AndroidX.coreKtx)
-    api(AndroidX.appcompat)
-    api(AndroidX.material)
-    api(AndroidX.constraintLayout)
-    api(AndroidX.junit)
-    api(AndroidX.junitExt)
-    api(AndroidX.espresso)
+    api(ComposingAndroidX.coreKtx)
+    api(ComposingAndroidX.appcompat)
+    api(ComposingAndroidX.material)
+    api(ComposingAndroidX.constraintLayout)
+    api(ComposingAndroidX.junit)
+    api(ComposingAndroidX.junitExt)
+    api(ComposingAndroidX.espresso)
 
-    //    //----------- Jetpack----------------
+    //----------- Jetpack----------------
     // ViewModelScope
-    api(Jetpack.viewModelKtx)
+    api(ComposingJetpack.viewModelKtx)
     // LifecycleScope提供协程作用域的，同样必不可少
-    api(Jetpack.lifecycleScope)
+    api(ComposingJetpack.lifecycleScope)
     // lifeCycle.repeatOnLifecycle()
-    api(Jetpack.lifecycleRuntimeCompose)
+    api(ComposingJetpack.lifecycleRuntimeCompose)
     // liveData
-    api(Jetpack.liveDataKtx)
+    api(ComposingJetpack.liveDataKtx)
     // ktx的扩展库，这些倒不是必须的，但是能帮忙我们简化不少代码的书写
-    api(Jetpack.activityKtx)
-    api(Jetpack.fragmentKtx)
+    api(ComposingJetpack.activityKtx)
+    api(ComposingJetpack.fragmentKtx)
     // 协程库，因为Flow是构建在Kotlin协程基础之上的，因此协程依赖库必不可少
-    api(Jetpack.coroutinesCore)
-    api(Jetpack.coroutinesAndroid)
+    api(ComposingJetpack.coroutinesCore)
+    api(ComposingJetpack.coroutinesAndroid)
     // UnPeek-LiveData解决数据倒灌
-    api(Jetpack.unPeekLiveData)
+    api(ComposingJetpack.unPeekLiveData)
 
     //---------------Koin依赖注入------------------
 //    // Koin for Kotlin
@@ -92,71 +238,72 @@ dependencies {
 //    api(Jetpack.koinAndroidxFragment)
 //    api(Jetpack.koinAndroidxExt)
 
-    api(Jetpack.koinCore)
-    api(Jetpack.koinAndroid)
+    api(ComposingJetpack.koinCore)
+    api(ComposingJetpack.koinAndroid)
 
     //---------------网络相关------------------
-    api(CommonDependencies.retrofit)
-    api(CommonDependencies.gson)
-    api(CommonDependencies.converterGson)
+    api(ComposingDependencies.retrofit)
+    api(ComposingDependencies.gson)
+    api(ComposingDependencies.converterGson)
     // Moshi
-    api(CommonDependencies.moshi)
-    api(CommonDependencies.moshi_kt)
-    api(CommonDependencies.converterMoshi)
+    api(ComposingDependencies.moshi)
+    api(ComposingDependencies.moshi_kt)
+    api(ComposingDependencies.converterMoshi)
 
-    api(CommonDependencies.loggingInterceptor)
-    api(CommonDependencies.persistentCookieJar)
+    api(ComposingDependencies.loggingInterceptor)
+    api(ComposingDependencies.persistentCookieJar)
+
+    //---------------UI相关------------------
 
     // 加载反馈页管理框架 https://github.com/KingJA/LoadSir
-    api(CommonDependencies.loadSir)
+    api(ComposingDependencies.loadSir)
 
     // 腾讯MMKV 基于 mmap 的高性能通用 key-value 组件
-    api(CommonDependencies.mmkv)
+    api(ComposingDependencies.mmkv)
 
     //---------------图片相关------------------
     // Glide
-    api(CommonDependencies.glide)
+    api(ComposingDependencies.glide)
     // Coil
-    api(CommonDependencies.coil)
-    api(CommonDependencies.coil_base)
-    api(CommonDependencies.coil_gif)
-    api(CommonDependencies.coil_svg)
-    api(CommonDependencies.coil_video)
+    api(ComposingDependencies.coil)
+    api(ComposingDependencies.coil_base)
+    api(ComposingDependencies.coil_gif)
+    api(ComposingDependencies.coil_svg)
+    api(ComposingDependencies.coil_video)
 
     //---------------UI相关-------------
-    api(CommonDependencies.recyclerview)
-    api(CommonDependencies.cardView)
-    api(CommonDependencies.baseQuickAdapter)
-    api(CommonDependencies.swipeRefreshLayout)
-    api(CommonDependencies.flexbox)
+    api(ComposingDependencies.recyclerview)
+    api(ComposingDependencies.cardView)
+    api(ComposingDependencies.baseQuickAdapter)
+    api(ComposingDependencies.swipeRefreshLayout)
+    api(ComposingDependencies.flexbox)
 
     // material风格功能强大的Dialog
-    api(CommonDependencies.materialDialogsCore)
-    api(CommonDependencies.materialDialogsLifecycle)
-    api(CommonDependencies.materialDialogsbottomsheets)
+    api(ComposingDependencies.materialDialogsCore)
+    api(ComposingDependencies.materialDialogsLifecycle)
+    api(ComposingDependencies.materialDialogsbottomsheets)
 
     // 工具类
-    api(CommonDependencies.utilCodex)
+    api(ComposingDependencies.utilCodex)
 
     // LiveEventBus
-    api(CommonDependencies.liveEventBus)
-    api(CommonDependencies.lebxProcessorGson)
+    api(ComposingDependencies.liveEventBus)
+    api(ComposingDependencies.lebxProcessorGson)
 
     //权限请求 com.permissionx.guolindev
-    api(CommonDependencies.permissionX)
+    api(ComposingDependencies.permissionX)
 
     // PictureSelector https://github.com/LuckSiege/PictureSelector
-    api(CommonDependencies.pictureSelectorBasic)
-    api(CommonDependencies.pictureSelectorCompress)
-    api(CommonDependencies.pictureSelectorUCrop)
-    api(CommonDependencies.pictureSelectorCameraX)
+    api(ComposingDependencies.pictureSelectorBasic)
+    api(ComposingDependencies.pictureSelectorCompress)
+    api(ComposingDependencies.pictureSelectorUCrop)
+    api(ComposingDependencies.pictureSelectorCameraX)
 
     // BannerViewPager
-    api(CommonDependencies.bannerViewPager)
+    api(ComposingDependencies.bannerViewPager)
 
-
-//    // 视频播放器Exoplayer
-//    api(CommonDependencies.exoplayer)
+    //    // 视频播放器Exoplayer
+//    api(ComposingDependencies.exoplayer)
 
     // Room数据库
     // apply plugin: 'kotlin-kapt'
@@ -170,12 +317,16 @@ dependencies {
 //    implementation 'androidx.room:room-ktx:2.5.0'
 //    kapt 'androidx.room:room-compiler:2.5.0'
 
-    api(Jetpack.roomRuntime)
-    api(Jetpack.roomKtx)
-    kapt(Jetpack.roomCompiler)
+    api(ComposingJetpack.roomRuntime)
+    api(ComposingJetpack.roomKtx)
+    kapt(ComposingJetpack.roomCompiler)
 
 //    // 今日头条的适配方案
-//    api(CommonDependencies.autoSize)
+//    api(ComposingDependencies.autoSize)
+
+    /////////////////////////////ComposingBuild-使用Plugin中声明的三方库-end////////////////////////////////////////
+
+
 }
 
 // 发布Maven配置
@@ -208,45 +359,46 @@ dependencies {
 //    id 'maven-publish'
 //}
 
-def versionName = "1.0.0"
-
-def repoUrl = ""
-
-def repository_url() {
-    File file = new File(getRootDir().getAbsolutePath() + File.separator + "maven_repository")
-    return file.toURI().toURL()
-}
-
-// 因为组件仅在 afterEvaluate 阶段创建，所以必须使用 afterEvaluate() 生命周期方法配置发布。
-afterEvaluate {
-    // 输出一下相关信息
-    println "versionName = " + versionName
-    println "repoUrl = " + repoUrl + "\n"
-
-    publishing {
-        // 配置maven-publishing插件的输出物
-        publications {
-            maven(MavenPublication) {
-                // 唯一标识（通常为模块包名，也可以任意）
-                // 使用方引用 implementation 'com.liang:module_base:1.0.0'
-                groupId = 'com.liang.maven_repo'
-                // 项目名称（通常为类库模块名称，也可以任意）
-                artifactId = 'module_base'
-                version = versionName
-            }
-        }
-        repositories {
-            // 定义一个 maven 仓库
-            maven {
-                // 配置本地仓库路径，项目根目录下
-//                url = uri('file://D:/CodeSpace/Android/MySpace/Maven')
-                // AndroidStudio 生成本地库到当前项目目录
-//                url = uri('file://D:/CodeSpace/Android/MySpace/NewBaseProject/Maven')
-                url = uri(repository_url())
-            }
-        }
-    }
-}
+//def versionName = "1.0.0"
+//
+//def repoUrl = ""
+//
+//def repository_url() {
+//    File file = new File(getRootDir().getAbsolutePath() + File.separator + "maven_repository")
+//    return file.toURI().toURL()
+//}
+//
+//// 因为组件仅在 afterEvaluate 阶段创建，所以必须使用 afterEvaluate() 生命周期方法配置发布。
+//afterEvaluate {
+//    // 输出一下相关信息
+//    println "versionName = " + versionName
+//    println "repoUrl = " + repoUrl + "\n"
+//
+//    publishing {
+//        // 配置maven-publishing插件的输出物
+//        publications {
+//            maven(MavenPublication) {
+//                // 唯一标识（通常为模块包名，也可以任意）
+//                // 使用方引用 implementation 'com.liang:module_base:1.0.0'
+//                groupId = 'com.liang.maven_repo'
+//                // 项目名称（通常为类库模块名称，也可以任意）
+//                artifactId = 'module_base'
+//                version = versionName
+//            }
+//        }
+//        repositories {
+//            // 定义一个 maven 仓库
+//            maven {
+//                // 配置本地仓库路径，项目根目录下
+////                url = uri('file://D:/CodeSpace/Android/MySpace/Maven')
+//                // AndroidStudio 生成本地库到当前项目目录
+////                url = uri('file://D:/CodeSpace/Android/MySpace/NewBaseProject/Maven')
+//                url = uri(repository_url())
+//
+//            }
+//        }
+//    }
+//}
 
 //afterEvaluate {
 //    publishing {

@@ -1,8 +1,8 @@
-//// 引入ComposingBuild包名
-//import com.example.version_plugin.ComposingAndroidX
-//import com.example.version_plugin.ComposingBuildVersions
-//import com.example.version_plugin.ComposingDependencies
-//import com.example.version_plugin.ComposingJetpack
+// 引入ComposingBuild包名
+import com.example.version_plugin.ComposingAndroidX
+import com.example.version_plugin.ComposingBuildVersions
+import com.example.version_plugin.ComposingDependencies
+import com.example.version_plugin.ComposingJetpack
 
 plugins {
     id 'com.android.application'
@@ -10,8 +10,8 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
-//    // ComposingBuild依赖插件
-//    id 'version-plugin'
+    // ComposingBuild依赖插件
+    id 'version-plugin'
 }
 
 apply plugin: 'kotlin-android'
@@ -23,11 +23,11 @@ android {
 //    // Google-ext依赖
 //    compileSdk rootProject.ext.android.compileSdk
 
-    // 使用buildSrc统一版本依赖
-    compileSdk BuildVersions.compileSdk
+//    // 使用buildSrc统一版本依赖
+//    compileSdk BuildVersions.compileSdk
 
-//    // ComposingBuild-使用Plugin中声明的三方库
-//    compileSdk ComposingBuildVersions.compileSdk
+    // ComposingBuild-使用Plugin中声明的三方库
+    compileSdk ComposingBuildVersions.compileSdk
 
     defaultConfig {
 //        applicationId "com.liang.newbaseproject"
@@ -42,19 +42,19 @@ android {
 //        versionCode rootProject.ext.android.versionCode
 //        versionName rootProject.ext.android.versionName
 
-//        // ComposingBuild-使用Plugin中声明的三方库
-//        applicationId ComposingBuildVersions.applicationId
-//        minSdk ComposingBuildVersions.minSdk
-//        targetSdk ComposingBuildVersions.targetSdk
-//        versionCode ComposingBuildVersions.versionCode
-//        versionName ComposingBuildVersions.versionName
+        // ComposingBuild-使用Plugin中声明的三方库
+        applicationId ComposingBuildVersions.applicationId
+        minSdk ComposingBuildVersions.minSdk
+        targetSdk ComposingBuildVersions.targetSdk
+        versionCode ComposingBuildVersions.versionCode
+        versionName ComposingBuildVersions.versionName
 
-        // 使用buildSrc统一版本依赖
-        applicationId BuildVersions.applicationId
-        minSdk BuildVersions.minSdk
-        targetSdk BuildVersions.targetSdk
-        versionCode BuildVersions.versionCode
-        versionName BuildVersions.versionName
+//        // 使用buildSrc统一版本依赖
+//        applicationId BuildVersions.applicationId
+//        minSdk BuildVersions.minSdk
+//        targetSdk BuildVersions.targetSdk
+//        versionCode BuildVersions.versionCode
+//        versionName BuildVersions.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -219,5 +219,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
 
-    kapt(Jetpack.roomCompiler)
+//    kapt(Jetpack.roomCompiler)
+
+    // ComposingBuild-使用Plugin中声明的三方库-Room
+    kapt(ComposingJetpack.roomCompiler)
 }
