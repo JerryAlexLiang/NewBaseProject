@@ -223,7 +223,10 @@ dependencies {
 
     implementation project(path: ':module_base')
     implementation project(path: ':module_route')
-    implementation project(path: ':module_picture_selector')
+    
+    if (!isModulePictureSelectorBuildModule.toBoolean()){
+        implementation project(path: ':module_picture_selector')
+    }
 
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'

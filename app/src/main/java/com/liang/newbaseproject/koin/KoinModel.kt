@@ -98,3 +98,21 @@ val adapterModule: Module = module {
         GalleryRvPictureAdapter()
     }
 }
+
+/**
+ * 注释
+ */
+//// single->单例式  factory->每次都创建不同实例  viewModel->VM注入
+//    // androidApplication()->获取当前Application , androidContext() -> 获取context
+//    // 1 . 获取api实例
+//    single { RetrofitClient.getInstance().create(ApiService::class.java) }
+//    // 2. 创建实例前若构造方法内有参数 则需先注入构造中的参数实例
+//    single<HttpDataSource> { HttpDataImpl(get()) }
+//    // 3. 获取本地数据调用的实例
+//    single<LocalDataSource> { LocalDataImpl() }
+//    // 4 .综合以上本地+网络两个数据来源 得到数据仓库
+//    single { DataRepository(get(), get()) }
+//    // bind 将指定的实例绑定到对应的class  single { AppViewModelFactory(androidApplication(), get()) } bind TestActivity::class
+//    single { AppViewModelFactory(get(), get()) }
+//    // 维护一个全局单例的登录弹窗组 避免多次弹出
+//    single(named("login_map")) { ConcurrentHashMap<Int,BasePopupView>(1) }

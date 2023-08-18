@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.liang.module_base.base.BaseActivity
-import com.liang.module_base.utils.ToastUtil
 import com.liang.module_picture_selector.databinding.ActivityTestBinding
 
 class TestActivity : BaseActivity<ActivityTestBinding>() {
@@ -21,6 +20,6 @@ class TestActivity : BaseActivity<ActivityTestBinding>() {
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        ToastUtil.showShort(this, "Test")
+
     }
 }
