@@ -104,6 +104,12 @@ android {
     viewBinding {
         enabled = true
     }
+
+//    sourceSets {
+//        main {
+//            jniLibs.srcDirs = ['libs']
+//        }
+//    }
 }
 
 dependencies {
@@ -223,8 +229,8 @@ dependencies {
 
     implementation project(path: ':module_base')
     implementation project(path: ':module_route')
-    
-    if (!isModulePictureSelectorBuildModule.toBoolean()){
+
+    if (!isModulePictureSelectorBuildModule.toBoolean()) {
         implementation project(path: ':module_picture_selector')
     }
 
@@ -240,4 +246,5 @@ dependencies {
     // ARoute路由
     kapt(ComposingDependencies.aRouterCompiler)
 
+    implementation fileTree(dir: 'libs',includes: ['*.jar','*.aar'])
 }

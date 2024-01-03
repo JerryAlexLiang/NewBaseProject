@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
+import com.baselib.datapicker.DatePickerActivity
 import com.liang.module_base.base.BaseActivity
 import com.liang.module_base.extension.mirrorViewByXForPositive
 import com.liang.module_base.extension.mirrorViewByXForReverse
@@ -108,6 +109,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                             val intent = Intent()
                             intent.putExtra("isShowButton", true)
                             intent.setClass(this@MainActivity, SplashActivity::class.java)
+                            startActivity(intent)
+                        } else if (funNameResId == R.string.func_SDK_aar) {
+                            val intent = Intent()
+                            intent.setClass(this@MainActivity, DatePickerActivity::class.java)
                             startActivity(intent)
                         } else if (funNameResId == R.string.func_breathing_plate) {
 //                            checkScreenOffOrOn()

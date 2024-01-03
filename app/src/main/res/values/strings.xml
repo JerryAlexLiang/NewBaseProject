@@ -2,6 +2,8 @@
     <string name="app_name">NewBaseProject</string>
     <string name="app_package_name">com.liang.newbaseproject</string>
 
+    <string name="func_SDK_aar" translatable="false">SDK-aar</string>
+
     <string name="android_tag">安卓协程</string>
 
     <string name="changeLanguageMode">中->英</string>
