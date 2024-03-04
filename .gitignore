@@ -104,3 +104,5 @@ local.properties
 /buildSrc/build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i
 /buildSrc/build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i.len
 /.idea/vcs.xml
+/.idea/deploymentTargetDropDown.xml
+/.idea/migrations.xml

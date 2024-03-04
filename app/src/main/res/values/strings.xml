@@ -4,6 +4,8 @@
 
     <string name="func_SDK_aar" translatable="false">SDK-aar</string>
 
+    <string name="func_custom_view">自定义View</string>
+
     <string name="android_tag">安卓协程</string>
 
     <string name="changeLanguageMode">中->英</string>

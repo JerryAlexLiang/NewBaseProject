@@ -46,6 +46,11 @@ object MockMainFunBeanList {
             R.string.func_SDK_aar,
         )
 
+    private val bean11 =
+        FunItemBean(
+            R.string.func_custom_view,
+        )
+
     private var funBeanList: MutableList<FunItemBean> = mutableListOf()
 
     fun initMainFunData(): MutableList<FunItemBean> {
@@ -61,6 +66,7 @@ object MockMainFunBeanList {
 //            add(bean8)
             add(bean9)
             add(bean10)
+            add(bean11)
         }
         return funBeanList
     }
