@@ -336,6 +336,9 @@ dependencies {
 
     api(ComposingDependencies.multidex)
 
+    // glideTransformations
+    api(ComposingDependencies.glideTransformations)
+
     /////////////////////////////ComposingBuild-使用Plugin中声明的三方库-end////////////////////////////////////////
 
 

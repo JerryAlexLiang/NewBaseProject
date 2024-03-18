@@ -3,10 +3,8 @@ package com.liang.newbaseproject.ratingBar
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.liang.module_base.base.BaseActivity
-import com.liang.module_base.base.BaseApp
 import com.liang.module_base.utils.LogUtils
 import com.liang.module_base.utils.MoshiUtil
 import com.liang.module_base.utils.ToastUtil
@@ -14,7 +12,6 @@ import com.liang.newbaseproject.R
 import com.liang.newbaseproject.bean.WanDataBean
 import com.liang.newbaseproject.databinding.ActivityRatingBarBinding
 import com.liang.newbaseproject.livedata.MainTestViewModel
-import com.liang.newbaseproject.livedata.MainTestViewModelFactory
 import com.liang.newbaseproject.livedata.WanApiRepository
 import com.liang.newbaseproject.livedata.WanBaseResBean
 
@@ -75,7 +72,7 @@ class RatingBarActivity : BaseActivity<ActivityRatingBarBinding>() {
     override fun initListener() {
         super.initListener()
         mBinding.ratingBar.setOnRatingChangeListener { ratingBar, rating ->
-            ToastUtil.onShowSuccessToast(this, true, "当前星级：$rating")
+            ToastUtil.showSuccessToast(this, true, "当前星级：$rating")
         }
     }
 

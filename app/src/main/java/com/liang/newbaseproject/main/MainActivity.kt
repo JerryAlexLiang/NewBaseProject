@@ -20,6 +20,7 @@ import com.liang.module_route.impl.PictureSelectorServiceProvider
 import com.liang.newbaseproject.R
 import com.liang.newbaseproject.databinding.ActivityMainBinding
 import com.liang.newbaseproject.koin.KoinActivity
+import com.liang.newbaseproject.musicService.MusicServiceActivity
 import com.liang.newbaseproject.ratingBar.RatingBarActivity
 import com.liang.newbaseproject.splash.SplashActivity
 import com.liang.newbaseproject.widget.CustomViewActivity
@@ -123,6 +124,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                             KoinActivity.actionStart(this@MainActivity)
                         } else if (funNameResId == R.string.func_custom_view) {
                             CustomViewActivity.actionStart(this@MainActivity)
+                        } else if (funNameResId == R.string.func_music_service) {
+                            MusicServiceActivity.actionStart(this@MainActivity)
                         } else {
                             val strByLanguage = LanguageUtilKt.getStrByLanguage(
                                 this@MainActivity,
@@ -135,7 +138,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 ////                            ).showShortToast()
 //                            ).showShortToastMirrorX(mirrorUI)
 
-                            ToastUtil.onShowSuccessRectangleToast(
+                            ToastUtil.showSuccessRectangleToast(
                                 this@MainActivity,
                                 true,
                                 strByLanguage

@@ -15,7 +15,7 @@ interface MxnzpApiService {
      * 获取主页的推荐关注数据
      * home/attention/recommend
      */
-    @Headers("project_token: 6DF0B828673A44C9906BB386D26FB9D7")
+    @Headers("project_token: D54170CB6AA84AA8AFFD2DFC02AC51F5")
     @POST
     suspend fun getHomeAttentionRecommendList(@Url url: String): BaseResult<MutableList<HomeRecommendBean>>
 
@@ -29,7 +29,7 @@ interface MxnzpApiService {
      * suspend - 和协程联用
      * 使用suspend标记的方法，标记这个是一个协程使用的异步方法
      */
-    @Headers("project_token: 6DF0B828673A44C9906BB386D26FB9D7")
+    @Headers("project_token: D54170CB6AA84AA8AFFD2DFC02AC51F5")
     @POST
     suspend fun getMxnzpDouyinList(@Url url: String): MxnzpBaseBean<List<DouyinData>>
 
@@ -38,7 +38,7 @@ interface MxnzpApiService {
      * 协程Flow
      * /home/jokes/search
      */
-    @Headers("project_token: 6DF0B828673A44C9906BB386D26FB9D7")
+    @Headers("project_token: D54170CB6AA84AA8AFFD2DFC02AC51F5")
     @POST
     suspend fun searchJokesByFlow(
         @Url url: String,

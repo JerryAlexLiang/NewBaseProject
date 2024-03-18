@@ -6,6 +6,8 @@
 
     <string name="func_custom_view">自定义View</string>
 
+    <string name="func_music_service">后台音乐播放器</string>
+
     <string name="android_tag">安卓协程</string>
 
     <string name="changeLanguageMode">中->英</string>

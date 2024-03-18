@@ -1,19 +1,15 @@
 package com.liang.newbaseproject.normal
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.liang.module_base.base.BaseActivity
-import com.liang.module_base.base.BaseApp
 import com.liang.module_base.utils.LogUtils
 import com.liang.module_base.utils.MoshiUtil
-import com.liang.module_base.utils.StatusBarUtil
 import com.liang.module_base.utils.ToastUtil
 import com.liang.newbaseproject.R
 import com.liang.newbaseproject.bean.WanDataBean
 import com.liang.newbaseproject.databinding.ActivityNormalViewModelBinding
 import com.liang.newbaseproject.livedata.MainTestViewModel
-import com.liang.newbaseproject.livedata.MainTestViewModelFactory
 import com.liang.newbaseproject.livedata.WanApiRepository
 import com.liang.newbaseproject.livedata.WanBaseResBean
 import com.zhpan.bannerview.BannerViewPager
@@ -98,10 +94,16 @@ class NormalViewModelActivity : BaseActivity<ActivityNormalViewModelBinding>() {
             setOnPageClickListener { _, position ->
                 val wanDataBean = mBannerViewPager.data[position]
 //                wanDataBean.title.showShortToast()
-                ToastUtil.showShort(
+//                ToastUtil.showShort(
+//                    this@NormalViewModelActivity,
+//                    wanDataBean.title,
+//                    mirrorX = if (mirrorUI) -1F else 1F
+//                )
+                ToastUtil.showSuccessToast(
                     this@NormalViewModelActivity,
+                    true,
                     wanDataBean.title,
-                    mirrorX = if (mirrorUI) -1F else 1F
+                    mirrorX = mirrorUI
                 )
             }
             create()

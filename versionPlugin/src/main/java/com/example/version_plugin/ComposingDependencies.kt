@@ -156,6 +156,11 @@ object DepsVersions {
      */
     const val multidex = "2.0.1"
 
+    /**
+     * glide-transformations
+     */
+    const val glideTransformations = "4.3.0"
+
 }
 
 object ComposingDependencies {
@@ -382,4 +387,10 @@ object ComposingDependencies {
      * multidex
      */
     const val multidex = "androidx.multidex:multidex:${DepsVersions.multidex}"
+
+    /**
+     * glide-transformations
+     * implementation 'jp.wasabeef:glide-transformations:4.3.0'
+     */
+    const val glideTransformations = "jp.wasabeef:glide-transformations:${DepsVersions.glideTransformations}"
 }

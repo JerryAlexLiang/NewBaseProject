@@ -7,9 +7,9 @@ import android.util.Log
 import com.google.gson.Gson
 import com.liang.module_base.base.BaseActivity
 import com.liang.module_base.http.model.DataStatus
+import com.liang.module_base.utils.ToastUtil
 import com.liang.newbaseproject.R
 import com.liang.newbaseproject.databinding.ActivityKoinBinding
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class KoinActivity : BaseActivity<ActivityKoinBinding>() {
@@ -44,7 +44,10 @@ class KoinActivity : BaseActivity<ActivityKoinBinding>() {
         Log.d(TAG, "initObserve: douyinListLiveData2 dataStatus  + ${it?.dataStatus}")
         when (it?.dataStatus) {
             DataStatus.STATE_LOADING -> showLoading()
-            DataStatus.STATE_ERROR -> dismissLoading()
+            DataStatus.STATE_ERROR -> {
+                dismissLoading()
+                ToastUtil.showFailToast(this@KoinActivity, true, it.msg)
+            }
             DataStatus.STATE_SUCCESS -> {
                 dismissLoading()
                 if (it.code == 200) {

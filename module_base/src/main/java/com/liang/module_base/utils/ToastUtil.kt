@@ -46,8 +46,14 @@ object ToastUtil {
         mirrorY: Float = 1F,
     ) {
         Toast.makeText(context.applicationContext, msg, Toast.LENGTH_SHORT).apply {
-            view!!.scaleX = mirrorX
-            view!!.scaleY = mirrorY
+//            view!!.scaleX = mirrorX
+//            view!!.scaleY = mirrorY
+
+            // setView禁用
+            view?.apply {
+                scaleX = mirrorX
+                scaleY = mirrorY
+            }
             show()
         }
     }
@@ -59,8 +65,14 @@ object ToastUtil {
         mirrorY: Float = 1F,
     ) {
         Toast.makeText(context.applicationContext, msg, Toast.LENGTH_LONG).apply {
-            view!!.scaleX = mirrorX
-            view!!.scaleY = mirrorY
+//            view!!.scaleX = mirrorX
+//            view!!.scaleY = mirrorY
+
+            // setView禁用
+            view?.apply {
+                scaleX = mirrorX
+                scaleY = mirrorY
+            }
             show()
         }
     }
@@ -78,8 +90,14 @@ object ToastUtil {
         mirrorY: Float = 1F,
     ) {
         Toast.makeText(context.applicationContext, msg, Toast.LENGTH_SHORT).apply {
-            view!!.scaleX = mirrorX
-            view!!.scaleY = mirrorY
+//            view!!.scaleX = mirrorX
+//            view!!.scaleY = mirrorY
+
+            // setView禁用
+            view?.apply {
+                scaleX = mirrorX
+                scaleY = mirrorY
+            }
             setGravity(Gravity.CENTER, 0, 0)
             show()
         }
@@ -98,8 +116,15 @@ object ToastUtil {
         mirrorY: Float = 1F,
     ) {
         Toast.makeText(context.applicationContext, msg, Toast.LENGTH_LONG).apply {
-            view!!.scaleX = mirrorX
-            view!!.scaleY = mirrorY
+//            view!!.scaleX = mirrorX
+//            view!!.scaleY = mirrorY
+
+            // setView禁用
+            view?.apply {
+                scaleX = mirrorX
+                scaleY = mirrorY
+            }
+
             setGravity(Gravity.CENTER, 0, 0)
             show()
         }
@@ -171,7 +196,7 @@ object ToastUtil {
     /**
      * 初始化封装自定义Toast
      */
-    fun setCustomToast(
+    fun showCustomToast(
         icon: Bitmap?,
         isShowIcon: Boolean? = false,
         message: String?,
@@ -211,7 +236,7 @@ object ToastUtil {
 
     }
 
-    fun setCustomToastRectangle(
+    fun showCustomToastRectangle(
         icon: Bitmap?,
         isShowIcon: Boolean? = false,
         message: String?,
@@ -253,13 +278,13 @@ object ToastUtil {
         toastRectangle.show()
     }
 
-    fun onShowSuccessToast(
+    fun showSuccessToast(
         context: Context,
         isShowIcon: Boolean = false,
         content: String?,
         mirrorX: Boolean = false,
     ) {
-        setCustomToast(
+        showCustomToast(
             BitmapFactory.decodeResource(context.resources, R.drawable.core_icon_success),
             isShowIcon,
             content,
@@ -271,13 +296,13 @@ object ToastUtil {
         )
     }
 
-    fun onShowSuccessToastLong(
+    fun showSuccessToastLong(
         context: Context,
         isShowIcon: Boolean = false,
         content: String?,
         mirrorX: Boolean = false,
     ) {
-        setCustomToast(
+        showCustomToast(
             BitmapFactory.decodeResource(context.resources, R.drawable.core_icon_success),
             isShowIcon,
             content,
@@ -289,13 +314,13 @@ object ToastUtil {
         )
     }
 
-    fun onShowFailToast(
+    fun showFailToast(
         context: Context,
         isShowIcon: Boolean = false,
         content: String?,
         mirrorX: Boolean = false,
     ) {
-        setCustomToast(
+        showCustomToast(
             BitmapFactory.decodeResource(context.resources, R.drawable.core_icon_fail),
             isShowIcon,
             content,
@@ -307,13 +332,13 @@ object ToastUtil {
         )
     }
 
-    fun onShowFailToastLong(
+    fun showFailToastLong(
         context: Context,
         content: String?,
         isShowIcon: Boolean = false,
         mirrorX: Boolean = false,
     ) {
-        setCustomToast(
+        showCustomToast(
             BitmapFactory.decodeResource(context.resources, R.drawable.core_icon_fail),
             isShowIcon,
             content,
@@ -325,13 +350,13 @@ object ToastUtil {
         )
     }
 
-    fun onShowSuccessRectangleToast(
+    fun showSuccessRectangleToast(
         context: Context,
         isShowIcon: Boolean = false,
         content: String?,
         mirrorX: Boolean = false,
     ) {
-        setCustomToastRectangle(
+        showCustomToastRectangle(
             BitmapFactory.decodeResource(context.resources, R.drawable.core_icon_success),
             isShowIcon,
             content,
@@ -343,13 +368,13 @@ object ToastUtil {
         )
     }
 
-    fun onShowSuccessRectangleToastLong(
+    fun showSuccessRectangleToastLong(
         context: Context,
         isShowIcon: Boolean = false,
         content: String?,
         mirrorX: Boolean = false,
     ) {
-        setCustomToastRectangle(
+        showCustomToastRectangle(
             BitmapFactory.decodeResource(context.resources, R.drawable.core_icon_success),
             isShowIcon,
             content,
@@ -361,13 +386,13 @@ object ToastUtil {
         )
     }
 
-    fun onShowFailRectangleToast(
+    fun showFailRectangleToast(
         context: Context,
         isShowIcon: Boolean = false,
         content: String?,
         mirrorX: Boolean = false,
     ) {
-        setCustomToastRectangle(
+        showCustomToastRectangle(
             BitmapFactory.decodeResource(context.resources, R.drawable.core_icon_fail),
             isShowIcon,
             content,
@@ -379,13 +404,13 @@ object ToastUtil {
         )
     }
 
-    fun onShowFailRectangleToastLong(
+    fun showFailRectangleToastLong(
         context: Context,
         isShowIcon: Boolean = false,
         content: String?,
         mirrorX: Boolean = false,
     ) {
-        setCustomToastRectangle(
+        showCustomToastRectangle(
             BitmapFactory.decodeResource(context.resources, R.drawable.core_icon_fail),
             isShowIcon,
             content,
@@ -397,68 +422,68 @@ object ToastUtil {
         )
     }
 
-    fun onShowSuccessToastMirrorX(
+    fun showSuccessToastMirrorX(
         context: Context,
         isShowIcon: Boolean = false,
         content: String?
     ) {
-        onShowSuccessToast(context, isShowIcon, content, mirrorX = true)
+        showSuccessToast(context, isShowIcon, content, mirrorX = true)
     }
 
-    fun onShowSuccessToastLongMirrorX(
+    fun showSuccessToastLongMirrorX(
         context: Context,
         isShowIcon: Boolean = false,
         content: String?
     ) {
-        onShowSuccessToastLong(context, isShowIcon, content, mirrorX = true)
+        showSuccessToastLong(context, isShowIcon, content, mirrorX = true)
     }
 
-    fun onShowFailToastMirrorX(
+    fun showFailToastMirrorX(
         context: Context,
         isShowIcon: Boolean = false,
         content: String?
     ) {
-        onShowFailToast(context, isShowIcon, content, mirrorX = true)
+        showFailToast(context, isShowIcon, content, mirrorX = true)
     }
 
-    fun onShowFailToastLongMirrorX(
+    fun showFailToastLongMirrorX(
         context: Context,
         isShowIcon: Boolean = false,
         content: String?
     ) {
-        onShowFailToastLong(context, content, isShowIcon, mirrorX = true)
+        showFailToastLong(context, content, isShowIcon, mirrorX = true)
     }
 
 
-    fun onShowSuccessRectangleToastMirrorX(
+    fun showSuccessRectangleToastMirrorX(
         context: Context,
         isShowIcon: Boolean = false,
         content: String?
     ) {
-        onShowSuccessRectangleToast(context, isShowIcon, content, mirrorX = true)
+        showSuccessRectangleToast(context, isShowIcon, content, mirrorX = true)
     }
 
-    fun onShowSuccessRectangleToastLongMirrorX(
+    fun showSuccessRectangleToastLongMirrorX(
         context: Context,
         isShowIcon: Boolean = false,
         content: String?
     ) {
-        onShowSuccessRectangleToastLong(context, isShowIcon, content, mirrorX = true)
+        showSuccessRectangleToastLong(context, isShowIcon, content, mirrorX = true)
     }
 
-    fun onShowFailRectangleToastMirrorX(
+    fun showFailRectangleToastMirrorX(
         context: Context,
         isShowIcon: Boolean = false,
         content: String?
     ) {
-        onShowFailRectangleToast(context, isShowIcon, content, mirrorX = true)
+        showFailRectangleToast(context, isShowIcon, content, mirrorX = true)
     }
 
-    fun onShowFailRectangleToastLongMirrorX(
+    fun showFailRectangleToastLongMirrorX(
         context: Context,
         isShowIcon: Boolean = false,
         content: String?
     ) {
-        onShowFailRectangleToastLong(context, isShowIcon, content, mirrorX = true)
+        showFailRectangleToastLong(context, isShowIcon, content, mirrorX = true)
     }
 }

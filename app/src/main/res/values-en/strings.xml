@@ -7,6 +7,8 @@
 
     <string name="func_custom_view">CustomView</string>
 
+    <string name="func_music_service">MusicService</string>
+
     <string name="android_tag">Android Coroutine</string>
 
     <string name="changeLanguageMode">En->CH</string>
