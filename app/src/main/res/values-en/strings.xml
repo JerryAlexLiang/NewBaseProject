@@ -35,6 +35,7 @@
     <string name="fun_gallery">Gallery</string>
     <string name="multi_select">Multiple Choice</string>
     <string name="mirror_x">MirrorX</string>
+    <string name="func_weather">Weather forecast</string>
 
     <!--    <string name="func_retrofit_get">Test the Retrofit-GET request</string>-->
 </resources>

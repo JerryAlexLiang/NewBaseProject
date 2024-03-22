@@ -33,5 +33,6 @@
     <string name="fun_gallery">画廊</string>
     <string name="multi_select">多选</string>
     <string name="mirror_x">X镜像</string>
+    <string name="func_weather">天气预报</string>
 
 </resources>

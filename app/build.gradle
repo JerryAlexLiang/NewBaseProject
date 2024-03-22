@@ -230,13 +230,20 @@ dependencies {
     implementation project(path: ':module_base')
     implementation project(path: ':module_route')
 
+    // 图片选择器
     if (!isModulePictureSelectorBuildModule.toBoolean()) {
         implementation project(path: ':module_picture_selector')
+    }
+
+    // 天气预报
+    if (!isModuleWeatherBuildModule.toBoolean()) {
+        implementation project(':module_weather')
     }
 
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+
 
 //    kapt(Jetpack.roomCompiler)
 
@@ -246,5 +253,5 @@ dependencies {
     // ARoute路由
     kapt(ComposingDependencies.aRouterCompiler)
 
-    implementation fileTree(dir: 'libs',includes: ['*.jar','*.aar'])
+    implementation fileTree(dir: 'libs', includes: ['*.jar', '*.aar'])
 }
