@@ -12,11 +12,10 @@ import com.liang.newbaseproject.room.RoomRepository
 import com.liang.newbaseproject.splash.SplashViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.module.Module
 import org.koin.dsl.module
 
-/** 网络请求 Module */
-val netModule = module {
+val mainModel = module {
+    /** 网络请求 Module */
     single {
         RetrofitManager.getApiService(WanApiService::class.java)
     }
@@ -24,10 +23,8 @@ val netModule = module {
     single {
         RetrofitManager.getApiService(MxnzpApiService::class.java)
     }
-}
 
-val daoModule = module {
-
+    /** Room数据库 */
     // single与factory功能一致，只不过创建的是单例
     single {
 //        Room.databaseBuilder(
@@ -45,10 +42,8 @@ val daoModule = module {
         // 获取MediaBeanDao数据库操作类
         database.getMediaBeanDao()
     }
-}
 
-/** 数据仓库 Module */
-val repositoryModule: Module = module {
+    /** 数据仓库 Module */
     // single与factory功能一致，只不过创建的是单例
     single {
         WanApiRepositoryKoin(get())
@@ -61,11 +56,8 @@ val repositoryModule: Module = module {
     single {
         RoomRepository(get())
     }
-}
 
-/** ViewModel Module */
-val viewModelModule: Module = module {
-
+    /** ViewModel Module */
     viewModel {
         SplashViewModel(androidApplication())
     }
@@ -86,10 +78,8 @@ val viewModelModule: Module = module {
     viewModel {
         PictureSelectorViewModel(androidApplication(), get())
     }
-}
 
-/** 适配器 Module */
-val adapterModule: Module = module {
+    /** 适配器 Module */
     // factory创建注入类的实例
     factory {
         MainFunRvAdapter()

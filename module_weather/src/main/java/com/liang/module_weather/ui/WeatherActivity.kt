@@ -1,9 +1,10 @@
-package com.liang.module_weather
+package com.liang.module_weather.ui
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.liang.module_base.base.BaseActivity
+import com.liang.module_weather.R
 import com.liang.module_weather.databinding.ActivityWeatherBinding
 
 /**
@@ -21,7 +22,7 @@ class WeatherActivity : BaseActivity<ActivityWeatherBinding>() {
     }
 
 
-    override fun getLayoutId(): Int =R.layout.activity_weather
+    override fun getLayoutId(): Int = R.layout.activity_weather
 
     override fun initView(savedInstanceState: Bundle?) {
 

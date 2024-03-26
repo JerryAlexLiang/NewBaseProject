@@ -10,17 +10,28 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPink"
-        tools:context=".WeatherActivity">
+        tools:context=".ui.WeatherActivity">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello World Weather!"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Hello World Weather!"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <fragment-->
+<!--            android:name="com.liang.module_weather.ui.place.PlaceFragment"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:id="@+id/placeFragment" />-->
+
+        <androidx.fragment.app.FragmentContainerView
+            android:name="com.liang.module_weather.ui.place.PlaceFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/placeFragment" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

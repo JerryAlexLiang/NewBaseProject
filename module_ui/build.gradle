@@ -1,0 +1,67 @@
+// 引入ComposingBuild包名
+import com.example.version_plugin.ComposingAndroidX
+import com.example.version_plugin.ComposingBuildVersions
+import com.example.version_plugin.ComposingDependencies
+import com.example.version_plugin.ComposingJetpack
+
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    // ComposingBuild依赖插件
+    id 'version-plugin'
+}
+
+android {
+    namespace 'com.liang.module_ui'
+//    compileSdk 34
+
+    // ComposingBuild-使用Plugin中声明的三方库
+    compileSdk ComposingBuildVersions.compileSdk
+
+    defaultConfig {
+//        minSdk 21
+
+        minSdk ComposingBuildVersions.minSdk
+        targetSdk ComposingBuildVersions.targetSdk
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    // 开启dataBinding
+    buildFeatures {
+        dataBinding true
+    }
+    // 开启viewBinding
+    viewBinding {
+        enabled = true
+    }
+
+}
+
+dependencies {
+//    implementation 'androidx.core:core-ktx:1.10.1'
+//    implementation 'androidx.appcompat:appcompat:1.6.1'
+//    implementation 'com.google.android.material:material:1.9.0'
+//    testImplementation 'junit:junit:4.13.2'
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    implementation project(path: ':module_base')
+}

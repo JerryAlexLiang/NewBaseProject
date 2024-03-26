@@ -6,4 +6,5 @@ import com.alibaba.android.arouter.facade.template.IProvider
 interface WeatherService : IProvider {
 
     fun startWeatherMainActivity(context: Context)
+
 }

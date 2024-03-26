@@ -67,7 +67,7 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
         overridePendingTransition(R.anim.scale_enter, R.anim.slide_still)
 
         LogUtils.d(tag = TAG_MSG, msg = actionStart)
-        LogUtils.d(actionStart, "onChangeLanguage:  init ${LanguageUtilKt.isChinese}")
+        LogUtils.d(tag = actionStart, msg = "onChangeLanguage:  init ${LanguageUtilKt.isChinese}")
         mLoadingDialog = LoadingDialog(this)
         ActivityUtil.addActivity(this)
         StatusBarUtil.setTransparentForWindow(this)
@@ -240,7 +240,7 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
      * 切换中英文环境，activity会重启
      */
     open fun changeLanguage(isChineseMode: Boolean) {
-        LogUtils.d(actionStart, "onChangeLanguage BaseActivity:  $isChineseMode")
+        LogUtils.d(tag = actionStart, msg = "onChangeLanguage BaseActivity:  $isChineseMode")
         LanguageUtilKt.setChineseMode(this@BaseActivity, isChineseMode)
 //        startTargetActivity<NightModeChangeMaskActivity>()
 //        overridePendingTransition(R.anim.scale_enter, R.anim.slide_still)

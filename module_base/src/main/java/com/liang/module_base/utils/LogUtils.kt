@@ -10,7 +10,7 @@ import com.liang.module_base.BuildConfig
  */
 object LogUtils {
 
-    private const val DEFAULT_TAG = "RxHttp"
+    private const val DEFAULT_TAG = "BaseApp"
 
     /**
      * Debug 下开启
@@ -23,7 +23,7 @@ object LogUtils {
     /**
      * [Log.VERBOSE]
      */
-    fun v(tag: String = DEFAULT_TAG, msg: String) {
+    fun v(msg: String, tag: String = DEFAULT_TAG) {
         if (isDebug) {
             Log.v(tag, msg)
         }
@@ -32,7 +32,7 @@ object LogUtils {
     /**
      * [Log.DEBUG]
      */
-    fun d(tag: String = DEFAULT_TAG, msg: String) {
+    fun d(msg: String, tag: String = DEFAULT_TAG) {
         if (isDebug) {
             Log.d(tag, msg)
         }
@@ -41,7 +41,7 @@ object LogUtils {
     /**
      * [Log.INFO]
      */
-    fun i(tag: String = DEFAULT_TAG, msg: String) {
+    fun i(msg: String, tag: String = DEFAULT_TAG) {
         if (isDebug) {
             Log.i(tag, msg)
         }
@@ -50,7 +50,7 @@ object LogUtils {
     /**
      * [Log.WARN]
      */
-    fun w(tag: String = DEFAULT_TAG, msg: String) {
+    fun w(msg: String, tag: String = DEFAULT_TAG) {
         if (isDebug) {
             Log.w(tag, msg)
         }
@@ -59,7 +59,7 @@ object LogUtils {
     /**
      * [Log.ERROR]
      */
-    fun e(tag: String = DEFAULT_TAG, msg: String) {
+    fun e(msg: String, tag: String = DEFAULT_TAG) {
         if (isDebug) {
             Log.e(tag, msg)
         }
@@ -68,7 +68,7 @@ object LogUtils {
     /**
      * [Log.ERROR]
      */
-    fun e(tag: String = DEFAULT_TAG, msg: String = "", throwable: Throwable) {
+    fun e(msg: String = "", throwable: Throwable, tag: String = DEFAULT_TAG) {
         if (isDebug) {
             Log.e(tag, msg, throwable)
         }

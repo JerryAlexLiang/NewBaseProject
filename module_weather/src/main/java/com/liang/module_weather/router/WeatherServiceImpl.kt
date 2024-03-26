@@ -5,7 +5,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.liang.module_base.utils.ToastUtil
 import com.liang.module_route.route.AppRouter
 import com.liang.module_route.service.WeatherService
-import com.liang.module_weather.WeatherActivity
+import com.liang.module_weather.ui.WeatherActivity
 
 
 /**

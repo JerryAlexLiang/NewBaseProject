@@ -43,7 +43,7 @@ android {
 //        versionCode 1
 //        versionName "1.0"
 
-        if (isModulePictureSelectorBuildModule.toBoolean()) {
+        if (isModuleWeatherBuildModule.toBoolean()) {
             applicationId "com.liang.module_weather"
         }
 
@@ -54,6 +54,28 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        // 在代码中读取gradle.propeties
+        // 1、在gradle.properties中添加属性 isModuleWeatherBuildModule=false
+        // 2、在build.gradle文件中的android 下的 defaultConfig中定义如下：String要加转移符  Boolean不需要,注意此方式也可以读取build.gradle中的定义的变量
+        // Java代码中引用的定义形式-举例
+        // buildConfigField "String", "CUR_PROJECT", "\"${CUR_PROJECT}\""
+        //    buildConfigField "Boolean", "DEBUG_TAG", "${DEBUG_TAG}"
+        //    buildConfigField "String", "DEBUG_LOGIN_SN", "\"${DEBUG_LOGIN_SN}\""
+        //    buildConfigField "String", "DEBUG_LOGIN_MODEL", "\"${DEBUG_LOGIN_MODEL}\""
+        //    buildConfigField "String", "DEBUG_LOGIN_VENDOR", "\"${DEBUG_LOGIN_VENDOR}\""
+        //    buildConfigField "String", "DEBUG_LOGIN_TYPE", "\"${DEBUG_LOGIN_TYPE}\""
+        //    buildConfigField "String", "SERVER_UP_URL", "\"${SERVER_UP_URL}\""
+        //    buildConfigField "String", "VIDEO_EXTRANET_IP", "\"${VIDEO_EXTRANET_IP}\""
+        //    buildConfigField "String", "LOAD_H5_UP", "\"${LOAD_H5_UP}\""
+        //    buildConfigField "String", "TIME_SERVER_IP", "\"${TIME_SERVER_IP}\""
+        //    buildConfigField "Boolean", "SUPPORT_TIMESHIFT", "${SUPPORT_TIMESHIFT}"
+        //    buildConfigField "Boolean", "IS_USE_IJKPLAYER_FOR_VOD", "${IS_USE_IJKPLAYER_FOR_VOD}"
+
+        // weather模块是否独立module
+        buildConfigField "Boolean", "isModuleWeatherBuildModule", "${isModuleWeatherBuildModule}"
+
+
     }
 
     buildTypes {
@@ -69,7 +91,6 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
     // 开启dataBinding
     buildFeatures {
         dataBinding true
@@ -83,7 +104,7 @@ android {
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
-            if (isModulePictureSelectorBuildModule.toBoolean()) {
+            if (isModuleWeatherBuildModule.toBoolean()) {
                 //独立运行
                 manifest.srcFile 'src/main/alone/AndroidManifest.xml'
             } else {
@@ -118,6 +139,7 @@ dependencies {
 
     implementation project(path: ':module_base')
     implementation project(path: ':module_route')
+    implementation project(':module_ui')
 
     // ARoute路由
     kapt(ComposingDependencies.aRouterCompiler)

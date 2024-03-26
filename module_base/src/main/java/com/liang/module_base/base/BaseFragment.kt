@@ -44,13 +44,15 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         mBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
+        // 需绑定lifecycleOwner到Activity,xml绑定的数据才会随着liveData数据源的改变而改变
+        mBinding.lifecycleOwner = this
         return mBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         LogUtils.d(tag = TAG_MSG, msg = actionStart)
-        LogUtils.d(actionStart, "onChangeLanguage:  ${LanguageUtilKt.isChinese}")
+        LogUtils.d(tag = actionStart, msg = "onChangeLanguage:  ${LanguageUtilKt.isChinese}")
         mLoadingDialog = LoadingDialog(view.context)
         initView(view)
         initData()
@@ -77,10 +79,12 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
                         requireContext(),
                         getString(R.string.request_time_out)
                     )
+
                     is ConnectException, is UnknownHostException -> ToastUtil.showShort(
                         requireContext(),
                         getString(R.string.network_error)
                     )
+
                     else -> ToastUtil.showShort(
                         requireContext(), it.message ?: getString(R.string.response_error)
                     )

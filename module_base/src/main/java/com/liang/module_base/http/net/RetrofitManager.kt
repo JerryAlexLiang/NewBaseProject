@@ -41,6 +41,9 @@ object RetrofitManager {
     const val BASE_URL_Mxnzp = "http://tools.cretinzp.com/jokes/"
     const val BASE_URL_Mock = "https://maas.aminer.cn/api/paas/"
 
+    //彩云天气API
+    const val WEATHER_BASE_URL = "https://api.caiyunapp.com/"
+
     /** OkHttpClient相关配置 */
     private val client: OkHttpClient
         get() = OkHttpClient.Builder()
@@ -68,7 +71,7 @@ object RetrofitManager {
      * GSON、Moshi配合retrofit
      */
     fun <T> getApiService(serviceClass: Class<T>, baseUrl: String? = null): T {
-        LogUtils.d(msg = BASE_URL)
+        LogUtils.d(msg = "BaseUrl：$baseUrl")
         return Retrofit.Builder()
             .client(client)
             .baseUrl(baseUrl ?: BASE_URL)
