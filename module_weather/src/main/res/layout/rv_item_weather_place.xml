@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingDefaultResource,ResourceName">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp130"
+        android:layout_margin="12dp"
+        android:background="@drawable/core_selector_bg_press_color_white"
+        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+        app:cardCornerRadius="@dimen/dp4"
+        android:elevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="18dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvPlaceName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/text_surface"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvPlaceAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:drawablePadding="10dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/text_third"
+                android:textSize="14sp"
+                app:drawableStartCompat="@drawable/core_icon_location" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

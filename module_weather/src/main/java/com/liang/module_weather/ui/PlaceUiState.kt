@@ -10,7 +10,7 @@ import com.liang.module_weather.logic.model.PlaceResponse
 sealed class PlaceUiState {
     object Loading : PlaceUiState()
 
-    data class Success(val result: PlaceResponse) : PlaceUiState()
+    data class Success(val result: PlaceResponse?) : PlaceUiState()
 
     data class Error(val message: String) : PlaceUiState()
 }

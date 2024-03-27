@@ -9,7 +9,6 @@ import com.liang.module_base.utils.LogUtils
 import com.liang.module_weather.logic.model.Place
 import com.liang.module_weather.logic.model.PlaceResponse
 import com.liang.module_weather.logic.net.WeatherRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class WeatherViewModel(application: Application, private val weatherRepository: WeatherRepository) :
@@ -19,8 +18,7 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
     // 稍后在编写UI层代码的时候就会用到这几个变量
 
     // 城市列表数据List
-//    var placeList = ArrayList<Place>()
-    var placeList = mutableListOf<Place>()
+    var placeList = ArrayList<Place>()
 
     // 搜索返回Place数据
     private val _placeLiveData: MutableLiveData<PlaceUiState> = MutableLiveData<PlaceUiState>()
@@ -28,8 +26,8 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
         get() = _placeLiveData
 
     fun searchPlace(string: String) {
-        _placeLiveData.value = PlaceUiState.Loading
         viewModelScope.launch {
+            _placeLiveData.value = PlaceUiState.Loading
             try {
                 val places: PlaceResponse = weatherRepository.searchPlaces(string)
                 _placeLiveData.value = PlaceUiState.Success(places)

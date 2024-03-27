@@ -1,4 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">module_weather</string>
     <string name="weather_place_address_title">地址：%1$s</string>
 </resources>

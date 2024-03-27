@@ -5,7 +5,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.liang.module_base.utils.ToastUtil
 import com.liang.module_route.route.AppRouter
 import com.liang.module_route.service.WeatherService
-import com.liang.module_weather.ui.WeatherActivity
+import com.liang.module_weather.ui.place.PlaceActivity
 
 
 /**
@@ -17,7 +17,7 @@ import com.liang.module_weather.ui.WeatherActivity
 class WeatherServiceImpl : WeatherService {
     override fun startWeatherMainActivity(context: Context) {
         ToastUtil.showSuccessToast(context, true, "Weather")
-        WeatherActivity.actionStart(context)
+        PlaceActivity.actionStart(context)
     }
 
     override fun init(context: Context?) {

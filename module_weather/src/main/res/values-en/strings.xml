@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">module_weather</string>
-    <string name="weather_place_address_title">地址：%1$s</string>
+    <string name="weather_place_address_title">Address：%1$s</string>
 </resources>

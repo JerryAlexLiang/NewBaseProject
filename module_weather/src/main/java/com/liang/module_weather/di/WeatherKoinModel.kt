@@ -36,15 +36,5 @@ val weatherModel = module {
     viewModel {
         WeatherViewModel(androidApplication(), get())
     }
-}
 
-///** 适配器 Module */
-//val adapterModule: Module = module {
-//    // factory创建注入类的实例
-//    factory {
-//        MainFunRvAdapter()
-//    }
-//    factory {
-//        GalleryRvPictureAdapter()
-//    }
-//}
+}

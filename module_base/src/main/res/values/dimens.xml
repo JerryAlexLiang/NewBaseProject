@@ -24,7 +24,7 @@
     <dimen name="dp_2.5">2.5dp</dimen>
     <dimen name="dp3">3dp</dimen>
     <dimen name="dp_3.5">3.5dp</dimen>
-    <dimen name="cpbase_dp4">4dp</dimen>
+    <dimen name="dp4">4dp</dimen>
     <dimen name="dp_4.5">4.5dp</dimen>
     <dimen name="dp5">5dp</dimen>
     <dimen name="dp6">6dp</dimen>

@@ -5,8 +5,9 @@
 
     <application>
         <activity
-            android:name=".ui.WeatherActivity"
-            android:exported="false" />
+            android:name=".ui.place.PlaceActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>
