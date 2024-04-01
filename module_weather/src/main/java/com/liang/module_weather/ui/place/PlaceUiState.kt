@@ -1,4 +1,4 @@
-package com.liang.module_weather.ui
+package com.liang.module_weather.ui.place
 
 import com.liang.module_weather.logic.model.PlaceResponse
 

@@ -271,6 +271,10 @@ object ComposingDependencies {
         "io.github.scwang90:refresh-header-classics:${DepsVersions.smartRefreshLayout}"
     const val smartRefreshFooterClassics =
         "io.github.scwang90:refresh-footer-classics:${DepsVersions.smartRefreshLayout}"
+    const val smartRefreshHeaderFalsify =
+        "io.github.scwang90:refresh-header-falsify:${DepsVersions.smartRefreshLayout}"
+    const val smartRefreshHeaderMaterial =
+        "io.github.scwang90:refresh-header-material:${DepsVersions.smartRefreshLayout}"
 
 
     /**
@@ -392,5 +396,6 @@ object ComposingDependencies {
      * glide-transformations
      * implementation 'jp.wasabeef:glide-transformations:4.3.0'
      */
-    const val glideTransformations = "jp.wasabeef:glide-transformations:${DepsVersions.glideTransformations}"
+    const val glideTransformations =
+        "jp.wasabeef:glide-transformations:${DepsVersions.glideTransformations}"
 }

@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">module_weather</string>
     <string name="weather_place_address_title">Address：%1$s</string>
+    <string name="weather_forecast">forecast</string>
+    <string name="weather_index_living">Living index</string>
+    <string name="weather_influenza">influenza</string>
+    <string name="weather_dress">dress</string>
+    <string name="weather_ultraviolet">ultraviolet</string>
+    <string name="weather_car_washing">Car wash</string>
 </resources>

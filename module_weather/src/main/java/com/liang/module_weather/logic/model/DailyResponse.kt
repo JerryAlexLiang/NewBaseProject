@@ -162,6 +162,7 @@ data class DailyResponse(
                 val min: Double
             )
 
+            // 未来几天天气
             data class Skycon(
                 val date: Date,
                 val value: String

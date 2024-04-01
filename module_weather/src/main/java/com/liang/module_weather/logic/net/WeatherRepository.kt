@@ -1,7 +1,10 @@
 package com.liang.module_weather.logic.net
 
-import com.liang.module_base.http.net.RetrofitManager
+import com.liang.module_base.utils.GsonUtils
+import com.liang.module_base.utils.MMKVUtils
+import com.liang.module_weather.WeatherConstant
 import com.liang.module_weather.logic.model.DailyResponse
+import com.liang.module_weather.logic.model.Place
 import com.liang.module_weather.logic.model.PlaceResponse
 import com.liang.module_weather.logic.model.RealtimeResponse
 
@@ -23,13 +26,26 @@ class WeatherRepository(
      * 实时天气
      */
     suspend fun getRealtimeWeather(lng: String, lat: String): RealtimeResponse {
-        return weatherService.getRealtimeWeather(RetrofitManager.WEATHER_BASE_URL, lng, lat)
+        return weatherService.getRealtimeWeather(lng, lat)
     }
 
     /**
      * 未来几天天气
      */
     suspend fun getDailyWeather(lng: String, lat: String): DailyResponse {
-        return weatherService.getDailyWeather(RetrofitManager.WEATHER_BASE_URL, lng, lat)
+        return weatherService.getDailyWeather(lng, lat)
+    }
+
+    fun isPlaceSaved(): Boolean {
+        return MMKVUtils.ifContainKey(WeatherConstant.SHARED_PLACE_NAME)
+    }
+
+    fun savePlace(place: Place) {
+        MMKVUtils.put(WeatherConstant.SHARED_PLACE_NAME, GsonUtils.toJson(place))
+    }
+
+    fun getSavedPlace(): Place {
+        val placeJson = MMKVUtils.getString(WeatherConstant.SHARED_PLACE_NAME)
+        return GsonUtils.parseJsonObjectToBean(placeJson, Place::class.java)
     }
 }

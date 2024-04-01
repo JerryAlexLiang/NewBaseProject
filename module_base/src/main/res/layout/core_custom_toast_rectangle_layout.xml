@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/core_icon_success"
         android:visibility="visible"
-        app:tint="@color/white" />
+        android:tint="@color/white" />
 
     <TextView
         android:id="@+id/tv_toast_message"

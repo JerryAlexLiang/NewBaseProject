@@ -1,17 +1,18 @@
-package com.liang.module_weather.ui
+package com.liang.module_weather.ui.place
 
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.liang.module_base.base.BaseViewModel
+import com.liang.module_base.utils.GsonUtils
 import com.liang.module_base.utils.LogUtils
 import com.liang.module_weather.logic.model.Place
 import com.liang.module_weather.logic.model.PlaceResponse
 import com.liang.module_weather.logic.net.WeatherRepository
 import kotlinx.coroutines.launch
 
-class WeatherViewModel(application: Application, private val weatherRepository: WeatherRepository) :
+class PlaceViewModel(application: Application, private val weatherRepository: WeatherRepository) :
     BaseViewModel(application) {
 
     // 和界面相关的数据，定义在ViewModel中，可以保证它们在手机屏幕发生旋转的时候不会丢失
@@ -33,8 +34,22 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
                 _placeLiveData.value = PlaceUiState.Success(places)
             } catch (exception: Exception) {
                 _placeLiveData.value = PlaceUiState.Error(exception.message.toString())
-                LogUtils.e("searchPlace", exception.message.toString())
+                LogUtils.e(tag = "searchPlace", msg = exception.message.toString())
             }
         }
+    }
+
+    fun isPlaceSaved(): Boolean {
+        return weatherRepository.isPlaceSaved()
+    }
+
+    fun savePlace(place: Place) {
+        LogUtils.d(tag = "SavedPlace", msg = GsonUtils.toJson(place))
+        weatherRepository.savePlace(place)
+    }
+
+    fun getSavedPlace(): Place {
+        LogUtils.d(tag = "getSavedPlace", msg = GsonUtils.toJson(weatherRepository.getSavedPlace()))
+        return weatherRepository.getSavedPlace()
     }
 }

@@ -339,6 +339,13 @@ dependencies {
     // glideTransformations
     api(ComposingDependencies.glideTransformations)
 
+    // smartRefreshLayout
+    api(ComposingDependencies.smartRefreshLayout)
+    api(ComposingDependencies.smartRefreshHeaderClassics)
+    api(ComposingDependencies.smartRefreshFooterClassics)
+    api(ComposingDependencies.smartRefreshHeaderFalsify)
+    api(ComposingDependencies.smartRefreshHeaderMaterial)
+
     /////////////////////////////ComposingBuild-使用Plugin中声明的三方库-end////////////////////////////////////////
 
 

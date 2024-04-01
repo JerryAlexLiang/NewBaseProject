@@ -285,7 +285,7 @@ object ToastUtil {
         mirrorX: Boolean = false,
     ) {
         showCustomToast(
-            BitmapFactory.decodeResource(context.resources, R.drawable.core_icon_success),
+            BitmapFactory.decodeResource(context.resources, R.drawable.core_icon_true),
             isShowIcon,
             content,
             ContextCompat.getColor(context, R.color.toast_bg),

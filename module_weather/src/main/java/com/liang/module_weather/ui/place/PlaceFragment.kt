@@ -1,9 +1,11 @@
 package com.liang.module_weather.ui.place
 
 import android.annotation.SuppressLint
+import android.text.Editable
 import android.view.View
 import androidx.core.view.isVisible
 import com.liang.module_base.base.BaseFragment
+import com.liang.module_base.extension.invisible
 import com.liang.module_base.extension.setLinearLayoutManager
 import com.liang.module_base.extension.visible
 import com.liang.module_base.utils.GsonUtils
@@ -12,8 +14,7 @@ import com.liang.module_base.utils.ToastUtil
 import com.liang.module_weather.R
 import com.liang.module_weather.databinding.FragmentPlaceBinding
 import com.liang.module_weather.logic.model.Place
-import com.liang.module_weather.ui.PlaceUiState
-import com.liang.module_weather.ui.WeatherViewModel
+import com.liang.module_weather.ui.weather.WeatherActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -37,7 +38,7 @@ class PlaceFragment : BaseFragment<FragmentPlaceBinding>() {
     }
 
     // 初始化ViewModel-使用Koin依赖注入的方法
-    private val viewModel: WeatherViewModel by viewModel()
+    private val viewModel: PlaceViewModel by viewModel()
 
     // 城市列表适配器
     private val placeAdapter by lazy {
@@ -54,10 +55,56 @@ class PlaceFragment : BaseFragment<FragmentPlaceBinding>() {
         initListener()
     }
 
+    private fun initStatus() {
+        if (activity is PlaceActivity && viewModel.isPlaceSaved()) {
+            mBinding.baseActionbar.baseActionbarLeftIcon.visibility = View.VISIBLE
+
+            val savedPlace = viewModel.getSavedPlace()
+            context?.let {
+                WeatherActivity.actionStart(
+                    it,
+                    savedPlace.name,
+                    savedPlace.location.lng,
+                    savedPlace.location.lat,
+                )
+            }
+            activity?.finish()
+            return
+        } else if (activity is WeatherActivity) {
+            mBinding.baseActionbar.baseActionbarLeftIcon.visibility = View.GONE
+            mBinding.baseActionbar.editSearchView.apply {
+                if (text?.isEmpty() == true){
+                    hint = (activity as WeatherActivity).getCurrentCity()
+                    LogUtils.d(tag="XXX", msg = hint.toString())
+                    viewModel.searchPlace(hint.toString())
+                }
+            }
+        }
+    }
+
     private fun initListener() {
         placeAdapter.setOnItemClickListener(object : PlaceAdapter.OnItemClickListener {
             override fun onItemClick(bean: Place?) {
                 context?.let { ToastUtil.showShort(it, bean?.name ?: "") }
+
+                if (activity is WeatherActivity) {
+                    // 如果当前是WeatherActivity，则不需要再次跳转，关闭DrawerLayout,并请求新数据并刷新界面UI
+                    bean?.let { (activity as WeatherActivity).currentActivityRefresh(it) }
+                } else {
+                    context?.let {
+                        WeatherActivity.actionStart(
+                            it,
+                            bean?.name ?: "",
+                            bean?.location?.lng ?: "",
+                            bean?.location?.lat ?: ""
+                        )
+                    }
+                    activity?.finish()
+                }
+
+                // 存储城市名
+                bean?.let { viewModel.savePlace(it) }
+
             }
         })
     }
@@ -81,6 +128,11 @@ class PlaceFragment : BaseFragment<FragmentPlaceBinding>() {
 
                 baseActionbarLeftTv.visible()
 
+//                if (viewModel.editText.isNotEmpty()){
+//                    editSearchView.hint = viewModel.editText
+//                    viewModel.searchPlace(viewModel.editText)
+//                }
+
                 editSearchView.apply {
                     visible()
 
@@ -100,6 +152,7 @@ class PlaceFragment : BaseFragment<FragmentPlaceBinding>() {
                     setOnSearchClickListener { _ ->
                         viewModel.placeList.clear()
                         val content = this.text.toString().trim()
+
                         LogUtils.d("=========> $content")
                         if (content.isNotEmpty()) {
                             viewModel.searchPlace(content)
@@ -112,6 +165,9 @@ class PlaceFragment : BaseFragment<FragmentPlaceBinding>() {
                 }
             }
         }
+
+        initStatus()
+
     }
 
     override fun startObserver() {

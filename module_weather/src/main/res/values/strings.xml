@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">module_weather</string>
     <string name="weather_place_address_title">地址：%1$s</string>
+    <string name="weather_forecast">预报</string>
+    <string name="weather_index_living">生活指数</string>
+    <string name="weather_influenza">感冒</string>
+    <string name="weather_dress">穿衣</string>
+    <string name="weather_ultraviolet">实时紫外线</string>
+    <string name="weather_car_washing">洗车</string>
 </resources>

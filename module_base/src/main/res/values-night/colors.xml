@@ -45,7 +45,7 @@
     <color name="accent_pale_blue">#FF2196F3</color>//蓝
     <color name="accent_indigo">#FF3F51B5</color>//靛蓝
 
-    <color name="white">#ff2d2d2d</color>
+    <color name="white">#000000</color>
     <color name="white_title">#FFFFFFFF</color>
     <color name="reverse_white">#FFFFFFFF</color>
 
@@ -98,6 +98,6 @@
     <color name="ps_color_0077F6">#0077F6</color>
     <color name="ps_color_E4E4E4">#E4E4E4</color>
 
-    <color name="toast_bg">#FFFFFF</color>
+    <color name="toast_bg">#000000</color>
     <color name="text_invert">#111111</color>
 </resources>

@@ -4,7 +4,8 @@ import com.liang.module_base.http.net.RetrofitManager
 import com.liang.module_weather.logic.net.PlaceApiService
 import com.liang.module_weather.logic.net.WeatherApiService
 import com.liang.module_weather.logic.net.WeatherRepository
-import com.liang.module_weather.ui.WeatherViewModel
+import com.liang.module_weather.ui.place.PlaceViewModel
+import com.liang.module_weather.ui.weather.WeatherViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -33,6 +34,10 @@ val weatherModel = module {
     }
 
     /** ViewModel Module */
+    viewModel {
+        PlaceViewModel(androidApplication(), get())
+    }
+
     viewModel {
         WeatherViewModel(androidApplication(), get())
     }

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="ResourceName">
+
+    <data>
+
+    </data>
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.weather.WeatherActivity">
+
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/smartRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlEnablePreviewInEditMode="true">
+
+            <ScrollView
+                android:id="@+id/scrollWeatherLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include
+                        android:id="@+id/layoutWeatherItemNow"
+                        layout="@layout/layout_weather_item_now" />
+
+                    <include
+                        android:id="@+id/layoutWeatherForecast"
+                        layout="@layout/layout_weather_forecast" />
+
+                    <include
+                        android:id="@+id/layoutWeatherLifeIndex"
+                        layout="@layout/layout_weather_life_index" />
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:id="@+id/flStatusBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp25" />
+
+                <fragment
+                    android:id="@+id/placeFragment"
+                    android:name="com.liang.module_weather.ui.place.PlaceFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fitsSystemWindows="false"
+                    tools:ignore="FragmentTagUsage" />
+
+            </LinearLayout>
+        </com.google.android.material.navigation.NavigationView>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+</layout>

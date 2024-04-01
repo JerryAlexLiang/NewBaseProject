@@ -20,7 +20,6 @@ class WeatherApp : BaseApp() {
     }
 
     private fun initKoin() {
-        ToastUtil.showShort(context, "KoinWeather")
         LogUtils.d("**********initKoinWeather**********")
         ToastUtil.showSuccessRectangleToast(context, true, "init Koin Success")
 

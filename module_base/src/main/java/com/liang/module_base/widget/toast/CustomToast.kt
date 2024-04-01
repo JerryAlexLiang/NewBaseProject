@@ -163,6 +163,7 @@ class CustomToast(context: Context?, layoutResID: Int) {
                 if (null != icon) {
                     //设置图片
                     mine!!.icon.setImageBitmap(icon)
+                    mine!!.icon.autofillHints
                 } else {
                     //设置图片
                     mine!!.icon.setBackgroundResource(iconID)
