@@ -3,6 +3,8 @@ package com.liang.module_base.base
 import android.app.Application
 import android.content.Context
 import android.os.Build.VERSION.SDK_INT
+import android.os.Process
+import android.text.TextUtils
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
@@ -19,6 +21,9 @@ import com.jeremyliao.liveeventbus.LiveEventBus
 import com.liang.module_base.BuildConfig
 import com.liang.module_base.extension.getNightMode
 import com.tencent.mmkv.MMKV
+import java.io.BufferedReader
+import java.io.FileReader
+import java.io.IOException
 import kotlin.properties.Delegates
 
 /**
@@ -143,5 +148,47 @@ open class BaseApp : Application(), ViewModelStoreOwner, ImageLoaderFactory {
         imageLoader.components(componentRegistry)
 
         return imageLoader.build()
+    }
+
+    open fun isMainProcess(): Boolean {
+        val mainProcessName: String = appContext.packageName
+        val processName: String? = currentProcessName()
+        return processName == null || TextUtils.equals(processName, mainProcessName)
+    }
+
+    //public static String currentProcessName() {
+    //        return getProcessName(Process.myPid());
+    //    }
+
+    open fun currentProcessName(): String? {
+        return getProcessName(Process.myPid())
+    }
+
+
+    /**
+     * 获取进程号对应的进程名
+     *
+     * @param pid 进程号
+     * @return 进程名
+     */
+    open fun getProcessName(pid: Int): String? {
+        var reader: BufferedReader? = null
+        try {
+            reader = BufferedReader(FileReader("/proc/$pid/cmdline"))
+            var processName = reader.readLine()
+            if (!TextUtils.isEmpty(processName)) {
+                processName = processName.trim { it <= ' ' }
+            }
+            return processName
+        } catch (throwable: Throwable) {
+            throwable.printStackTrace()
+        } finally {
+            try {
+                reader?.close()
+            } catch (exception: IOException) {
+                exception.printStackTrace()
+            }
+        }
+        return null
     }
 }

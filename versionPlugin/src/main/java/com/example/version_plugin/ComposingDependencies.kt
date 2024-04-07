@@ -161,6 +161,12 @@ object DepsVersions {
      */
     const val glideTransformations = "4.3.0"
 
+    /**
+     * Bugly 其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如4.1.9.3
+     * implementation 'com.tencent.bugly:crashreport:latest.release'
+     */
+    const val bugly = "latest.release"
+
 }
 
 object ComposingDependencies {
@@ -398,4 +404,10 @@ object ComposingDependencies {
      */
     const val glideTransformations =
         "jp.wasabeef:glide-transformations:${DepsVersions.glideTransformations}"
+
+    /**
+     * Bugly 其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如4.1.9.3
+     * implementation 'com.tencent.bugly:crashreport:latest.release'
+     */
+    const val bugly = "com.tencent.bugly:crashreport:${DepsVersions.bugly}"
 }

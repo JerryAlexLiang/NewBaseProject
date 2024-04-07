@@ -346,6 +346,9 @@ dependencies {
     api(ComposingDependencies.smartRefreshHeaderFalsify)
     api(ComposingDependencies.smartRefreshHeaderMaterial)
 
+    // Bugly
+    api(ComposingDependencies.bugly)
+
     /////////////////////////////ComposingBuild-使用Plugin中声明的三方库-end////////////////////////////////////////
 
 

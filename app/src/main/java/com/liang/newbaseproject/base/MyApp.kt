@@ -1,7 +1,9 @@
 package com.liang.newbaseproject.base
 
+import com.liang.module_base.BuildConfig
 import com.liang.module_base.base.BaseApp
 import com.liang.newbaseproject.koin.appModules
+import com.tencent.bugly.crashreport.CrashReport
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext.startKoin
@@ -25,6 +27,26 @@ class MyApp : BaseApp() {
         initRoomDataBase()
         initAppViewModel()
         initKoin()
+        //腾讯Bugly
+        initBugly()
+    }
+
+    /**
+     * 腾讯bugly
+     */
+    private fun initBugly() {
+        CrashReport.setIsDevelopmentDevice(this, BuildConfig.DEBUG)
+        val userStrategy: CrashReport.UserStrategy = CrashReport.UserStrategy(this)
+        userStrategy.setUploadProcess(isMainProcess())
+
+
+        //注册时申请的APP ID
+        //第三个参数为SDK调试模式开关，调试模式的行为特性如下：
+        //输出详细的Bugly SDK的Log；
+        //每一条Crash都会被立即上报；
+        //自定义日志将会在Logcat中输出。
+        //建议在测试阶段建议设置成true，发布时设置为false。
+        CrashReport.initCrashReport(this, "cdb269a031", BuildConfig.DEBUG, userStrategy)
     }
 
     /**

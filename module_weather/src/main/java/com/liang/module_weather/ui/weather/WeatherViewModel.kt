@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
  * - User: Jerry
  * - Description: 天气预报ViewModel
  */
-class WeatherViewModel(application: Application, val weatherRepository: WeatherRepository) :
+class WeatherViewModel(application: Application, private val weatherRepository: WeatherRepository) :
     BaseViewModel(application) {
 
 //    private val _weatherLiveData: MutableLiveData<Location> = MutableLiveData<Location>()

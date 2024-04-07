@@ -185,4 +185,6 @@
 
     <color name="toast_bg">#000000</color>
     <color name="text_invert">#ffffff</color>
+
+    <color name="surface">#ffffff</color>
 </resources>
