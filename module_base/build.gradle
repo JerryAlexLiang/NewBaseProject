@@ -349,6 +349,9 @@ dependencies {
     // Bugly
     api(ComposingDependencies.bugly)
 
+    // CrashActivity
+    api(ComposingDependencies.crashActivity)
+
     /////////////////////////////ComposingBuild-使用Plugin中声明的三方库-end////////////////////////////////////////
 
 

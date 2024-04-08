@@ -13,6 +13,7 @@ import com.liang.module_base.extension.setGridLayoutManager
 import com.liang.module_base.extension.showShortToast
 import com.liang.module_base.extension.showShortToastMirrorX
 import com.liang.module_base.utils.ClickAnimationUtils
+import com.liang.module_base.utils.GsonUtils
 import com.liang.module_base.utils.LanguageUtilKt
 import com.liang.module_base.utils.ToastUtil
 import com.liang.module_base.utils.decoration.SpaceItemDecorationKt
@@ -100,7 +101,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                         if (funNameResId == R.string.func_day_night) {
                             // 切换暗黑模式
                             changeDayNightMode()
-                        }else if (funNameResId == R.string.func_change_language) {
+                        } else if (funNameResId == R.string.func_change_language) {
                             if (LanguageUtilKt.isChinese) {
                                 changeLanguage(false)
                             } else {
@@ -127,9 +128,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                             MusicServiceActivity.actionStart(this@MainActivity)
                         } else if (funNameResId == R.string.func_choose_image) {
                             PictureSelectorServiceProvider.startPictureSelectorActivity(this@MainActivity)
-                        }
-                        else if (funNameResId == R.string.func_weather) {
+                        } else if (funNameResId == R.string.func_weather) {
                             WeatherServiceProvider.startWeatherMainActivity(this@MainActivity)
+                        } else if (funNameResId == R.string.func_crash_test) {
+                            testAppCrashCatch()
                         } else {
                             val strByLanguage = LanguageUtilKt.getStrByLanguage(
                                 this@MainActivity,
@@ -152,6 +154,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 }
             })
         }
+    }
+
+    /**
+     * 程序崩溃框架测试
+     */
+    private fun testAppCrashCatch() {
+        val list: MutableList<String> = mutableListOf()
+        list.add("肖战")
+        list.add("贺峻霖")
+        list.add("肖宇梁")
+        list.add("丁程鑫")
+        list.add("马天宇")
+        list.clear()
+
+        ToastUtil.showFailToast(this, true, "List列表第index=0项为：${GsonUtils.toJson(list[0])}")
     }
 
     override fun startObserver() {

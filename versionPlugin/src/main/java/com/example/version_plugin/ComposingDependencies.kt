@@ -167,6 +167,9 @@ object DepsVersions {
      */
     const val bugly = "latest.release"
 
+    // Android程序崩溃框架—CustomActivityOnCrash
+    // cat.ereza:customactivityoncrash:$versions.crashActivity
+    const val crashActivity = "2.4.0"
 }
 
 object ComposingDependencies {
@@ -410,4 +413,7 @@ object ComposingDependencies {
      * implementation 'com.tencent.bugly:crashreport:latest.release'
      */
     const val bugly = "com.tencent.bugly:crashreport:${DepsVersions.bugly}"
+
+    // Android程序崩溃框架—CustomActivityOnCrash
+    const val crashActivity = "cat.ereza:customactivityoncrash:${DepsVersions.crashActivity}"
 }
