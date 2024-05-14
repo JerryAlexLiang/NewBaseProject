@@ -83,30 +83,27 @@ class PlaceFragment : BaseFragment<FragmentPlaceBinding>() {
     }
 
     private fun initListener() {
-        placeAdapter.setOnItemClickListener(object : PlaceAdapter.OnItemClickListener {
-            override fun onItemClick(bean: Place?) {
-                context?.let { ToastUtil.showShort(it, bean?.name ?: "") }
+        placeAdapter.setOnItemClickListener { bean ->
+            context?.let { ToastUtil.showShort(it, bean?.name ?: "") }
 
-                if (activity is WeatherActivity) {
-                    // 如果当前是WeatherActivity，则不需要再次跳转，关闭DrawerLayout,并请求新数据并刷新界面UI
-                    bean?.let { (activity as WeatherActivity).currentActivityRefresh(it) }
-                } else {
-                    context?.let {
-                        WeatherActivity.actionStart(
-                            it,
-                            bean?.name ?: "",
-                            bean?.location?.lng ?: "",
-                            bean?.location?.lat ?: ""
-                        )
-                    }
-                    activity?.finish()
+            if (activity is WeatherActivity) {
+                // 如果当前是WeatherActivity，则不需要再次跳转，关闭DrawerLayout,并请求新数据并刷新界面UI
+                bean?.let { (activity as WeatherActivity).currentActivityRefresh(it) }
+            } else {
+                context?.let {
+                    WeatherActivity.actionStart(
+                        it,
+                        bean?.name ?: "",
+                        bean?.location?.lng ?: "",
+                        bean?.location?.lat ?: ""
+                    )
                 }
-
-                // 存储城市名
-                bean?.let { viewModel.savePlace(it) }
-
+                activity?.finish()
             }
-        })
+
+            // 存储城市名
+            bean?.let { viewModel.savePlace(it) }
+        }
     }
 
     private fun initAdapter() {

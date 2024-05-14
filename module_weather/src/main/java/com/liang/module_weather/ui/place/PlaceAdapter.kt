@@ -19,7 +19,7 @@ class PlaceAdapter(private val placeList: List<Place>) :
 
     private var onItemClickListener: OnItemClickListener? = null
 
-    interface OnItemClickListener {
+    fun interface OnItemClickListener {
         fun onItemClick(bean: Place?)
     }
 

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import com.liang.module_base.base.BaseActivity
@@ -263,6 +264,15 @@ class WeatherActivity : BaseActivity<ActivityWeatherBinding>() {
                 tvTemperatureInfo.text = tempScope
                 // 添加View到父布局中
                 llForecastLayout.addView(forecastItemView)
+
+                forecastItemView.setOnClickListener {
+                    ToastUtil.showShort(this@WeatherActivity,"时间: ${simpleDateFormat.format(skycon.date)}")
+                }
+
+                tvSkyInfo.setOnClickListener {
+                    ToastUtil.showShort(this@WeatherActivity,"天气: ${sky.info}")
+                }
+
             }
         }
     }

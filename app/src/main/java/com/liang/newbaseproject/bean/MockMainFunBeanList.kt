@@ -4,8 +4,8 @@ import android.content.Context
 import com.liang.module_base.base.BaseApp
 import com.liang.module_base.utils.LanguageUtilKt
 import com.liang.newbaseproject.R
+import com.liang.newbaseproject.citypicker.CityPickerActivity
 import com.liang.newbaseproject.normal.NormalViewModelActivity
-import com.liang.newbaseproject.pictureSelector.PictureSelectorActivity
 
 object MockMainFunBeanList {
 
@@ -65,6 +65,13 @@ object MockMainFunBeanList {
             R.string.func_crash_test,
         )
 
+    private val bean15 =
+        FunItemBean(
+            R.string.func_city_list,
+            activity = CityPickerActivity::class.java
+        )
+
+
     private var funBeanList: MutableList<FunItemBean> = mutableListOf()
 
     fun initMainFunData(): MutableList<FunItemBean> {
@@ -84,6 +91,7 @@ object MockMainFunBeanList {
             add(bean12)
             add(bean13)
             add(bean14)
+            add(bean15)
         }
         return funBeanList
     }

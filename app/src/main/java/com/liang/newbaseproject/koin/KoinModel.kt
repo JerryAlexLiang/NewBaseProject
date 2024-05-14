@@ -1,6 +1,7 @@
 package com.liang.newbaseproject.koin
 
 import com.liang.module_base.http.net.RetrofitManager
+import com.liang.newbaseproject.citypicker.CityViewModel
 import com.liang.newbaseproject.livedata.WanApiRepositoryKoin
 import com.liang.newbaseproject.livedata.WanApiService
 import com.liang.newbaseproject.main.MainFunRvAdapter
@@ -68,6 +69,10 @@ val mainModel = module {
 
     viewModel {
         MxnzpViewModel(androidApplication(), get())
+    }
+
+    viewModel {
+        CityViewModel(get())
     }
 
 //

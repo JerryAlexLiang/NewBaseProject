@@ -170,6 +170,9 @@ object DepsVersions {
     // Android程序崩溃框架—CustomActivityOnCrash
     // cat.ereza:customactivityoncrash:$versions.crashActivity
     const val crashActivity = "2.4.0"
+
+    // 汉字转拼音com.belerweb:pinyin4j:2.5.1
+    const val pinyin4j = "2.5.1"
 }
 
 object ComposingDependencies {
@@ -416,4 +419,7 @@ object ComposingDependencies {
 
     // Android程序崩溃框架—CustomActivityOnCrash
     const val crashActivity = "cat.ereza:customactivityoncrash:${DepsVersions.crashActivity}"
+
+    // 汉字转拼音com.belerweb:pinyin4j:2.5.1
+    const val pinyin4j = "com.belerweb:pinyin4j:${DepsVersions.pinyin4j}"
 }

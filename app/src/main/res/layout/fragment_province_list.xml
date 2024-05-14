@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/tvProvince"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="省份"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvAG"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:background="@color/yellow"
+            android:gravity="center"
+            android:text="A-G"
+            android:textSize="26sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/rgAG"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toEndOf="@id/tvAG"
+            app:layout_constraintTop_toTopOf="@id/tvAG">
+
+            <!--固定数量，为了方便，可以直接使用循环遍历生成layout布局，不使用RecyclerView       -->
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tvHK"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:background="@color/yellow"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:text="H-K"
+            android:textSize="26sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvAG"/>
+
+        <RadioGroup
+            android:id="@+id/rgHK"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toEndOf="@id/tvHK"
+            app:layout_constraintTop_toTopOf="@id/tvHK">
+
+            <!--固定数量，为了方便，可以直接使用循环遍历生成layout布局，不使用RecyclerView       -->
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tvLS"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:background="@color/yellow"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:text="L-S"
+            android:textSize="26sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvHK"/>
+
+        <RadioGroup
+            android:id="@+id/rgLS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toEndOf="@id/tvLS"
+            app:layout_constraintTop_toTopOf="@id/tvLS">
+
+            <!--固定数量，为了方便，可以直接使用循环遍历生成layout布局，不使用RecyclerView       -->
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tvTZ"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:background="@color/yellow"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:text="T-Z"
+            android:textSize="26sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvLS"/>
+
+        <RadioGroup
+            android:id="@+id/rgTZ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toEndOf="@id/tvTZ"
+            app:layout_constraintTop_toTopOf="@id/tvTZ">
+
+            <!--固定数量，为了方便，可以直接使用循环遍历生成layout布局，不使用RecyclerView       -->
+
+        </RadioGroup>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

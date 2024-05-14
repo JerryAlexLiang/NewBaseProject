@@ -352,6 +352,9 @@ dependencies {
     // CrashActivity
     api(ComposingDependencies.crashActivity)
 
+    // pinyin4j
+    api(ComposingDependencies.pinyin4j)
+
     /////////////////////////////ComposingBuild-使用Plugin中声明的三方库-end////////////////////////////////////////
 
 

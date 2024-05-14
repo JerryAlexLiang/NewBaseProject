@@ -35,5 +35,8 @@
     <string name="mirror_x">X镜像</string>
     <string name="func_weather">天气预报</string>
     <string name="func_crash_test">程序崩溃框架测试</string>
+    <string name="func_city_list">城市选择列表</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
