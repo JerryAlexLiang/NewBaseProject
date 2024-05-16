@@ -6,6 +6,7 @@ import com.liang.module_base.utils.LanguageUtilKt
 import com.liang.newbaseproject.R
 import com.liang.newbaseproject.citypicker.CityPickerActivity
 import com.liang.newbaseproject.normal.NormalViewModelActivity
+import com.liang.newbaseproject.pickView.OptionPickerActivity
 
 object MockMainFunBeanList {
 
@@ -71,6 +72,11 @@ object MockMainFunBeanList {
             activity = CityPickerActivity::class.java
         )
 
+    private val bean16 =
+            FunItemBean(
+                    R.string.fun_option_picker,
+                    activity = OptionPickerActivity::class.java
+            )
 
     private var funBeanList: MutableList<FunItemBean> = mutableListOf()
 
@@ -92,6 +98,7 @@ object MockMainFunBeanList {
             add(bean13)
             add(bean14)
             add(bean15)
+            add(bean16)
         }
         return funBeanList
     }

@@ -1,5 +1,7 @@
 package com.liang.module_base.utils;
 
+import android.annotation.SuppressLint;
+
 import com.liang.module_base.R;
 
 import java.text.ParseException;
@@ -16,6 +18,7 @@ import java.util.TimeZone;
  */
 public class DateUtilJava {
     public static final String STANDARD_TIME = "yyyy.MM.dd HH:mm:ss";
+    public static final String STANDARD_TIME2 = "yyyy.MM.dd HH:mm";
     public static final String FULL_TIME = "yyyy-MM-dd HH:mm:ss.SSS";
     public static final String MONTH_DAY_HOUR_MINUTE = "MM-dd HH:mm";
     public static final String YEAR_MONTH_DAY_HOUR_MINUTE = "yyyy.MM.dd HH:mm";
@@ -106,6 +109,15 @@ public class DateUtilJava {
      */
     public static String getTheYearMonthAndDayMiddleLine() {
         return new SimpleDateFormat(YEAR_MONTH_DAY_MIDDLE_LINE, Locale.CHINESE).format(new Date());
+    }
+
+    /**
+     * 获取年月日(今天)
+     *
+     * @return 例如 07-01
+     */
+    public static String getTheMonthAndDayMiddleLine() {
+        return new SimpleDateFormat(MONTH_DAY, Locale.CHINESE).format(new Date());
     }
 
     /**
@@ -261,6 +273,36 @@ public class DateUtilJava {
         return Objects.requireNonNull(date).getTime();
     }
 
+    /**
+     * 将时间转换为时间戳
+     *
+     * @param s
+     * @return
+     * @throws ParseException
+     */
+    public static String dateToStamp2(String s) throws ParseException {
+        String res;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = simpleDateFormat.parse(s);
+        long ts = date.getTime();
+        res = String.valueOf(ts);
+        return res;
+    }
+
+
+    /**
+     * 将时间戳转换为时间
+     * s就是时间戳
+     */
+    public static String stampToDate(String s) {
+        String res;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //如果它本来就是long类型的,则不用写这一步
+        long lt = new Long(s);
+        Date date = new Date(lt);
+        res = simpleDateFormat.format(date);
+        return res;
+    }
 
     /**
      * 将时间转换为时间戳
@@ -440,6 +482,8 @@ public class DateUtilJava {
 
     /**
      * 根据输入的日期时间计算是星期几
+     * <p>
+     * 废弃不用 使用getWeekByTime
      *
      * @param dateTime 例如 2021-06-20
      * @return 例如 星期日
@@ -449,7 +493,8 @@ public class DateUtilJava {
         if ("".equals(dateTime)) {
             cal.setTime(new Date(System.currentTimeMillis()));
         } else {
-            SimpleDateFormat sdf = new SimpleDateFormat(YEAR_MONTH_DAY, Locale.getDefault());
+//            SimpleDateFormat sdf = new SimpleDateFormat(YEAR_MONTH_DAY, Locale.getDefault());
+            SimpleDateFormat sdf = new SimpleDateFormat(YEAR_MONTH_DAY_MIDDLE_LINE, Locale.getDefault());
             Date date;
             try {
                 date = sdf.parse(dateTime);
@@ -611,4 +656,92 @@ public class DateUtilJava {
         }
         return quarter;
     }
+
+    /**
+     * 根据当前日期获得是星期几
+     * time=yyyy-MM-dd
+     *
+     * @return
+     */
+    public static String getWeek2(String time) {
+        String Week = "";
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(format.parse(time));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        int wek = c.get(Calendar.DAY_OF_WEEK);
+
+        if (wek == 1) {
+            Week += "周日";
+        }
+        if (wek == 2) {
+            Week += "周一";
+        }
+        if (wek == 3) {
+            Week += "周二";
+        }
+        if (wek == 4) {
+            Week += "周三";
+        }
+        if (wek == 5) {
+            Week += "周四";
+        }
+        if (wek == 6) {
+            Week += "周五";
+        }
+        if (wek == 7) {
+            Week += "周六";
+        }
+        return Week;
+    }
+
+
+    /**
+     * 获取前n天日期、后n天日期
+     *
+     * @param distanceDay 前几天 如获取前7天日期则传-7即可；如果后7天则传7  当天日期传0 yyyy-MM-dd
+     * @return
+     */
+    public static String getOldDate(int distanceDay) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd");
+//        SimpleDateFormat dft = new SimpleDateFormat("yyyyMMdd");
+        Date beginDate = new Date();
+        Calendar date = Calendar.getInstance();
+        date.setTime(beginDate);
+        date.set(Calendar.DATE, date.get(Calendar.DATE) + distanceDay);
+        Date endDate = null;
+        try {
+            endDate = dft.parse(dft.format(date.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dft.format(endDate);
+    }
+
+    /**
+     * 获取前n天日期、后n天日期
+     *
+     * @param distanceDay 前几天 如获取前7天日期则传-7即可；如果后7天则传7 yyyy-MM-dd
+     * @return
+     */
+    public static String getOldDateMontyDay(int distanceDay) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dft = new SimpleDateFormat("MM-dd");
+//        SimpleDateFormat dft = new SimpleDateFormat("yyyyMMdd");
+        Date beginDate = new Date();
+        Calendar date = Calendar.getInstance();
+        date.setTime(beginDate);
+        date.set(Calendar.DATE, date.get(Calendar.DATE) + distanceDay);
+        Date endDate = null;
+        try {
+            endDate = dft.parse(dft.format(date.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dft.format(endDate);
+    }
+
 }

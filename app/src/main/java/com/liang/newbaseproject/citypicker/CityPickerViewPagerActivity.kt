@@ -15,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.liang.module_base.base.BaseActivity
+import com.liang.module_base.utils.DateUtilJava
 import com.liang.module_base.utils.GsonUtils
 import com.liang.module_base.utils.LogUtils
 import com.liang.module_base.utils.ToastUtil
@@ -98,15 +99,15 @@ class CityPickerViewPagerActivity : BaseActivity<ActivityCityPickerViewPagerBind
                         val checkedCity = viewModel.checkedCity
                         if (checkedCity == null) {
                             ToastUtil.showFailRectangleToast(
-                                this@CityPickerViewPagerActivity,
-                                true,
-                                "请选择城市"
+                                    this@CityPickerViewPagerActivity,
+                                    true,
+                                    "请选择城市"
                             )
                         } else {
                             LogUtils.d(tag = "CityTagAdapter3", msg = "选中: ${checkedCity.name}")
                             ToastUtil.showSuccessRectangleToast(
-                                this@CityPickerViewPagerActivity, true,
-                                checkedCity.name
+                                    this@CityPickerViewPagerActivity, true,
+                                    checkedCity.name
                             )
                         }
                     }
@@ -164,6 +165,36 @@ class CityPickerViewPagerActivity : BaseActivity<ActivityCityPickerViewPagerBind
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+
+        mBinding.apply {
+//            val weekByData = DateUtilJava.getWeekByData("2024-5-14")
+//            text = "$weekByData 2024-5-14"
+
+            val theYearMonthAndDayMiddleLine = DateUtilJava.getTheYearMonthAndDayMiddleLine()
+            val theMonthAndDayMiddleLine = DateUtilJava.getTheMonthAndDayMiddleLine()
+
+            // Today星期
+            val todayOfWeek = DateUtilJava.getTodayOfWeek()
+
+            // 日期转星期
+            val weekByData = DateUtilJava.getWeek2(theYearMonthAndDayMiddleLine)
+
+
+            tvTime.text = theYearMonthAndDayMiddleLine + " " + todayOfWeek + " " + theMonthAndDayMiddleLine + " " + weekByData
+
+            // 前几天 如获取前7天日期则传-7即可；如果后7天则传7
+            val futureDate = DateUtilJava.getOldDate(7)
+            val week2 = DateUtilJava.getWeek(futureDate)
+            val weekByData2 = DateUtilJava.getWeek2(futureDate)
+
+            tvTimeEnd.text = futureDate + " " + week2 + " " + weekByData2
+
+            val currentYear = DateUtilJava.getCurrentYear()
+            val futureDateMontyDay = DateUtilJava.getOldDateMontyDay(7)
+            tvTimeEnd2.text = "$currentYear-$futureDateMontyDay"
+        }
+
 
 //        mBinding.rgTabLayout.minimumHeight = ScreenUtil.dp2px(this@CityPickerViewPagerActivity, 80f)
 
@@ -233,9 +264,9 @@ class CityPickerViewPagerActivity : BaseActivity<ActivityCityPickerViewPagerBind
             // 这个参数在左滑时由1趋近0，右滑由0趋近1
             // 参数三：positionOffsetPixel表示页面完成滑动的像素数，变化趋势和positionOffset一样
             override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int,
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int,
             ) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
             }
