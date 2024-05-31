@@ -36,6 +36,16 @@ class CityViewModel(application: Application) : BaseViewModel(application) {
     // 选中城市
     var checkedCity: City? = null
 
+    // 省市切换tag 1 省选中 2 城市选中
+    private val _provinceOrCityIsCheck: MutableLiveData<Int> = MutableLiveData()
+    val provinceOrCityIsCheck: LiveData<Int>
+        get() = _provinceOrCityIsCheck
+
+    fun setProvinceOrCityIsCheck(flag: Int) {
+        // 省市切换tag 1 省选中 2 城市选中
+        _provinceOrCityIsCheck.value = flag
+    }
+
     // 省市JSON数据解析
     private val _dataLiveData: MutableLiveData<CityUiState> = MutableLiveData()
     val dataLiveData: LiveData<CityUiState>
@@ -54,10 +64,10 @@ class CityViewModel(application: Application) : BaseViewModel(application) {
         // 获取assets目录下的json文件数据
         val jsonData = getJson(getApplication(), "city.json")
         _dataLiveData.value = CityUiState.Success(
-            Gson().fromJson(
-                jsonData,
-                object : TypeToken<ArrayList<ProvinceInfo>>() {}.type
-            )
+                Gson().fromJson(
+                        jsonData,
+                        object : TypeToken<ArrayList<ProvinceInfo>>() {}.type
+                )
         )
     }
 
@@ -66,9 +76,9 @@ class CityViewModel(application: Application) : BaseViewModel(application) {
         try {
             val assetManager = context.assets
             val bf = BufferedReader(
-                InputStreamReader(
-                    assetManager.open(fileName!!)
-                )
+                    InputStreamReader(
+                            assetManager.open(fileName!!)
+                    )
             )
             var line: String?
             while (bf.readLine().also { line = it } != null) {

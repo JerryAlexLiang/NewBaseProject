@@ -7,10 +7,9 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -33,10 +32,13 @@ import com.liang.newbaseproject.databinding.ActivityCityPickerViewPagerBinding
 class CityPickerViewPagerActivity : BaseActivity<ActivityCityPickerViewPagerBinding>() {
 
     private val stringList: ArrayList<String> = ArrayList()
-    private val fragmentList: ArrayList<Fragment> = ArrayList()
 
     // 初始化ViewModel-使用Koin依赖注入的方法
-    private val viewModel: CityViewModel by viewModels()
+//    private val viewModel: CityViewModel by viewModels()
+
+    private val viewModel: CityViewModel by lazy {
+        ViewModelProvider(this)[CityViewModel::class.java]
+    }
 
     companion object {
         fun actionStart(context: Context) {
@@ -138,7 +140,7 @@ class CityPickerViewPagerActivity : BaseActivity<ActivityCityPickerViewPagerBind
         }
     }
 
-    fun setCheckTabUI() {
+    fun setCheckCityUI() {
         mBinding.apply {
             rbProvince.isChecked = false
             rbCity.isChecked = true
@@ -240,7 +242,7 @@ class CityPickerViewPagerActivity : BaseActivity<ActivityCityPickerViewPagerBind
         }.attach()
 
         // false表示禁止，true表示允许
-        mBinding.viewPager.setUserInputEnabled(false);
+        mBinding.viewPager.setUserInputEnabled(false)
 
         // TabLayout的监听事件
         mBinding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -311,9 +313,6 @@ class CityPickerViewPagerActivity : BaseActivity<ActivityCityPickerViewPagerBind
     private fun setData() {
         stringList.add("省份")
         stringList.add("城市")
-
-        fragmentList.add(ProvinceListFragment.newInstance())
-        fragmentList.add(CityListFragment.newInstance())
     }
 
     private fun setTabLayoutCanClick(canClick: Boolean) {

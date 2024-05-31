@@ -13,17 +13,12 @@ import com.liang.newbaseproject.R
 import com.liang.newbaseproject.databinding.FragmentProvinceListBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
-
-class ProvinceListFragment : BaseFragment<FragmentProvinceListBinding>() {
+class ProvinceListFragment2 : BaseFragment<FragmentProvinceListBinding>() {
 
     companion object {
         @JvmStatic
-        fun newInstance(): ProvinceListFragment = ProvinceListFragment()
+        fun newInstance(): ProvinceListFragment2 = ProvinceListFragment2()
     }
-
-//    private val viewModel: CityViewModel by lazy {
-//        ViewModelProvider(requireActivity())[CityViewModel::class.java]
-//    }
 
     private val viewModel: CityViewModel by activityViewModel()
 
@@ -56,7 +51,7 @@ class ProvinceListFragment : BaseFragment<FragmentProvinceListBinding>() {
         dismissLoading()
         val result = uiState.result
         val json = GsonUtils.toJson(result)
-        LogUtils.d(tag = "CityJson2", msg = json)
+        LogUtils.d(tag = "CityJson**", msg = json)
 
         viewModel.provinceListAG.clear()
         viewModel.provinceListHK.clear()
@@ -151,8 +146,8 @@ class ProvinceListFragment : BaseFragment<FragmentProvinceListBinding>() {
     }
 
     private fun setProvinceUI(
-        rgContainer: RadioGroup,
-        provinceListAG: ArrayList<ProvinceInfo>,
+            rgContainer: RadioGroup,
+            provinceListAG: ArrayList<ProvinceInfo>,
     ) {
         //清空父布局中的子布局
         rgContainer.removeAllViews()
@@ -167,19 +162,19 @@ class ProvinceListFragment : BaseFragment<FragmentProvinceListBinding>() {
 //            radioButton.setTextColor(ContextCompat.getColor(requireContext(),R.color.selector_radio_button_text))  // 无效
             // 获取颜色资源使用getResources().getColorStateList(），而不是getResources().getColor(）
             radioButton.setTextColor(
-                ContextCompat.getColorStateList(
-                    requireContext(),
-                    R.color.selector_radio_button_text
-                )
+                    ContextCompat.getColorStateList(
+                            requireContext(),
+                            R.color.selector_radio_button_text
+                    )
             )
             //设置按钮的样式
             radioButton.buttonDrawable = null
             // 去除点击水波纹效果
             radioButton.setBackgroundColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    com.liang.module_ui.R.color.transparent
-                )
+                    ContextCompat.getColor(
+                            requireContext(),
+                            com.liang.module_ui.R.color.transparent
+                    )
             )
             // 设置文字距离按钮四周的距离
             radioButton.setPadding(15, 0, 15, 0)
@@ -188,7 +183,7 @@ class ProvinceListFragment : BaseFragment<FragmentProvinceListBinding>() {
 
             //设置RadioButton间距margin
             val params = RadioGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
             )
             params.setMargins(10, 0, 10, 0)
 
@@ -228,20 +223,16 @@ class ProvinceListFragment : BaseFragment<FragmentProvinceListBinding>() {
                         }
                     }
 
-
                     // 设置选中省份
                     viewModel.setCheckProvinceInfo(provinceInfo)
 
 //                // 不使用LiveData的话不符合需求
 //                viewModel.checkedProvince = provinceInfo
 
-                    // 切换ViewPager-CityFragment
-                    (activity as CityPickerViewPagerActivity).mBinding.viewPager.currentItem = 1
-                    // 更新UI
-                    (activity as CityPickerViewPagerActivity).setCheckCityUI()
+                    // 选中城市，切换ViewPager-CityFragment，切换ViewPager-CityFragment-更新父容器DialogFragment中的UI-setCheckCityUI
+                    viewModel.setProvinceOrCityIsCheck(2)
                 }
             }
-
 
             rgContainer.addView(radioButton, params)
         }

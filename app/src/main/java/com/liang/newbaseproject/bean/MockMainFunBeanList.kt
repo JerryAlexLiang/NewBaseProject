@@ -4,7 +4,8 @@ import android.content.Context
 import com.liang.module_base.base.BaseApp
 import com.liang.module_base.utils.LanguageUtilKt
 import com.liang.newbaseproject.R
-import com.liang.newbaseproject.citypicker.CityPickerActivity
+import com.liang.newbaseproject.citypicker.CityPickerDialogActivity
+import com.liang.newbaseproject.citypicker.CityPickerViewPagerActivity
 import com.liang.newbaseproject.normal.NormalViewModelActivity
 import com.liang.newbaseproject.pickView.OptionPickerActivity
 
@@ -69,14 +70,20 @@ object MockMainFunBeanList {
     private val bean15 =
         FunItemBean(
             R.string.func_city_list,
-            activity = CityPickerActivity::class.java
+            activity = CityPickerViewPagerActivity::class.java
         )
 
     private val bean16 =
-            FunItemBean(
-                    R.string.fun_option_picker,
-                    activity = OptionPickerActivity::class.java
-            )
+        FunItemBean(
+            R.string.func_city_list,
+            activity = CityPickerDialogActivity::class.java
+        )
+
+    private val bean17 =
+        FunItemBean(
+            R.string.fun_option_picker,
+            activity = OptionPickerActivity::class.java
+        )
 
     private var funBeanList: MutableList<FunItemBean> = mutableListOf()
 
@@ -99,6 +106,7 @@ object MockMainFunBeanList {
             add(bean14)
             add(bean15)
             add(bean16)
+            add(bean17)
         }
         return funBeanList
     }

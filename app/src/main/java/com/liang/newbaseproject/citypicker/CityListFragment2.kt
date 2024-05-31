@@ -9,11 +9,12 @@ import com.google.android.flexbox.JustifyContent
 import com.liang.module_base.base.BaseFragment
 import com.liang.module_base.utils.GsonUtils
 import com.liang.module_base.utils.LogUtils
+import com.liang.module_base.utils.ToastUtil
 import com.liang.newbaseproject.R
 import com.liang.newbaseproject.databinding.FragmentCityListBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
-class CityListFragment : BaseFragment<FragmentCityListBinding>() {
+class CityListFragment2 : BaseFragment<FragmentCityListBinding>() {
 
     private val cityTagAdapter by lazy {
         CityListAdapter()
@@ -21,15 +22,8 @@ class CityListFragment : BaseFragment<FragmentCityListBinding>() {
 
     companion object {
         @JvmStatic
-//        fun newInstance(): CityListFragment {
-//            return CityListFragment()
-//        }
-        fun newInstance(): CityListFragment = CityListFragment()
+        fun newInstance(): CityListFragment2 = CityListFragment2()
     }
-
-//    private val viewModel: CityViewModel by lazy {
-//        ViewModelProvider(requireActivity())[CityViewModel::class.java]
-//    }
 
     private val viewModel: CityViewModel by activityViewModel()
 
@@ -48,6 +42,7 @@ class CityListFragment : BaseFragment<FragmentCityListBinding>() {
 
         cityTagAdapter.setOnMyItemClickListener {
             LogUtils.d(tag = "CityTagAdapter1", msg = "选中: ${it?.name}")
+            ToastUtil.showShort(requireContext(),"选中: ${it?.name}")
             viewModel.checkedCity = it
         }
     }
@@ -56,14 +51,6 @@ class CityListFragment : BaseFragment<FragmentCityListBinding>() {
         super.onResume()
         viewModel.checkedCity = null
     }
-//    fun getSelectedCity(): City {
-//        val selectedList = cityTagAdapter.getSelectedList()
-//        LogUtils.d(tag = "getSelectedCity in Fragment", msg = GsonUtils.toJson(selectedList))
-//        if (selectedList.isNotEmpty()) {
-//            viewModel.checkedCity = selectedList[0]
-//        }
-//        return selectedList[0]
-//    }
 
     private fun getFlexboxLayoutManager(context: Context?): FlexboxLayoutManager {
         //设置布局管理器
@@ -79,24 +66,6 @@ class CityListFragment : BaseFragment<FragmentCityListBinding>() {
         flexboxLayoutManager.justifyContent = JustifyContent.FLEX_START
         return flexboxLayoutManager
     }
-
-//    override fun onResume() {
-//        super.onResume()
-//
-//        val checkedProvince = viewModel.checkedProvince
-//        LogUtils.d(tag = "checkedProvinceCityList", msg = GsonUtils.toJson(checkedProvince?.name ?: "***"))
-//
-//        mBinding.tvCity.text = checkedProvince?.name + "省"
-//
-//        val cityList = checkedProvince?.cityList
-//
-//        cityList?.let { it1 -> viewModel.checkedCityList.addAll(it1) }
-//        cityTagAdapter.submitList(cityList)
-//
-//        cityList?.forEach { city ->
-//            mBinding.tvCity.append(" " + city.name + " ")
-//        }
-//    }
 
     override fun startObserver() {
         super.startObserver()
@@ -120,12 +89,10 @@ class CityListFragment : BaseFragment<FragmentCityListBinding>() {
             }
         }
 
-        mBinding.tvCity.setOnClickListener {
-            // 切换ViewPager-CityFragment
-            (activity as CityPickerViewPagerActivity).mBinding.viewPager.currentItem = 0
-            // 更新UI
-            (activity as CityPickerViewPagerActivity).setCheckProvinceUI()
-        }
+//        mBinding.tvCity.setOnClickListener {
+//            // 选中城市，切换ViewPager-ProvinceFragment，切换ViewPager-ProvinceFragment-更新父容器DialogFragment中的UI-setCheckProvinceUI
+//            viewModel.setProvinceOrCityIsCheck(1)
+//        }
     }
 
 }
