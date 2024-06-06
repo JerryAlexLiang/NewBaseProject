@@ -64,6 +64,12 @@ object RetrofitManager {
 //            .cookieJar(MyCookieJar())
             .retryOnConnectionFailure(true)
             .followRedirects(false)
+//            .sslSocketFactory(SSLSocketClient.getSSLSocketFactory())
+            .sslSocketFactory(
+                SSLSocketClient.getSSLSocketFactory(),
+                SSLSocketClient.getX509TrustManager()
+            )
+            .hostnameVerifier(SSLSocketClient.getHostnameVerifier())
             .build()
 
     /**
