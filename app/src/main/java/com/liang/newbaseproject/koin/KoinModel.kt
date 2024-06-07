@@ -2,6 +2,9 @@ package com.liang.newbaseproject.koin
 
 import com.liang.module_base.http.net.RetrofitManager
 import com.liang.newbaseproject.citypicker.CityViewModel
+import com.liang.newbaseproject.citypicker.RepairShopRepository
+import com.liang.newbaseproject.citypicker.RepairShopService
+import com.liang.newbaseproject.citypicker.RepairShopViewModel
 import com.liang.newbaseproject.livedata.WanApiRepositoryKoin
 import com.liang.newbaseproject.livedata.WanApiService
 import com.liang.newbaseproject.main.MainFunRvAdapter
@@ -23,6 +26,15 @@ val mainModel = module {
 
     single {
         RetrofitManager.getApiService(MxnzpApiService::class.java)
+    }
+
+    single {
+        RetrofitManager.getApiService(
+            RepairShopService::class.java,
+//            baseUrl = "https://test-api.bhmc.com.cn/"
+//            baseUrl = "https://pre-api.bhmc.com.cn/"
+            baseUrl = "https://bm2-api.bluemembers.com.cn/"
+        )
     }
 
     /** Room数据库 */
@@ -58,6 +70,10 @@ val mainModel = module {
         RoomRepository(get())
     }
 
+    single {
+        RepairShopRepository(get())
+    }
+
     /** ViewModel Module */
     viewModel {
         SplashViewModel(androidApplication())
@@ -73,6 +89,10 @@ val mainModel = module {
 
     viewModel {
         CityViewModel(get())
+    }
+
+    viewModel {
+        RepairShopViewModel(get(), get())
     }
 
 //

@@ -48,16 +48,28 @@ class OptionPickerActivity : BaseActivity<ActivityTimPickerBinding>() {
             )
 
         // 自定义选项列表
-        val bean1 = PickerBean("丁程鑫", "1")
-        val bean2 = PickerBean("贺峻霖", "2")
-        val bean3 = PickerBean("马嘉祺", "3")
-        val bean4 = PickerBean("姚景元", "4")
-        val bean5 = PickerBean("李天泽", "5")
-        val bean6 = PickerBean("刘耀文", "6")
-        val bean7 = PickerBean("马天宇", "7")
-        val bean8 = PickerBean("丁凯乐", "8")
-        val bean9 = PickerBean("肖战", "9")
-        val bean10 = PickerBean("成毅", "10")
+//        val bean1 = PickerBean("丁程鑫", "1")
+//        val bean2 = PickerBean("贺峻霖", "2")
+//        val bean3 = PickerBean("马嘉祺", "3")
+//        val bean4 = PickerBean("姚景元", "4")
+//        val bean5 = PickerBean("李天泽", "5")
+//        val bean6 = PickerBean("刘耀文", "6")
+//        val bean7 = PickerBean("马天宇", "7")
+//        val bean8 = PickerBean("丁凯乐", "8")
+//        val bean9 = PickerBean("肖战", "9")
+//        val bean10 = PickerBean("成毅", "10")
+
+        val bean1 = PickerBean("索纳塔1", "1")
+        val bean2 = PickerBean("伊兰特1", "2")
+        val bean3 = PickerBean("胜达1", "3")
+        val bean4 = PickerBean("途胜1", "4")
+        val bean5 = PickerBean("捷尼赛思1", "5")
+        val bean6 = PickerBean("索纳塔2", "6")
+        val bean7 = PickerBean("伊兰特2", "7")
+        val bean8 = PickerBean("胜达2", "8")
+        val bean9 = PickerBean("途胜2", "9")
+        val bean10 = PickerBean("捷尼赛思2", "10")
+
         val beanList: List<PickerBean> =
             listOf(bean1, bean2, bean3, bean4, bean5, bean6, bean7, bean8, bean9, bean10)
 
@@ -182,7 +194,7 @@ class OptionPickerActivity : BaseActivity<ActivityTimPickerBinding>() {
             btnDialogBean.setOnClickListener {
                 OptionPickerDialog
                     .Builder(this@OptionPickerActivity)
-                    .setTitle("选择你喜欢的明星")
+                    .setTitle("选择你喜欢的车型")
                     .setHighlightColor(
                         ContextCompat.getColor(
                             this@OptionPickerActivity,

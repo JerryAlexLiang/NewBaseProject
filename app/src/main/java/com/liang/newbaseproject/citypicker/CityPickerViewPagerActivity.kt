@@ -14,13 +14,16 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.liang.module_base.base.BaseActivity
+import com.liang.module_base.extension.showDialog
 import com.liang.module_base.utils.DateUtilJava
 import com.liang.module_base.utils.GsonUtils
 import com.liang.module_base.utils.LogUtils
 import com.liang.module_base.utils.ToastUtil
 import com.liang.module_base.utils.setOnClickListener
+import com.liang.module_weather.ui.place.PlaceViewModel
 import com.liang.newbaseproject.R
 import com.liang.newbaseproject.databinding.ActivityCityPickerViewPagerBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 /**
@@ -39,6 +42,9 @@ class CityPickerViewPagerActivity : BaseActivity<ActivityCityPickerViewPagerBind
     private val viewModel: CityViewModel by lazy {
         ViewModelProvider(this)[CityViewModel::class.java]
     }
+
+    // 初始化ViewModel-使用Koin依赖注入的方法
+    private val repairShopViewModel: RepairShopViewModel by viewModel()
 
     companion object {
         fun actionStart(context: Context) {
@@ -101,16 +107,28 @@ class CityPickerViewPagerActivity : BaseActivity<ActivityCityPickerViewPagerBind
                         val checkedCity = viewModel.checkedCity
                         if (checkedCity == null) {
                             ToastUtil.showFailRectangleToast(
-                                    this@CityPickerViewPagerActivity,
-                                    true,
-                                    "请选择城市"
+                                this@CityPickerViewPagerActivity,
+                                true,
+                                "请选择城市"
                             )
                         } else {
                             LogUtils.d(tag = "CityTagAdapter3", msg = "选中: ${checkedCity.name}")
                             ToastUtil.showSuccessRectangleToast(
-                                    this@CityPickerViewPagerActivity, true,
-                                    checkedCity.name
+                                this@CityPickerViewPagerActivity, true,
+                                checkedCity.name
                             )
+
+                            repairShopViewModel.getRepairShopList(checkedCity.code)
+
+
+                            showDialog(
+                                "成功",
+                                positiveAction = {
+                                    ToastUtil.showShort(this@CityPickerViewPagerActivity, "确定")
+                                },
+                                negativeAction = {
+                                    ToastUtil.showShort(this@CityPickerViewPagerActivity, "取消")
+                                })
                         }
                     }
                 }
@@ -183,7 +201,8 @@ class CityPickerViewPagerActivity : BaseActivity<ActivityCityPickerViewPagerBind
             val weekByData = DateUtilJava.getWeek2(theYearMonthAndDayMiddleLine)
 
 
-            tvTime.text = theYearMonthAndDayMiddleLine + " " + todayOfWeek + " " + theMonthAndDayMiddleLine + " " + weekByData
+            tvTime.text =
+                theYearMonthAndDayMiddleLine + " " + todayOfWeek + " " + theMonthAndDayMiddleLine + " " + weekByData
 
             // 前几天 如获取前7天日期则传-7即可；如果后7天则传7
             val futureDate = DateUtilJava.getOldDate(7)
@@ -266,9 +285,9 @@ class CityPickerViewPagerActivity : BaseActivity<ActivityCityPickerViewPagerBind
             // 这个参数在左滑时由1趋近0，右滑由0趋近1
             // 参数三：positionOffsetPixel表示页面完成滑动的像素数，变化趋势和positionOffset一样
             override fun onPageScrolled(
-                    position: Int,
-                    positionOffset: Float,
-                    positionOffsetPixels: Int,
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int,
             ) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
             }
@@ -321,6 +340,15 @@ class CityPickerViewPagerActivity : BaseActivity<ActivityCityPickerViewPagerBind
             val tabView = tabStrip.getChildAt(i)
             if (tabView != null) {
                 tabView.isClickable = canClick
+            }
+        }
+    }
+
+    override fun startObserver() {
+        super.startObserver()
+        repairShopViewModel.repairShopBeanLiveData.observe(this) {
+            if (it != null) {
+                LogUtils.d(tag = "RepairShopViewModel", msg = GsonUtils.toJson(it))
             }
         }
     }

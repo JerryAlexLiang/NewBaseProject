@@ -39,6 +39,7 @@
     <string name="func_crash_test">CrashCatchTest</string>
     <string name="func_city_list">CityPicker</string>
     <string name="fun_option_picker">OptionPicker</string>
+    <string name="fun_spinner">Spinner</string>
 
     <!--    <string name="func_retrofit_get">Test the Retrofit-GET request</string>-->
 </resources>

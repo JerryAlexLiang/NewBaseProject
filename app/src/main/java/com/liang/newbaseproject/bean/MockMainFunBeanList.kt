@@ -8,6 +8,7 @@ import com.liang.newbaseproject.citypicker.CityPickerDialogActivity
 import com.liang.newbaseproject.citypicker.CityPickerViewPagerActivity
 import com.liang.newbaseproject.normal.NormalViewModelActivity
 import com.liang.newbaseproject.pickView.OptionPickerActivity
+import com.liang.newbaseproject.spinner.SpinnerActivity
 
 object MockMainFunBeanList {
 
@@ -85,6 +86,12 @@ object MockMainFunBeanList {
             activity = OptionPickerActivity::class.java
         )
 
+    private val bean18 =
+        FunItemBean(
+            R.string.fun_spinner,
+            activity = SpinnerActivity::class.java
+        )
+
     private var funBeanList: MutableList<FunItemBean> = mutableListOf()
 
     fun initMainFunData(): MutableList<FunItemBean> {
@@ -107,6 +114,7 @@ object MockMainFunBeanList {
             add(bean15)
             add(bean16)
             add(bean17)
+            add(bean18)
         }
         return funBeanList
     }
