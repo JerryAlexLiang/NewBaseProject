@@ -6,6 +6,8 @@ import android.graphics.Color
 import android.view.ViewGroup
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.DataBindingHolder
+import com.liang.module_base.extension.gone
+import com.liang.module_base.extension.visible
 import com.liang.newbaseproject.R
 import com.liang.newbaseproject.databinding.RvItemPopSpinnerBinding
 
@@ -52,6 +54,12 @@ class PopRvSpinnerAdapter :
             } else {
                 setTextColor(Color.BLACK)
             }
+        }
+
+        if (position == itemCount - 1) {
+            binding.viewDivider.gone()
+        } else {
+            binding.viewDivider.visible()
         }
     }
 

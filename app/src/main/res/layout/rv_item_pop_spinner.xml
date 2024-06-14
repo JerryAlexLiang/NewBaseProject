@@ -7,7 +7,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:padding="10dp">
 
@@ -16,18 +16,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
+            android:text="丁程鑫丁程鑫丁程鑫丁程鑫丁程鑫丁程鑫丁程鑫丁程鑫丁程鑫丁程鑫丁程鑫丁程鑫丁程鑫丁程鑫丁程鑫丁程鑫丁程鑫丁程鑫丁程鑫"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
+            android:id="@+id/viewDivider"
             android:layout_width="wrap_content"
-            android:layout_height="0.5dp"
-            android:visibility="gone"
+            android:layout_height="1dp"
+            android:visibility="visible"
             android:background="@color/gray"
-            app:layout_constraintEnd_toEndOf="@id/tvSpinnerContent"
-            app:layout_constraintStart_toStartOf="@id/tvSpinnerContent"
+            android:layout_marginTop="3dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             app:layout_constraintTop_toBottomOf="@id/tvSpinnerContent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

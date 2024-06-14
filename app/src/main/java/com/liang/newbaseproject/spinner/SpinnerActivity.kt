@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.liang.module_base.base.BaseActivity
 import com.liang.module_base.utils.ToastUtil
+import com.liang.module_base.utils.decoration.RecyclerviewItemDecoration
 import com.liang.newbaseproject.R
 import com.liang.newbaseproject.databinding.ActivitySpinnerBinding
 
@@ -90,12 +91,12 @@ class SpinnerActivity : BaseActivity<ActivitySpinnerBinding>() {
             linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
             layoutManager = linearLayoutManager
             adapter = popRvSpinnerAdapter
-            addItemDecoration(
-                DividerItemDecoration(
-                    this@SpinnerActivity,
-                    DividerItemDecoration.VERTICAL
-                )
-            )
+//            addItemDecoration(
+//                DividerItemDecoration(
+//                    this@SpinnerActivity,
+//                    DividerItemDecoration.VERTICAL
+//                )
+//            )
         }
 
         popupWindow.isOutsideTouchable = true

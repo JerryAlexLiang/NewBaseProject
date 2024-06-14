@@ -4,6 +4,7 @@ import android.content.Context
 import com.liang.module_base.base.BaseApp
 import com.liang.module_base.utils.LanguageUtilKt
 import com.liang.newbaseproject.R
+import com.liang.newbaseproject.baidumap.BaiduMapActivity
 import com.liang.newbaseproject.citypicker.CityPickerDialogActivity
 import com.liang.newbaseproject.citypicker.CityPickerViewPagerActivity
 import com.liang.newbaseproject.normal.NormalViewModelActivity
@@ -92,6 +93,13 @@ object MockMainFunBeanList {
             activity = SpinnerActivity::class.java
         )
 
+    private val bean19 =
+        FunItemBean(
+            R.string.fun_baidu_map,
+            activity = BaiduMapActivity::class.java
+        )
+
+
     private var funBeanList: MutableList<FunItemBean> = mutableListOf()
 
     fun initMainFunData(): MutableList<FunItemBean> {
@@ -115,6 +123,7 @@ object MockMainFunBeanList {
             add(bean16)
             add(bean17)
             add(bean18)
+            add(bean19)
         }
         return funBeanList
     }

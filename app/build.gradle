@@ -24,6 +24,21 @@ kapt {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('D:\\MySpace\\CodeSpace\\Android\\my_app_release.jks')
+            storePassword 'jerry666'
+            keyAlias 'key0'
+            keyPassword 'jerry666'
+        }
+        release {
+            storeFile file('D:\\MySpace\\CodeSpace\\Android\\my_app_release.jks')
+            storePassword 'jerry666'
+            keyAlias 'key0'
+            keyPassword 'jerry666'
+        }
+    }
+
     namespace 'com.liang.newbaseproject'
 
 //    compileSdk 32
@@ -84,9 +99,35 @@ android {
     }
 
     buildTypes {
+//        release {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//        }
+
         release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // 将签名文件信息配置给对应的包
+            signingConfig signingConfigs.release
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    def buildDate = new Date().format("yyyyMMddHH", TimeZone.getTimeZone("GMT+08:00"))
+                    outputFileName = "NewBaseProject_${versionName}_${buildDate}_${buildType.name}.apk"
+                }
+            }
+        }
+
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // 将签名文件信息配置给对应的包
+            signingConfig signingConfigs.debug
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    def buildDate = new Date().format("yyyyMMddHH", TimeZone.getTimeZone("GMT+08:00"))
+                    outputFileName = "NewBaseProject_${versionName}_${buildDate}_${buildType.name}.apk"
+                }
+            }
         }
     }
     compileOptions {
@@ -105,11 +146,12 @@ android {
         enabled = true
     }
 
-//    sourceSets {
-//        main {
-//            jniLibs.srcDirs = ['libs']
-//        }
-//    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
 }
 
 dependencies {
@@ -248,6 +290,8 @@ dependencies {
 
     // ARoute路由
     kapt(ComposingDependencies.aRouterCompiler)
+
+    implementation files('libs/BaiduLBS_Android.jar')
 
     implementation fileTree(dir: 'libs', includes: ['*.jar', '*.aar'])
 }
