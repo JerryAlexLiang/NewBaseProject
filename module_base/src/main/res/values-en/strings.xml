@@ -126,4 +126,11 @@
     <string name="device_activated">Device is activated.</string>
     <string name="device_is_not_activated">Device is not activated</string>
     <string name="no_device_management_permission">No device management permission</string>
+
+    <string name="help">帮助</string>
+    <string name="string_help_text">当前应用缺少必要权限。\n\n请点击\"设置\"-\"权限\"-打开所需权限。\n\n最后点击两次后退按钮，即可返回。</string>
+    <string name="string_help_text2">为了提供完整的功能，应用需要访问定位权限。是否去设置中允许？</string>
+    <string name="quit">退出</string>
+    <string name="no_permissions">应用需要必要的运行权限</string>
+    <string name="settings">设置</string>
 </resources>

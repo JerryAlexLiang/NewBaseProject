@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <!-- 清除屏保需要的权限 -->
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-    <!-- 唤醒屏幕需要的权限 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 清除屏保需要的权限 -->
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" /> <!-- 唤醒屏幕需要的权限 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application>
         <activity
+            android:name=".base.PermissionActivity"
+            android:exported="false" />
+        <activity
             android:name=".base.NightModeChangeMaskActivity"
             android:exported="false"
-            android:theme="@style/Transparent_half" />
-
-        <!--设备管理器广播接收器-->
+            android:theme="@style/Transparent_half" /> <!-- 设备管理器广播接收器 -->
         <receiver
             android:name=".screenlight.ScreenOffAdminReceiver"
             android:exported="true"
@@ -23,6 +21,7 @@
             <meta-data
                 android:name="android.app.device_admin"
                 android:resource="@xml/device_admin" />
+
             <intent-filter>
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
